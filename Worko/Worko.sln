@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worko", "Worko\Worko.csproj", "{6E995102-02B4-485A-AD30-7CB07C569F16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoMVC", "D:\Projects\Aviran1\Aviran1\WorkoMVC.csproj", "{C11F225C-357C-44CD-AFEE-D3C6A5319AB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6E995102-02B4-485A-AD30-7CB07C569F16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E995102-02B4-485A-AD30-7CB07C569F16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E995102-02B4-485A-AD30-7CB07C569F16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C11F225C-357C-44CD-AFEE-D3C6A5319AB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C11F225C-357C-44CD-AFEE-D3C6A5319AB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C11F225C-357C-44CD-AFEE-D3C6A5319AB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C11F225C-357C-44CD-AFEE-D3C6A5319AB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,6 +5,10 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worko", "Worko\Worko.csproj", "{6E995102-02B4-485A-AD30-7CB07C569F16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoUnitTest", "WorkoUnitTest\WorkoUnitTest.csproj", "{725C5242-9A58-4839-8F45-896CA27C9227}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoConsoleTest", "WorkoConsoleTest\WorkoConsoleTest.csproj", "{2E447757-BCBC-4B6A-AC5C-F1A6C1730846}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{6E995102-02B4-485A-AD30-7CB07C569F16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E995102-02B4-485A-AD30-7CB07C569F16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E995102-02B4-485A-AD30-7CB07C569F16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{725C5242-9A58-4839-8F45-896CA27C9227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{725C5242-9A58-4839-8F45-896CA27C9227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{725C5242-9A58-4839-8F45-896CA27C9227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{725C5242-9A58-4839-8F45-896CA27C9227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E447757-BCBC-4B6A-AC5C-F1A6C1730846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E447757-BCBC-4B6A-AC5C-F1A6C1730846}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E447757-BCBC-4B6A-AC5C-F1A6C1730846}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E447757-BCBC-4B6A-AC5C-F1A6C1730846}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Worko - Scheduling System";
+}
+
+<!--Header-->
+<header class="container-fluid">
+    <div class="row">
+        <h1>...תיכנון סידור העבודה מעולם לא היה פשוט יותר</h1>
+        <img src="~/Content/img/headerImg.png" class="headerImg">
+    </div>
+</header>
+<!--/Header-->
+<!--Main Content-->
+<div class="container">
+    <div class="row">
+        <img src="~/Content/img/mainDecoration.png" class="mainDecoration">
+    </div>
+</div>
+<!--/Main Content-->
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#loginBtn a').click(function () {
+                var cookie = readCookie(_cuCookie);
+                if (cookie) {
+                    $.ajax({
+                        method: "POST",
+                        url: 'Account/AutoLogin',
+                        data: {
+                            workerId: cookie
+                        },
+                        success: function (data) {
+                            if (data.Message == 'success' && data.Url) {
+                                window.location.href = data.Url;
+                            }
+                        }
+                    });
+                }
+                else {
+                    window.location.href = "/Account/Login";
+                }
+            });
+        });
+    </script>
+}

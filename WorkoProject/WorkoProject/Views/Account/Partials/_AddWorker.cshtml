@@ -1,0 +1,66 @@
+﻿@model WorkoProject.Models.Worker
+
+<div id="add-worker-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div>
+            @using (Ajax.BeginForm("AddWorker", "Account", new { }, new AjaxOptions() { HttpMethod = "POST", OnSuccess = "addWorkerSuccess" }, new { id = "add-worker-form" }))
+            {
+                <div>
+                    <!-- multistep form -->
+                    <div id="msform">
+                        <!-- progressbar -->
+                        <ul id="progressbar">
+                            <li class="active">פרטי חשבון</li>
+                            <li>פרטים אישיים</li>
+                        </ul>
+                        <!-- fieldsets -->
+                        <fieldset class="regPersonalDetails">
+                            <h2 class="fs-title">צור עובד חדש</h2>
+                            <div class="form-group register-modal">
+                                @Html.TextBoxFor(m => m.IdNumber, new { @class = "form-control", @placeholder = "תעודת זהות" })
+                                @Html.ValidationMessageFor(x => x.IdNumber)
+                            </div>
+                            <div class="form-group register-modal">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "מייל" })
+                                @Html.ValidationMessageFor(x => x.Email)
+                            </div>
+                            <div class="form-group register-modal">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "סיסמא" })
+                                @Html.ValidationMessageFor(x => x.Password)
+                            </div>
+                            <input type="button" name="next" class="next action-button" value="הבא" />
+                        </fieldset>
+
+                        <fieldset class="regPersonalDetails">
+                            <h2 class="fs-title">פרטים אישיים<br /></h2>
+
+                            <div class="form-group register-modal">
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "שם פרטי" })
+                                @Html.ValidationMessageFor(x => x.FirstName)
+                            </div>
+
+                            <div class="form-group register-modal">
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "שם משפחה" })
+                                @Html.ValidationMessageFor(x => x.LastName)
+                            </div>
+
+                            <div class="form-group register-modal">
+                                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "טלפון" })
+                                @Html.ValidationMessageFor(x => x.Phone)
+                            </div>
+
+                            <input type="submit" class="submit action-button" value="שלח" />
+                            <input type="button" name="previous" class="previous action-button" value="הקודם" />
+                        </fieldset>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer add-worker">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">סגור</button>
+                    <span class="message"></span>
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

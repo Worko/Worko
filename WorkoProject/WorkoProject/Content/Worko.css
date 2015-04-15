@@ -1,0 +1,491 @@
+﻿/* general + common styles */
+textarea {
+    resize: none;
+}
+
+label.success {
+    color: #5cb85c;
+}
+
+/* removing the yellow color of input after autocomplete on Google Crome*/
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+/* make link non-clickable */
+a.disabled {
+    pointer-events: none !important;
+    cursor: default !important;
+    opacity: 0.6;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+
+/* navbar */
+.navbar-default {
+    background-color: #FFF;
+    border-color: #e7e7e7;
+}
+
+.navbar-brand {
+    padding: 0;
+}
+
+#userPic img {
+    border-radius: 50%;
+    border: 1px solid #CDCDCD;
+}
+
+/* panels and tables with actions */
+.panel .actions,
+.panel .actions button,
+.panel .actions input {
+    height: 45px;
+}
+
+    .panel .actions button {
+        background: #fff;
+    }
+
+    .panel .actions button,
+    .panel .actions input {
+        padding: 10px 16px;
+        font-size: 18px;
+        line-height: 1.33;
+        border-radius: 6px;
+    }
+
+/* forms */
+.input-validation-error {
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+    .input-validation-error:focus {
+        border-color: #843534;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #ce8483;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #ce8483;
+    }
+
+/* Register*/
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-right-width: 8px;
+    border-radius: 3px;
+    border-right-color: rgba(0, 0, 0, 0.5);
+}
+
+    .bs-callout h2 {
+        font-size: 30px;
+        margin-top: 0;
+    }
+
+.form-group.register {
+    margin-bottom: 15px;
+    width: 25%;
+}
+.form-group.register-modal {
+    margin-bottom: 15px;
+}
+
+/* Register*/
+
+/* modals */
+.modal-footer.add-worker {
+    padding: 19px 20px 20px;
+    margin-top: 400px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+
+.modal .modal-footer .message {
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+    .modal .modal-footer .message.success {
+        color: #3c763d;
+    }
+
+    .modal .modal-footer .message.error {
+        color: #a94442;
+    }
+
+.modal .modal-footer .error-message {
+    color: #D9534F;
+    font-weight: bold;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin-top: 7px;
+}
+
+/* side bar menu */
+#sidemenu {
+    margin-top: 70px;
+}
+
+/* Workers list */
+.table > tbody > tr > td {
+    vertical-align: middle;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.changePic {
+    cursor: pointer;
+}
+
+    .changePic:hover {
+        border: 3px dotted rgb(221, 221, 221);
+    }
+
+/* Stations list */
+#Stations-list .related-workers {
+    cursor: pointer;
+}
+
+#Stations-list #add-station {
+    padding: 0;
+    width: 45px;
+    height: 45px;
+    font-size: 22px;
+}
+
+#Stations-list .table > tbody > tr.editing > td.field {
+    vertical-align: top;
+}
+
+#Stations-list .search,
+#workers-list .search {
+    width: 75%;
+}
+
+@media (max-width: 991px) {
+    #add-station {
+        top: -60px;
+        position: relative;
+    }
+}
+
+#worker-station-modal .table-responsive {
+    height: 300px;
+    overflow: auto;
+}
+
+#worker-station-modal .modal-footer {
+    margin-top: 0;
+}
+
+
+/* Main content */
+#page-wrapper {
+    position: inherit;
+    margin: -21px 250px 0 0;
+    padding: 21px 30px;
+    border-right: 1px solid #e7e7e7;
+}
+
+/* Error Page */
+@media (max-width: 580px) {
+    .error-page .panel-heading .info {
+        display: none;
+    }
+}
+
+.error-page .container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.error-page .panel-heading {
+    font-size: 24px;
+    text-align: center;
+}
+
+    .error-page .panel-heading .info:after {
+        content: '!';
+        display: inline-block;
+        width: 35px;
+        height: 35px;
+        text-align: center;
+        background-color: #fff;
+        color: #F0AD4E;
+        border-radius: 50%;
+        font-weight: bold;
+        position: absolute;
+        right: 25px;
+    }
+
+    .error-page .panel-heading .title {
+        position: relative;
+        top: -2px;
+    }
+
+.error-page .panel-body {
+    font-size: 18px;
+    text-align: center;
+}
+
+.error-page .panel-footer {
+    text-align: center;
+}
+
+/* Constrains Submission */
+#shifts-constrains table tr td.clickable:hover {
+    background-color: rgb(202, 202, 202);
+}
+
+#shifts-constrains table tr td:not(.clickable):not(.shift-name) {
+  background: repeating-linear-gradient( 
+      45deg, 
+      rgba(249, 249, 249, 1), 
+      rgba(255, 255, 255, 1) 8px, 
+      rgba(249, 249, 249, 1) 5px, 
+      rgba(0, 0, 0, 0.1) 12px );
+}
+
+#shifts-constrains table tr td:not(.shift-name),
+#shifts-constrains table tr th:not(.shift-name) {
+    width: 13%;
+    text-align: center;
+}
+
+#shifts-constrains table tr td.shift-name,
+#shifts-constrains table tr th.shift-name {
+    width: 9%;
+}
+
+#shifts-constrains table tbody tr {
+    height: 70px;
+}
+
+#shifts-constrains table tr td i.fa {
+    font-size: 45px;
+    color: #d9534f;
+}
+
+#shifts-constrains table tr td::selection {
+    background: none; /* WebKit/Blink Browsers */
+}
+
+#shifts-constrains table tr td::-moz-selection {
+    background: none; /* Gecko Browsers */
+}
+
+.wrong {
+    color: #d9534f;
+    position: absolute;
+    left: 50%;
+    font-weight: bold;
+}
+
+
+/* ScheduleConstrains */
+
+.shift:hover {
+    background-color: rgba(221, 221, 221, 0.3);
+}
+
+.table-first {
+    width: 200px;
+}
+
+/*.table-title {
+    background-color: rgb(60, 60, 60);
+    color: white;
+}*/
+
+.table-title th {
+    text-align: center;
+}
+
+.station-name {
+  color: rgba(60,60,60,0.9);
+}
+
+.icon-td {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}
+.icon {
+      text-align: -webkit-center;
+}
+.morning-icon {
+      background-image: url('img/morning.png');
+      background-repeat: no-repeat;
+      background-size: 100%;
+      height: 16px;
+      width: 16px;
+}
+.noon-icon {
+    background-image: url('img/noon.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 16px;
+    width: 16px;
+}
+
+.night-icon {
+    background-image: url('img/night.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 16px;
+    width: 16px;
+}
+
+#schedule-constrains table td:nth-child(n) {
+  border-left: 1px solid rgba(221, 221, 221, 0.3);
+}
+#schedule-constrains table td:nth-child(3n-2) {
+  border-left: 2px solid rgba(221, 221, 221, 0.5);
+}
+
+#schedule-constrains table tr:nth-child(n+2) {
+    border-bottom: 2px solid rgba(221, 221, 221, 1);
+}
+#schedule-constrains table tr:nth-last-child(1) {
+    border-bottom: none;
+}
+#schedule-constrains table td:nth-last-child(1) {
+    border-left: none;
+}
+
+
+
+/* Add worker modal */
+
+/*form styles*/
+#msform {
+    width: 400px;
+    margin: 50px auto;
+    text-align: center;
+    position: relative;
+}
+
+    #msform fieldset {
+        background: white;
+        border: 0 none;
+        border-radius: 3px;
+        box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+        padding: 20px 30px;
+        box-sizing: border-box;
+        width: 90%;
+        margin: 0 auto;
+        /*stacking fieldsets above each other*/
+        position: absolute;
+    }
+        /*Hide all except first fieldset*/
+        #msform fieldset:not(:first-of-type) {
+            display: none;
+        }
+    /*inputs*/
+    #msform input, #msform textarea {
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        margin-bottom: 10px;
+        width: 100%;
+        box-sizing: border-box;
+        font-family: montserrat;
+        color: #2C3E50;
+        font-size: 13px;
+    }
+    /*buttons*/
+    #msform .action-button {
+        width: 100px;
+        background: #27AE60;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 1px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px;
+    }
+
+        #msform .action-button:hover, #msform .action-button:focus {
+            box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+        }
+
+/*headings*/
+.fs-title {
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #2C3E50;
+    margin-bottom: 10px;
+}
+
+.fs-subtitle {
+    font-weight: normal;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 20px;
+}
+/*progressbar*/
+#progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    /*CSS counters to number the steps*/
+    counter-reset: step;
+}
+
+    #progressbar li {
+        list-style-type: none;
+        color: white;
+        font-size: 12px;
+        width: 50%;
+        float: left;
+        position: relative;
+    }
+
+        #progressbar li:before {
+            content: counter(step);
+            counter-increment: step;
+            width: 20px;
+            line-height: 20px;
+            display: block;
+            font-size: 10px;
+            color: #333;
+            background: white;
+            border-radius: 3px;
+            margin: 0 auto 5px auto;
+        }
+        /*progressbar connectors*/
+        #progressbar li:after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: white;
+            position: absolute;
+            left: -50%;
+            top: 9px;
+            z-index: -1; /*put it behind the numbers*/
+        }
+
+        #progressbar li:first-child:after {
+            /*connector not needed before the first step*/
+            content: none;
+        }
+        /*marking active/completed steps green*/
+        /*The number of the step and the connector before it = green*/
+        #progressbar li.active:before, #progressbar li.active:after {
+            background: #27AE60;
+            color: white;
+        }
+
+fieldset.regPersonalDetails {
+    display: block;
+    max-height: 350px;
+    width: 90%;
+}

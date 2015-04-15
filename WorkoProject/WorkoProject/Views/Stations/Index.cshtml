@@ -1,0 +1,42 @@
+﻿@using WorkoProject.Models;
+@using WorkoProject.Utils;
+
+@model List<Station>
+
+@{
+    ViewBag.Title = "רשימת עמדות";
+    Layout = "~/Views/Shared/_ControlLayout.cshtml";
+
+    List<Worker> workers = (List<Worker>)ViewData["Workers"];
+}
+
+<h2>רשימת עמדות</h2>
+
+<div id="Stations-list" class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row actions">
+            <div class="col-md-6">
+                <div class="form-group input-group search">
+                    <input id="search-station" type="text" class="form-control" placeholder="חיפוש">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" title="חפש">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <button id="add-station" type="button" class="btn btn-outline btn-default pull-left" title="הוספת עמדה חדשה">+</button>
+            </div>
+        </div>
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        @Html.Partial("Partials/_StationsList", Model)
+    </div>
+</div>
+@section Modals
+{
+    @Html.Partial("Partials/_AddStation", new Station())
+    @Html.Partial("Partials/_LinkWorkerToStation", workers)
+}

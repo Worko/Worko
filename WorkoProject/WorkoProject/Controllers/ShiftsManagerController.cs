@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -21,9 +22,9 @@ namespace WorkoProject.Controllers
         public ActionResult ConstrainsSubmission()
         {
             ShiftsConstrains model = new ShiftsConstrains();
-
-            ///TODO: get current constrains if exists(for next week only)
-            ///      to let the worker edit his choices
+            model.WSID = clnt.GetWSID();
+            model.WorkerId = SessionManager.CurrentWorker.IdNumber;
+            model.Constrains = clnt.GetWorkerConstrains(model.WorkerId, model.WSID);
 
             return View(model);
         }
@@ -31,7 +32,27 @@ namespace WorkoProject.Controllers
         [HttpPost]
         public ActionResult ConstrainsSubmission(ShiftsConstrains model)
         {
-            return View();
+            ShiftsConstrainsDC sc = new ShiftsConstrainsDC()
+            {
+                Constrains = model.Constrains,
+                WorkerId = model.WorkerId,
+                WSID = model.WSID
+            };
+
+            if (clnt.AddWorkerConstrains(sc) == 1)
+            {
+                TempData["Success"] = true;
+            }
+            else
+            {
+                TempData["ErrorMessgae"] = new Message()
+                {
+                    Title = "אירעה שגיאה",
+                    Content = "אירעה שגיאה בעת הזנת האילוצים, נסה שנית."
+                };
+            }
+
+            return View(model);
         }
 
         public ActionResult ScheduleConstrains()

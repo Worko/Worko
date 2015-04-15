@@ -1,0 +1,65 @@
+﻿@model List<WorkoProject.Models.Worker>
+
+@{
+    ViewBag.Title = "רשימת עובדים";
+    Layout = "~/Views/Shared/_ControlLayout.cshtml";
+}
+<h2>רשימת עובדים</h2>
+
+<div id="workers-list" class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row actions">
+            <div class="col-md-6">
+                <div class="form-group input-group search">
+                    <input id="search-worker" type="text" class="form-control" placeholder="חיפוש">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" title="חפש">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <button id="add-worker" type="button" class="btn btn-outline btn-default pull-left" title="הוספת עובד חדש">+</button>
+            </div>
+        </div>
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <div class="table-responsive">
+            <input type="file" id="userFilePic" name="file" accept="image/*" style="display:none" />
+            <table class="table table-hover search-table">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th class="filter">שם פרטי</th>
+                        <th class="filter">שם משפחה</th>
+                        <th class="filter">טלפון</th>
+                        <th class="filter">אימייל</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var w in Model)
+                    {
+                        <tr data-id="@w.IdNumber">
+                            <td class="worker-pic"><img src="~/@(string.IsNullOrEmpty(w.Picture) ? "Content/img/default_user.png" : w.Picture)" alt="" width="50" height="50" /></td>
+                            <td class="worker-fname field">@w.FirstName</td>
+                            <td class="worker-lname field">@w.LastName</td>
+                            <td class="worker-phone field">@w.Phone</td>
+                            <td class="worker-email field">@w.Email</td>
+                            <td><button type="button" class="btn btn-info edit">ערוך</button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+    </div>
+    <!-- /.panel-body -->
+</div>
+
+@section Modals
+{
+    @Html.Partial("Partials/_AddWorker", new WorkoProject.Models.Worker())
+}

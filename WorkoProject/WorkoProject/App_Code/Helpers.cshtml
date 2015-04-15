@@ -1,0 +1,19 @@
+﻿@using Entities
+@using WorkoProject.Models
+
+
+@helper GetStationStatus(System.Web.Mvc.HtmlHelper Html, StationStatus status)
+{
+    switch (status)
+    {
+        case StationStatus.Active:
+            @Html.Raw("עמדה פעילה")
+            break;
+        case StationStatus.Inactive:
+            @Html.Raw("עמדה לא פעילה")
+            break;
+        case StationStatus.Treatment:
+            @Html.Raw("בטיפול")
+            break;
+    }
+}

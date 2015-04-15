@@ -1,0 +1,84 @@
+﻿@using WorkoProject.Models
+@model WorkoProject.Models.Login
+
+@{
+    Layout = null;
+    ViewBag.Title = "התחברות";
+} 
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/Site.css" rel="stylesheet">
+
+    <link rel="icon" href="~/Content/img/favicon.png">
+
+</head>
+<body style="background-image:url(../../Content/img/background-login.jpg);background-repeat: no-repeat;background-size: cover;">
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "login" }))
+    {
+        <div dir="rtl">
+            <div class="row login-row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="login-panel panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">התחברות</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form role="form">
+                                <fieldset>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.IdNumber)
+                                        @Html.TextBoxFor(m => m.IdNumber, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(x => x.IdNumber)
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Password)
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(x => x.Password)
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            @Html.CheckBoxFor(m => m.RememberME) זכור אותי
+                                        </label>
+                                    </div>
+                                    <input type="submit" class="btn btn-lg btn-success btn-block" value="התחבר" />
+
+                                    <!--<a class="btn btn-outline btn-default col-md-9 back" href="/Home/Index">חזור</a>-->
+
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</body>
+
+@if (TempData["ErrorMessgae"] != null)
+{
+    @Html.Partial("Partials/_ModalMessage", (WorkoProject.Models.Message)TempData["ErrorMessgae"])
+}
+
+
+<script src="~/Scripts/jquery-1.11.0.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="~/Scripts/bootstrap.min.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script src="~/Scripts/plugins/metisMenu/metisMenu.min.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="~/Scripts/sb-admin-2.js"></script>
+<script src="~/Scripts/Site.js"></script>
+<script src="~/Scripts/Worko.js"></script>
+<script src="~/Scripts/Cookies.js"></script>
+
+

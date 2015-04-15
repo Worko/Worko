@@ -1,0 +1,38 @@
+﻿@using WorkoProject.Models;
+@using WorkoProject.Utils;
+
+@model List<Station>
+
+<div class="table-responsive">
+    <table class="table table-hover search-table">
+        <thead>
+            <tr>
+                <th class="filter">שם העמדה</th>
+                <th class="filter">תיאור</th>
+                <th class="filter">סטטוס</th>
+                <th>עובדים משוייכים</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var station in Model)
+            {
+                <tr data-id="@station.Id">
+                    <td class="station-name field">@station.Name</td>
+                    <td class="station-desc field">@station.Description</td>
+                    <td class="station-status field">@Helpers.GetStationStatus(Html, station.Status)</td>
+                    <td><a class="related-workers">הצג עובדים משוייכים</a></td>
+                    <td>
+                        <button type="button" class="btn btn-success link-worker" title="שייך עובד לעמדה @station.Name">
+                            שייך עובד
+                        </button>
+                    </td>
+                    <td><button type="button" class="btn btn-info edit">ערוך</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!-- /.table-responsive -->
+</div>
+<!-- /.panel-body -->

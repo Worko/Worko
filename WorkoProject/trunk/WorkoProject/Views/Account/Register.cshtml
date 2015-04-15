@@ -1,0 +1,63 @@
+﻿@model WorkoProject.Models.Worker
+
+@{
+    Layout = "~/Views/Shared/_ControlLayout.cshtml";
+    ViewBag.Title = "הרשמה";
+}
+
+<div class="bs-callout">
+    <h2>@ViewBag.Title</h2>
+    <h4>צור עובד חדש.</h4>
+</div>
+
+
+<div id="regBody">
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data", id = "register-form" }))
+    {
+        <div class="form-group register">
+            @Html.LabelFor(m => m.IdNumber)
+            @Html.TextBoxFor(m => m.IdNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.IdNumber)
+        </div>
+
+        <div class="form-group register">
+            @Html.LabelFor(m => m.FirstName)
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.FirstName)
+        </div>
+
+        <div class="form-group register">
+            @Html.LabelFor(m => m.LastName)
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.LastName)
+        </div>
+
+        <div class="form-group register">
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Email)
+        </div>
+
+        <div class="form-group register">
+            @Html.LabelFor(m => m.Phone)
+            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Phone)
+        </div>
+
+        <div class="form-group register">
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Password)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Picture)
+            <input type="file" id="file" name="file" accept="image/*" />
+            <img id="output" width="128" height="128" />
+        </div>
+
+        <button type="submit" class="btn btn-success ">שלח טופס</button>
+        <button type="reset" id="resetForm" class="btn btn-default">נקה טופס</button>
+    }
+</div>

@@ -7,7 +7,7 @@
     ViewBag.Title = "הגשת אילוצי סידור עבודה";
     Layout = "~/Views/Shared/_ControlLayout.cshtml";
     
-    var stations = (List<StationDC>) ViewData["Stations"];
+    var stations = Model.Stations;
     var shifts = new WorkScheduleTemplate().Shifts;
 }
 
@@ -53,7 +53,7 @@
                                     </td>
                                 }
                             </tr>
-                            @foreach (StationDC s in stations)
+                            @foreach (Station s in stations)
                             {
                                 <tr data-stationid="@s.Id">
 
@@ -64,7 +64,7 @@
                                         for (int j = 0; j < 3; j++)
                                         {
                                             <td class="shift @(shifts[i].IsActive ? "clickable" : string.Empty)" data-day="@i" data-shift="@j">
-                                                @Html.HiddenFor(m => m._constrains[i][j], new { @class = "ischecked" })
+                                                @Html.HiddenFor(m => m.Stations.Find(x => x.Id == s.Id)._constrains[i][j], new { @class = "ischecked" })
                                                 <center><i class="fa times"></i></center>
                                             </td>
                                         }
@@ -77,7 +77,12 @@
                         </table>
                     </div>
                     <!-- /.table-responsive -->
-                    <button type="submit" class="btn btn-primary pull-left">שלח אילוצים</button>
+                    <button type="submit" class="btn btn-primary pull-right">שלח אילוצים</button>
+                    if (TempData["Success"] != null && (bool)TempData["Success"])
+                    {
+                        <label class="success pull-right">האילוצים עודכנו במערכת בהצלחה</label>
+                    }
+                    
                 }
             </div>
             <!-- /.panel-body -->

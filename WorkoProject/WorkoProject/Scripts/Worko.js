@@ -144,8 +144,10 @@ $('#schedule-constrains .shift.clickable').click(function () {
 
         if (v.hasClass('fa-times')) {
             v.removeClass('fa-times');
+            hidden.val("False");
         } else {
             v.addClass('fa-times');
+            hidden.val("True");
         }
 
 });

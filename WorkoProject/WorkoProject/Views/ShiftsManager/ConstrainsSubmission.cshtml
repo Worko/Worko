@@ -78,11 +78,12 @@
                         </table>
                     </div>
                     <!-- /.table-responsive -->
-                    if(TempData["Success"] != null && (bool)TempData["Success"])
-                    { 
+                    <button type="submit" class="btn btn-primary pull-right">שלח אילוצים</button>
+                    if (TempData["Success"] != null && (bool)TempData["Success"])
+                    {
                         <label class="success pull-right">האילוצים עודכנו במערכת בהצלחה</label>
                     }
-                    <button type="submit" class="btn btn-primary pull-left">שלח אילוצים</button>
+                    
                 }
             </div>
             <!-- /.panel-body -->

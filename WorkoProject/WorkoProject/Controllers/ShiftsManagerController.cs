@@ -57,15 +57,42 @@ namespace WorkoProject.Controllers
 
         public ActionResult ScheduleConstrains()
         {
-            ViewData["Stations"] = clnt.GetStations(Entities.StationStatus.None);
+            List<StationDC> lsdc = clnt.GetStations(Entities.StationStatus.None);
 
-            return View();
+            ScheduleConstrains model = new ScheduleConstrains();
+            model.WSID = clnt.GetWSID();
+            foreach (StationDC s in lsdc)
+            {
+                model.Stations.Add(s.TryCast<Station>());
+            }
+
+            return View(model);
         }
 
         [HttpPost]
         public ActionResult ScheduleConstrains(ScheduleConstrains model)
         {
-            return View();
+            ScheduleConstrainsDC sc = new ScheduleConstrainsDC();
+            sc.WSID = model.WSID;
+            foreach (Station s in model.Stations)
+            {
+                sc.Stations.Add(s.TryCast<StationDC>());
+            }
+
+            if (clnt.AddStationConstrains(sc) == 1)
+            {
+                TempData["Success"] = true;
+            }
+            else
+            {
+                TempData["ErrorMessgae"] = new Message()
+                {
+                    Title = "אירעה שגיאה",
+                    Content = "אירעה שגיאה בעת הזנת האילוצים, נסה שנית."
+                };
+            }
+
+            return View(model);
         }
     }
 }

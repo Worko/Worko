@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Enums.cs" />
     <Compile Include="RequestDC.cs" />
+    <Compile Include="ScheduleConstrainsDC.cs" />
     <Compile Include="ShiftDC.cs" />
     <Compile Include="ShiftsConstrainsDC.cs" />
     <Compile Include="StationDC.cs" />

@@ -520,6 +520,117 @@ namespace DBAgent
 
 
 
+        public static int RemoveStationConstrains(int stationId, int wsid)
+        {
+            OpenConnection();
+            // create new StoredProcedure command
+            cmd = new SqlCommand("sp_RemoveStationConstrains", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // add the parameters
+            cmd.Parameters.AddWithValue("@StationId", stationId);
+            cmd.Parameters.AddWithValue("@WSID", wsid);
+
+            sqlParm = new SqlParameter("@res", DbType.Int32);
+            sqlParm.Direction = ParameterDirection.Output;
+            // add the result parameter
+            cmd.Parameters.Add(sqlParm);
+
+            cmd.ExecuteNonQuery();
+            int res = (int)cmd.Parameters["@res"].Value;
+            CloseConnection();
+            return res;
+        }
+
+
+        public static int AddStationConstrains(ScheduleConstrainsDC scheduleConstrains)
+        {
+            //if (RemoveStationConstrains(scheduleConstrains.StationId, scheduleConstrains.WSID) == 1)
+            //{
+            //    int res = 1;
+
+            //    OpenConnection();
+            //    for (int i = 0; i < 7; i++)
+            //    {
+            //        for (int j = 0; j < 3; j++)
+            //        {
+            //            if (scheduleConstrains._constrains[k][i][j])
+            //            {
+            //                int shiftTime = j;
+            //                int day = i;
+
+            //                // create new StoredProcedure command
+            //                cmd = new SqlCommand("sp_AddStationConstrains", con);
+            //                cmd.CommandType = CommandType.StoredProcedure;
+
+            //                // add the parameters
+            //                cmd.Parameters.AddWithValue("@WSID", scheduleConstrains.WSID);
+            //                cmd.Parameters.AddWithValue("@StationId", scheduleConstrains.StationId);
+            //                cmd.Parameters.AddWithValue("@Day", day);
+            //                cmd.Parameters.AddWithValue("@Status", scheduleConstrains.Status);
+            //                cmd.Parameters.AddWithValue("@ShiftTime", shiftTime);
+
+            //                sqlParm = new SqlParameter("@res", DbType.Int32);
+            //                sqlParm.Direction = ParameterDirection.Output;
+            //                // add the result parameter
+            //                cmd.Parameters.Add(sqlParm);
+
+            //                cmd.ExecuteNonQuery();
+            //                res *= (int)cmd.Parameters["@res"].Value;
+            //            }
+            //        }
+            //    }
+
+            //    CloseConnection();
+            //    return res;
+            //}
+            //else
+            //{
+                return 0;
+            //}
+        }
+
+
+        public static bool[][] GetStationConstrains(int stationId, int wsid)
+        {
+            List<Tuple<string, object>> args = new List<Tuple<string, object>>();
+            args.Add(new Tuple<string, object>("StationId", stationId));
+            args.Add(new Tuple<string, object>("WSID", wsid));
+            var ds = GetDataSet("sp_GetStationConstrains", args);
+
+            bool[][] sc = { null };
+
+            //for (int i = 0; i < 7; i++)
+            //{
+            //    for (int j = 0; j < 3; j++)
+            //    {
+
+            //        sc[i][j] = false;
+            //    }
+            //}
+
+            //for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            //{
+            //    int day = (int)ds.Tables[0].Rows[i][3];
+            //    int shiftTime = (int)ds.Tables[0].Rows[i][5];
+            //    sc[day][shiftTime] = true;
+            //}
+
+
+            return sc;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

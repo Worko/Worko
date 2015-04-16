@@ -9,11 +9,9 @@ namespace Entities
     public class StationDC
     {
         public int Id { get; set; }
-
         public string Name { get; set; }
-
         public string Description { get; set; }
-
         public StationStatus Status { get; set; }
+        public bool[][] _constrains { get; set; }
     }
 }

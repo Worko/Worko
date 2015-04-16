@@ -9,22 +9,17 @@ namespace WorkoProject.Models
 {
     public class ShiftsConstrains
     {
-        private IList<bool> _constrains;
                 
         public ShiftsConstrains()
         {
-            _constrains = new List<bool>();
+            Constrains = new List<bool>();
             for (int i = 0; i < 21; i++)
             {
-                _constrains.Add(false);
+                Constrains.Add(false);
             }
         }
 
-        public IList<bool> Constrains
-        {
-            get { return _constrains; }
-            set { _constrains = value; }
-        }
+        public List<bool> Constrains { get; set; }
 
         public string WorkerId { get; set; }
 

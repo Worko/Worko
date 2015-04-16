@@ -5,6 +5,8 @@ textarea {
 
 label.success {
     color: #5cb85c;
+    margin-right: 20px;
+    margin-top: 8px;
 }
 
 /* removing the yellow color of input after autocomplete on Google Crome*/

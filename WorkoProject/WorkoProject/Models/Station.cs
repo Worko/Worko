@@ -20,5 +20,7 @@ namespace WorkoProject.Models
         public string Description { get; set; }
 
         public StationStatus Status { get; set; }
+        
+        public bool[][] _constrains { get; set; }
     }
 }

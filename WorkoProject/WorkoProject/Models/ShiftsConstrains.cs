@@ -19,7 +19,7 @@ namespace WorkoProject.Models
             }
         }
 
-        public List<bool> Constrains { get; set; }
+        public IList<bool> Constrains { get; set; }
 
         public string WorkerId { get; set; }
 

@@ -10,16 +10,17 @@ namespace WorkoProject.Models
     {
         public ScheduleConstrains()
         {
-            Stations = new List<Station>();
-            StartDay = DateTime.Now.AddDays(-1 * ((int)DateTime.Now.DayOfWeek));
+            Constrains = new bool[7][];
+            for (int i = 0; i < 7; i++)
+                Constrains[i] = new bool[3];
         }
 
         public int PKID               { get; set; }
         public int WSID               { get; set; }
+        public int StationId          { get; set; }
         public int Day                { get; set; }
         public StationStatus Status   { get; set; }
         public PartOfDay ShiftTime    { get; set; }
-        public DateTime StartDay      { get; set; }
-        public List<Station> Stations { get; set; }
+        public bool[][] Constrains    { get; set; }
     }
 }

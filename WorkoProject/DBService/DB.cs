@@ -83,9 +83,14 @@ namespace DBService
 
         #region WorkSchedule
 
-        public int AddStationConstrains(ScheduleConstrainsDC scheduleConstrains)
+        public int AddStationConstrains(int stationId, int wsid, int day, int shiftTime)
         {
-            return Invoker.AddStationConstrains(scheduleConstrains);
+            return Invoker.AddStationConstrains(stationId, wsid, day, shiftTime);
+        }
+
+        public int RemoveStationConstrains(int stationId, int wsid, int day, int shiftTime)
+        {
+            return Invoker.RemoveStationConstrains(stationId, wsid, day, shiftTime);
         }
 
         public int AddWorkerConstrains(ShiftsConstrainsDC shiftsConstrains)
@@ -103,9 +108,9 @@ namespace DBService
             return Invoker.GetWorkerConstrains(workerId, wsid);
         }
 
-        public bool[][] GetStationConstrains(int stationId, int wsid)
+        public List<ScheduleConstrainsDC> GetStationConstrains(int wsid)
         {
-            return Invoker.GetStationConstrains(stationId, wsid);
+            return Invoker.GetStationConstrains(wsid);
         }
         #endregion
 

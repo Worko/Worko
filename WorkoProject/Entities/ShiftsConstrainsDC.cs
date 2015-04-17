@@ -8,9 +8,9 @@ namespace Entities
 {
     public class ShiftsConstrainsDC
     {
-        private List<bool> _constrains;
+        private IList<bool> _constrains;
 
-        public List<bool> Constrains
+        public IList<bool> Constrains
         {
             get { return _constrains; }
             set { _constrains = value; }

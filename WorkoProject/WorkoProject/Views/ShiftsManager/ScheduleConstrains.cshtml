@@ -1,13 +1,14 @@
 ﻿@using Entities;
 @using WorkoProject.Models;
 
-@model ScheduleConstrains
+@model List<ScheduleConstrainsDC>
 
 @{
     ViewBag.Title = "הגשת אילוצי סידור עבודה";
     Layout = "~/Views/Shared/_ControlLayout.cshtml";
-    
-    var stations = Model.Stations;
+
+    int wsid = (int)ViewData["WSID"];
+    var stations = ViewData["Stations"] as List<StationDC>;
     var shifts = new WorkScheduleTemplate().Shifts;
 }
 
@@ -22,6 +23,8 @@
             <div class="panel-body">
                 @using (Html.BeginForm("ScheduleConstrains", "ShiftsManager", FormMethod.Post))
                 {
+                   <input type="hidden" id="WSID" value="@wsid" />
+                    
                     <div class="table-responsive">
                         <table class="table">
                             <tr class="table-title">
@@ -53,8 +56,11 @@
                                     </td>
                                 }
                             </tr>
-                            @foreach (Station s in stations)
+                            @foreach(var s in stations)
                             {
+                                var item = Model.Find(x => x.StationId == s.Id);
+                                bool isChecked = false;
+                                                                
                                 <tr data-stationid="@s.Id">
 
                                     <td class="station-name field">@s.Name</td>
@@ -63,9 +69,12 @@
                                     {
                                         for (int j = 0; j < 3; j++)
                                         {
-                                            <td class="shift @(shifts[i].IsActive ? "clickable" : string.Empty)" data-day="@i" data-shift="@j">
-                                                @Html.HiddenFor(m => m.Stations.Find(x => x.Id == s.Id)._constrains[i][j], new { @class = "ischecked" })
-                                                <center><i class="fa times"></i></center>
+                                            if (item != null)
+                                            {
+                                                isChecked = item.Constrains[i][j];
+                                            }
+                                            <td class="shift clickable" data-day="@i" data-shift="@j">
+                                                <center><i class="fa @(isChecked ? "fa-times" : string.Empty)"></i></center>
                                             </td>
                                         }
 
@@ -77,12 +86,12 @@
                         </table>
                     </div>
                     <!-- /.table-responsive -->
-                    <button type="submit" class="btn btn-primary pull-right">שלח אילוצים</button>
-                    if (TempData["Success"] != null && (bool)TempData["Success"])
-                    {
-                        <label class="success pull-right">האילוצים עודכנו במערכת בהצלחה</label>
-                    }
-                    
+                    @*<button type="submit" class="btn btn-primary pull-right" id="scheduleConstrains">שלח אילוצים</button>
+    if (TempData["Success"] != null && (bool)TempData["Success"])
+    {
+        <label class="success pull-right">האילוצים עודכנו במערכת בהצלחה</label>
+    }*@
+
                 }
             </div>
             <!-- /.panel-body -->

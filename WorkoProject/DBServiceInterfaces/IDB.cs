@@ -56,7 +56,10 @@ namespace DBServiceInterfaces
         #endregion
 
         #region WorkSchedule
-        int AddStationConstrains(ScheduleConstrainsDC shiftsConstrains);
+
+        int AddStationConstrains(int stationId, int wsid, int day, int shiftTime);
+
+        int RemoveStationConstrains(int stationId, int wsid, int day, int shiftTime);
 
         int AddWorkerConstrains(ShiftsConstrainsDC shiftsConstrains);
 
@@ -64,7 +67,7 @@ namespace DBServiceInterfaces
 
         List<bool> GetWorkerConstrains(string workerId, int wsid);
 
-        bool[][] GetStationConstrains(int stationId, int wsid);
+        List<ScheduleConstrainsDC> GetStationConstrains(int wsid);
 
         #endregion
 

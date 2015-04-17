@@ -1,4 +1,31 @@
-﻿/* general + common styles */
+﻿/* Carousel */
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+    width: 70%;
+    margin: auto;
+    height: 250px;
+}
+
+#myCarousel .myControl-right {
+  right: 0;
+  left: auto;
+  background-image: none;
+  color: #000;
+}
+#myCarousel .myControl-left {
+  left: 0;
+  right: auto;
+  background-image: none;
+  color: #000;
+}
+#myCarousel .carousel-indicators.custom li {
+   border-color: #292929;
+   background-color: rgba(41, 41, 41, 0.4);
+}
+
+
+
+/* general + common styles */
 textarea {
     resize: none;
 }
@@ -491,3 +518,5 @@ fieldset.regPersonalDetails {
     max-height: 350px;
     width: 90%;
 }
+
+

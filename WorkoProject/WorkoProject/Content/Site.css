@@ -53,6 +53,9 @@ input:-webkit-autofill {
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #ce8483;
 }
 
+#loginBtn a {
+    font-size: 25px;
+}
 
 /* ### Login  ############################################################## */
 
@@ -92,22 +95,6 @@ input:-webkit-autofill {
 	text-decoration: underline;
 }
 
-.rbullet, .lbullet {
-  font-size: 35px;
-  text-decoration: none !important;
-  float: right;
-  
-}
-
-.rbullet {
-	color:  #3a5757;
-	margin: -8px 31px 0 0px;
-}
-
-.lbullet {
-	color:  #3b4d41;
-	margin: -8px 43px 0 0px;
-}
 
 /* Header */
 header {

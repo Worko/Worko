@@ -55,44 +55,53 @@ namespace WorkoProject.Controllers
             return View(model);
         }
 
+
         public ActionResult ScheduleConstrains()
         {
             List<StationDC> lsdc = clnt.GetStations(Entities.StationStatus.None);
 
-            ScheduleConstrains model = new ScheduleConstrains();
-            model.WSID = clnt.GetWSID();
-            foreach (StationDC s in lsdc)
-            {
-                model.Stations.Add(s.TryCast<Station>());
-            }
+            int wsid = clnt.GetWSID();
+
+            List<ScheduleConstrainsDC> model = clnt.GetStationConstrains(wsid);
+
+            ViewData["WSID"] = wsid;
+            ViewData["Stations"] = lsdc;
 
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult ScheduleConstrains(ScheduleConstrains model)
+        public JsonResult AddSchduleConstrain(int wsid, int stationId, int day, int shiftTime)
         {
-            ScheduleConstrainsDC sc = new ScheduleConstrainsDC();
-            sc.WSID = model.WSID;
-            foreach (Station s in model.Stations)
-            {
-                sc.Stations.Add(s.TryCast<StationDC>());
-            }
+            int res = clnt.AddStationConstrains(stationId, wsid, day, shiftTime);
 
-            if (clnt.AddStationConstrains(sc) == 1)
+            if (res == 1)
             {
-                TempData["Success"] = true;
+
             }
             else
             {
-                TempData["ErrorMessgae"] = new Message()
-                {
-                    Title = "אירעה שגיאה",
-                    Content = "אירעה שגיאה בעת הזנת האילוצים, נסה שנית."
-                };
+
             }
 
-            return View(model);
+            return Json(new { });
+        }
+
+        [HttpPost]
+        public JsonResult RemoveSchduleConstrain(int wsid, int stationId, int day, int shiftTime)
+        {
+            int res = clnt.RemoveStationConstrains(stationId, wsid, day, shiftTime);
+
+            if (res == 1)
+            {
+
+            }
+            else
+            {
+
+            }
+
+            return Json(new { });
         }
     }
 }

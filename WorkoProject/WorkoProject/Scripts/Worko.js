@@ -139,18 +139,40 @@ $(function () {
 /* ScheduleConstrains */
 
 $('#schedule-constrains .shift.clickable').click(function () {
-        var v = $(this).find('i.fa');
-        var hidden = $(this).find('.ischecked');
+    var v = $(this).find('i.fa');
+    var hidden = $(this).find('.ischecked');
+    var url;
 
-        if (v.hasClass('fa-times')) {
-            v.removeClass('fa-times');
-            hidden.val("False");
-        } else {
-            v.addClass('fa-times');
-            hidden.val("True");
+    if (v.hasClass('fa-times')) {
+        v.removeClass('fa-times');
+        hidden.val("False");
+        url = '/ShiftsManager/RemoveSchduleConstrain';
+    } else {
+        v.addClass('fa-times');
+        hidden.val("True");
+        url = '/ShiftsManager/AddSchduleConstrain';
+    }
+
+    var wsid = $('#WSID').val();
+    var day = $(this).data('day');
+    var shiftTime = $(this).data('shift');
+    var stationId = $(this).parents('tr').data('stationid');
+
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: {
+            wsid: wsid,
+            day: day,
+            shiftTime: shiftTime,
+            stationId: stationId
+        },
+        success: function (data) {
         }
+    });
 
 });
+
 
 
 /* functions */

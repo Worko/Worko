@@ -203,7 +203,6 @@
     <Content Include="Content\img\Carousel\6.jpg" />
     <Content Include="Content\img\Carousel\7.jpg" />
     <Content Include="Content\img\Carousel\8.jpg" />
-    <Content Include="Content\img\Carousel\9.jpg" />
     <Content Include="Content\img\default_user.png" />
     <Content Include="Content\img\favicon.png" />
     <Content Include="Content\img\footerBg.png" />
@@ -231,6 +230,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\ProfileImages\301210704.jpg" />
     <Content Include="Images\ProfileImages\301571121.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

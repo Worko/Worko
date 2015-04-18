@@ -340,6 +340,7 @@ $(document).on('click', '#workers-list .delete', function () {
 /* stations */
 var _stationDetails = { };
 
+
 function addStationSuccess(data) {
     var message = $(this).find('.modal-footer .message');
     message.addClass(data.state);
@@ -359,10 +360,12 @@ $('#add-station-modal').on('hidden.bs.modal', function () {
             data: {},
             success: function (data) {
                 $('#Stations-list .panel-body').html(data.html);
+                $('.message').text('');
                 _hasChanged = false;
             }
         });
     }
+
     resetForm($('#add-station-modal form'));
 })
 
@@ -415,6 +418,43 @@ $(document).on('click', '#Stations-list .edit', function () {
         // problem while trying to update the station
         // TODO: display message
     }
+});
+
+
+$(document).on('click', '#Stations-list .related-workers', function () {
+    var stationID = $(this).parents('tr').data('id');
+
+    $('#related-worker-station-modal').attr('data-sid', stationID);
+    $('#related-worker-station-modal .error-message').html('');
+
+    $('#related-worker-station-modal #stationName').html($(this).parents('tr').find('.station-name').html());
+
+    $.ajax({
+        method: "POST",
+        url: 'Stations/GetRelatedWorkers',
+        dataType: "json",
+        data: {
+            stationID: stationID
+        },
+        success: function (data) {
+            var rows = $('#related-worker-station-modal table tbody');
+            rows.empty();
+            for (var i = 0; i < data.workers.length; i++) {
+                var worker = data.workers[i];
+                var t1 = "<tr data-id=" + worker.IdNumber + ">";
+                var t2 = "<td class=\"worker-pic\"><img src=\"" + (worker.Picture == "" ? "Content/img/default_user.png" : worker.Picture) + "\" alt\=\"\" width=\"30\" height=\"30\" /></td>";
+                var t3 = "<td class=\"worker-fname field\">" + worker.FirstName + "</td>";
+                var t4 = "<td class=\"worker-lname field\">" + worker.LastName + "</td>";
+                var t5 = "<td class=\"worker-id field\">" + worker.IdNumber + "</td>";
+                var t6 = "</tr>";
+
+                var txt = t1 + t2 + t3 + t4 + t5 + t6;
+                rows.append(txt);
+            }
+        }
+    });
+
+    $('#related-worker-station-modal').modal('show');
 });
 
 $(document).on('click', '#Stations-list .link-worker', function () {
@@ -544,6 +584,26 @@ function updateStation(station) {
 
     return msg;
 }
+
+
+$(document).on('click', '#Stations-list .delete', function () {
+    var stationToRemove = $(this).parents('tr');
+    var stationId = stationToRemove.data('id');
+
+    $.ajax({
+        method: "POST",
+        url: 'Stations/DeleteStation',
+        data: {
+            stationId: stationId.toString()
+        },
+        success: function (data) {
+            stationToRemove.remove();
+            $('body').append(data.html);
+            $('#delete-station-modal').modal('show');
+
+        }
+    });
+});
 /* stations */
 
 

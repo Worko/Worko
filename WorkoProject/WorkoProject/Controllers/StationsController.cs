@@ -19,6 +19,7 @@ namespace WorkoProject.Controllers
         public ActionResult Index()
         {
             List<WorkerDC> workersDc = clnt.GetWorkers();
+
             List<Worker> workers = new List<Worker>();
 
             foreach (var w in workersDc)
@@ -116,6 +117,25 @@ namespace WorkoProject.Controllers
             return Json(new { workers = clnt.GetWorkersByStationID(stationID) });
         }
 
+        [HttpPost]
+        public JsonResult GetRelatedWorkers(int stationID)
+        {
+            List<WorkerDC> workers = new List<WorkerDC>();
+            List<WorkerDC> tempWorkers = clnt.GetWorkers();
+            List<string> relatedWorkers = clnt.GetWorkersByStationID(stationID);
+
+            foreach (var rw in relatedWorkers)
+            {
+                foreach (var w in tempWorkers)
+                {
+                    if (rw == w.IdNumber)
+                        workers.Add(w);
+                }
+            }
+
+            return Json(new { workers = workers});
+        }
+
 
         [HttpPost]
         public JsonResult UpdateStation(string name, string description, int status, int id)
@@ -152,6 +172,32 @@ namespace WorkoProject.Controllers
                 message.Content = "אירעה שגיאה במהלך עדכון פרטי העמדה, אנא נסה שוב";
             }
 
+
+            var html = this.RenderPartialToString("Partials/_ModalMessage", message);
+
+            return Json(new { html = html });
+        }
+
+
+        [HttpPost]
+        [AdminOnlyFilter]
+        public JsonResult DeleteStation(string stationId)
+        {
+            Message message = new Message()
+            {
+                Id = "delete-station-modal",
+                Title = "מחיקת עובד"
+            };
+
+            try
+            {
+                clnt.DeleteStation(stationId);
+                message.Content = "העמדה נמחקה בהצלחה";
+            }
+            catch (Exception)
+            {
+                message.Content = "אירעה שגיאה במהלך מחיקת העמדה, אנא נסה שוב";
+            }
 
             var html = this.RenderPartialToString("Partials/_ModalMessage", message);
 

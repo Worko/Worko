@@ -53,6 +53,8 @@ namespace DBServiceInterfaces
         [OperationContract]
         List<string> GetWorkersByStationID(int stationID);
 
+        [OperationContract]
+        void DeleteStation(string stationId);
         #endregion
 
         #region WorkSchedule

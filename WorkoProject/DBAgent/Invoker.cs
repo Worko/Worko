@@ -101,37 +101,11 @@ namespace DBAgent
             return ds;
         }
 
-        public static int AddWorker(WorkerDC worker)
-        {
-            OpenConnection();
-            // create new StoredProcedure command
-            cmd = new SqlCommand("sp_AddWorker", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            EncryptPassword en = new EncryptPassword();
-            en.HashedPass = worker.Password;
-
-            // add the parameters
-            cmd.Parameters.AddWithValue("@IdNumber", worker.IdNumber);
-            cmd.Parameters.AddWithValue("@FirstName", worker.FirstName);
-            cmd.Parameters.AddWithValue("@LastName", worker.LastName);
-            cmd.Parameters.AddWithValue("@Password", en.HashedPass);
-            cmd.Parameters.AddWithValue("@Phone", worker.Phone != null ? worker.Phone : "");
-            cmd.Parameters.AddWithValue("@Email", worker.Email != null ? worker.Email : "");
-            cmd.Parameters.AddWithValue("@Picture", worker.Picture != null ? worker.Picture : "");
-
-            sqlParm = new SqlParameter("@res", DbType.Int32);
-            sqlParm.Direction = ParameterDirection.Output;
-            // add the result parameter
-            cmd.Parameters.Add(sqlParm);
-
-            cmd.ExecuteNonQuery();
-            int res = (int)cmd.Parameters["@res"].Value;
-            CloseConnection();
-            return res;
-        }
 
 
+
+
+        #region Login
         /// <summary>
         /// Check id and password with database
         /// </summary>
@@ -204,6 +178,41 @@ namespace DBAgent
             CloseConnection();
             return w;
         }
+
+        #endregion
+
+        #region Workers
+
+        public static int AddWorker(WorkerDC worker)
+        {
+            OpenConnection();
+            // create new StoredProcedure command
+            cmd = new SqlCommand("sp_AddWorker", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            EncryptPassword en = new EncryptPassword();
+            en.HashedPass = worker.Password;
+
+            // add the parameters
+            cmd.Parameters.AddWithValue("@IdNumber", worker.IdNumber);
+            cmd.Parameters.AddWithValue("@FirstName", worker.FirstName);
+            cmd.Parameters.AddWithValue("@LastName", worker.LastName);
+            cmd.Parameters.AddWithValue("@Password", en.HashedPass);
+            cmd.Parameters.AddWithValue("@Phone", worker.Phone != null ? worker.Phone : "");
+            cmd.Parameters.AddWithValue("@Email", worker.Email != null ? worker.Email : "");
+            cmd.Parameters.AddWithValue("@Picture", worker.Picture != null ? worker.Picture : "");
+
+            sqlParm = new SqlParameter("@res", DbType.Int32);
+            sqlParm.Direction = ParameterDirection.Output;
+            // add the result parameter
+            cmd.Parameters.Add(sqlParm);
+
+            cmd.ExecuteNonQuery();
+            int res = (int)cmd.Parameters["@res"].Value;
+            CloseConnection();
+            return res;
+        }
+
 
         public static List<WorkerDC> GetWorkers()
         {
@@ -317,9 +326,9 @@ namespace DBAgent
 
             return workers;
         }
+        #endregion
 
-
-
+        #region Stations
         public static List<StationDC> GetStations(StationStatus status = StationStatus.None)
         {
             List<Tuple<string, object>> args = new List<Tuple<string, object>>();
@@ -389,6 +398,22 @@ namespace DBAgent
             return res;
         }
 
+
+        public static void DeleteStation(string stationId)
+        {
+            OpenConnection();
+            // create new StoredProcedure command
+            cmd = new SqlCommand("sp_DeleteStation", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // add the parameters
+            cmd.Parameters.AddWithValue("@StationId", stationId);
+
+            cmd.ExecuteNonQuery();
+        }
+        #endregion
+
+        #region Constrains
         public static List<bool> GetWorkerConstrains(string workerId, int wsid)
         {
             List<Tuple<string, object>> args = new List<Tuple<string, object>>();
@@ -527,7 +552,7 @@ namespace DBAgent
             CloseConnection();
             return res;
         }
-        
+
         public static int RemoveStationConstrains(int stationId, int wsid, int day, int shiftTime)
         {
             try
@@ -576,7 +601,7 @@ namespace DBAgent
                 CloseConnection();
                 return 1;
             }
-            catch 
+            catch
             {
                 return 0;
             }
@@ -592,7 +617,7 @@ namespace DBAgent
                 List<Tuple<string, object>> args = new List<Tuple<string, object>>();
                 args.Add(new Tuple<string, object>("WSID", wsid));
                 var ds = GetDataSet("sp_GetStationConstrains", args);
-                
+
                 int curStation = -1;
                 int index = -1;
 
@@ -603,7 +628,7 @@ namespace DBAgent
                     int day = (int)row["Day"];
                     int shift = (int)row["ShiftTime"];
                     int id = (int)row["StationId"];
-                    
+
                     if (curStation != id)
                     {
                         index++;
@@ -626,101 +651,6 @@ namespace DBAgent
             return list;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public static bool InsertRequest(string id, string cause, string date)
-        {
-            // create new StoredProcedure command
-            cmd = new SqlCommand("spu_InsertRequest", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            // add the parameters
-            cmd.Parameters.AddWithValue("@id", id);
-            cmd.Parameters.AddWithValue("@cause", cause);
-            cmd.Parameters.AddWithValue("@date", date);
-
-            sqlParm = new SqlParameter("@res", DbType.Int32);
-            sqlParm.Direction = ParameterDirection.Output;
-            // add the result parameter
-            cmd.Parameters.Add(sqlParm);
-
-            cmd.ExecuteNonQuery();
-            return (int)cmd.Parameters["@res"].Value == 1;
-        }
-
-        /// <summary>
-        /// Delete user activity
-        /// </summary>
-        /// <param name="userId">user id number</param>
-        public static void DeleteUserActivity(string pkid)
-        {
-            // create new StoredProcedure command
-            cmd = new SqlCommand("spu_DeleteUserActivity", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            // add the parameters
-            cmd.Parameters.AddWithValue("@pkid", pkid);
-
-            cmd.ExecuteNonQuery();
-        }
-
-
-        /// <summary>
-        /// Update user details in database
-        /// </summary>
-        /// <param name="fn">user first name</param>
-        /// <param name="ln">user last name</param>
-        /// <param name="id">user Id number</param>
-        /// <param name="email">user email</param>
-        /// <param name="phone">user phone</param>
-        /// <param name="picture">user picture</param>
-        /// <param name="pass">user password</param>
-        /// <param name="admin">user admin flag</param>
-        /// <returns></returns>
-        public static bool UpdateUser(string fn, string ln, string id, string email, string phone, string picture, string pass, string admin = "False")
-        {
-            // create new StoredProcedure command
-            cmd = new SqlCommand("spu_UpdateUser", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            // add the parameters
-            cmd.Parameters.AddWithValue("@fn", fn);
-            cmd.Parameters.AddWithValue("@ln", ln);
-            cmd.Parameters.AddWithValue("@id", id);
-            cmd.Parameters.AddWithValue("@email", email);
-            cmd.Parameters.AddWithValue("@phone", phone);
-            cmd.Parameters.AddWithValue("@picture", picture);
-            cmd.Parameters.AddWithValue("@pass", pass);
-            cmd.Parameters.AddWithValue("@admin", admin);
-
-            try
-            {
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-
+        #endregion
     }
 }

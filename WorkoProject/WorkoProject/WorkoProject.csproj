@@ -358,6 +358,7 @@
     <Content Include="Views\Account\Partials\_AddWorker.cshtml" />
     <Content Include="Views\ShiftsManager\ScheduleConstrains.cshtml" />
     <Content Include="Views\Requests\SendRequest.cshtml" />
+    <Content Include="Views\Stations\Partials\_RelatedWorkers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

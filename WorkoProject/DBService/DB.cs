@@ -79,6 +79,12 @@ namespace DBService
         {
             return Invoker.GetWorkersByStationID(stationID);
         }
+
+        public void DeleteStation(string stationId)
+        {
+            Invoker.DeleteStation(stationId);
+        }
+
         #endregion
 
         #region WorkSchedule

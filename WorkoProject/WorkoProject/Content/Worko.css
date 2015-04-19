@@ -516,3 +516,23 @@ fieldset.regPersonalDetails {
 }
 
 
+
+#companyLogo {
+    position: absolute;
+    right: 45%;
+    top: 20%;
+}
+
+
+.updateDot {
+    display: none;
+    border-radius: 50%;
+    border: 1px solid #FFF;
+    width: 6px;
+    height: 6px;
+    background: red;
+    position: absolute;
+    top: 53%;
+    right: 22%;
+    z-index: 1;
+}

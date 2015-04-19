@@ -439,23 +439,26 @@ namespace DBAgent
 
         public static int RemoveWorkerConstrains(string workerId, int wsid)
         {
-            OpenConnection();
-            // create new StoredProcedure command
-            cmd = new SqlCommand("sp_RemoveWorkerConstrains", con);
-            cmd.CommandType = CommandType.StoredProcedure;
+            int res = 0;
+            try
+            {
+                OpenConnection();
+                // create new StoredProcedure command
+                cmd = new SqlCommand("sp_RemoveWorkerConstrains", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            // add the parameters
-            cmd.Parameters.AddWithValue("@WorkerId", workerId);
-            cmd.Parameters.AddWithValue("@WSID", wsid);
+                // add the parameters
+                cmd.Parameters.AddWithValue("@WorkerId", workerId);
+                cmd.Parameters.AddWithValue("@WSID", wsid);
 
-            sqlParm = new SqlParameter("@res", DbType.Int32);
-            sqlParm.Direction = ParameterDirection.Output;
-            // add the result parameter
-            cmd.Parameters.Add(sqlParm);
-
-            cmd.ExecuteNonQuery();
-            int res = (int)cmd.Parameters["@res"].Value;
-            CloseConnection();
+                cmd.ExecuteNonQuery();
+                CloseConnection();
+                res = 1;
+            }
+            catch 
+            {
+                res = 0;
+            }
             return res;
         }
 

@@ -203,6 +203,7 @@
     <Content Include="Content\img\Carousel\6.jpg" />
     <Content Include="Content\img\Carousel\7.jpg" />
     <Content Include="Content\img\Carousel\8.jpg" />
+    <Content Include="Content\img\DavikLogo.png" />
     <Content Include="Content\img\default_user.png" />
     <Content Include="Content\img\favicon.png" />
     <Content Include="Content\img\footerBg.png" />

@@ -209,6 +209,13 @@
     <Content Include="Content\img\footerBg.png" />
     <Content Include="Content\img\footerDecoration.png" />
     <Content Include="Content\img\headerImg.png" />
+    <Content Include="Content\img\Loading Animation\Preloader_1.gif" />
+    <Content Include="Content\img\Loading Animation\Preloader_2.gif" />
+    <Content Include="Content\img\Loading Animation\Preloader_3.gif" />
+    <Content Include="Content\img\Loading Animation\Preloader_4.gif" />
+    <Content Include="Content\img\Loading Animation\Preloader_5.gif" />
+    <Content Include="Content\img\Loading Animation\Preloader_6.gif" />
+    <Content Include="Content\img\Loading Animation\Preloader_7.gif" />
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\img\mainDecoration.png" />
     <Content Include="Content\img\morning.png" />

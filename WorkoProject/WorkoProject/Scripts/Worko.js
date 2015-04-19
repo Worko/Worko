@@ -3,6 +3,13 @@ var _cuCookie = 'worko_stay_connected';
 var _sli = null;
 var _hasChanged = false;
 
+
+/* Page loading */
+$(window).load(function () {
+    // Animate loader off screen
+    $(".se-pre-con").fadeOut("slow");;
+});
+
 $(function () {
     /* Initialization */
     $('[data-tooltip="tooltip"]').tooltip()

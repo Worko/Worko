@@ -145,18 +145,16 @@ $(function () {
 
 /* ScheduleConstrains */
 
-$('#schedule-constrains .shift.clickable').click(function () {
+$(document).on('click', '#schedule-constrains .shift.clickable', function () {
+    _autoUpdateRun = false;
+
     var v = $(this).find('i.fa');
     var hidden = $(this).find('.ischecked');
     var url;
 
     if (v.hasClass('fa-times')) {
-        v.removeClass('fa-times');
-        hidden.val("False");
         url = '/ShiftsManager/RemoveSchduleConstrain';
     } else {
-        v.addClass('fa-times');
-        hidden.val("True");
         url = '/ShiftsManager/AddSchduleConstrain';
     }
 
@@ -174,13 +172,47 @@ $('#schedule-constrains .shift.clickable').click(function () {
             shiftTime: shiftTime,
             stationId: stationId
         },
+        dataType: "json",
         success: function (data) {
+            if (v.hasClass('fa-times')) {
+                v.removeClass('fa-times');
+                hidden.val("False");
+            } else {
+                v.addClass('fa-times');
+                hidden.val("True");
+            }
+        },
+        complete: function () {
+            _autoUpdateRun = true;
         }
+        
     });
 
 });
 
 
+function updateScheduleConstrains() {
+    var wsid = $('#WSID').val();
+
+    $.ajax({
+        method: "POST",
+        url: '/ShiftsManager/GetScheduleConstrains',
+        data: {
+            wsid: parseInt(wsid)
+        },
+        dataType: "json",
+        success: function (data) {
+            $('#schedule-constrains .panel-body').html(data.html);
+        }
+    });
+}
+
+function autoUpdate(func) {
+    $.ajaxSetup({ cache: false }); // This part addresses an IE bug.  without it, IE will only load the first number and will never refresh
+    setInterval(function () {
+        func();
+    }, 3000); // the "3000" here refers to the time to refresh the div.  it is in milliseconds. 
+}
 
 /* functions */
 /* search tables */

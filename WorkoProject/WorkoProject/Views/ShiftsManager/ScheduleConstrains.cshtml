@@ -28,68 +28,8 @@
                 {
                    <input type="hidden" name="wsid" id="WSID" value="@wsid" />
                     
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tr class="table-title">
-                                <th class="table-first"></th>
-                                <th colspan="3">ראשון</th>
-                                <th colspan="3">שני</th>
-                                <th colspan="3">שלישי</th>
-                                <th colspan="3">רביעי</th>
-                                <th colspan="3">חמישי</th>
-                                <th colspan="3">שישי</th>
-                                <th colspan="3">שבת</th>
-                                
-                            </tr>
-
-                            <tr>
-                                <td class="station-name"></td>
-                                @for (int i = 0; i < 7; i++)
-                                {
-                                    <td class="icon-td">
-                                        <center><div class="icon morning-icon" title="בוקר"></div></center>
-                                    </td>
-
-                                    <td class="icon-td">
-                                        <center><div class="icon noon-icon" title="צהריים"></div></center>
-                                    </td>
-
-                                    <td class="icon-td">
-                                        <center><div class="icon night-icon" title="לילה"></div></center>
-                                    </td>
-                                }
-                            </tr>
-                            @foreach(var s in stations)
-                            {
-                                var item = Model.Find(x => x.StationId == s.Id);
-                                bool isChecked = false;
-                                                                
-                                <tr data-stationid="@s.Id">
-
-                                    <td class="station-name field">@s.Name</td>
-
-                                    @for (int i = 0; i < 7; i++)
-                                    {
-                                        for (int j = 0; j < 3; j++)
-                                        {
-                                            if (item != null)
-                                            {
-                                                isChecked = item.Constrains[i][j];
-                                            }
-                                            <td class="shift clickable" data-day="@i" data-shift="@j">
-                                                <center><i class="fa @(isChecked ? "fa-times" : string.Empty)"></i></center>
-                                            </td>
-                                        }
-
-                                    }
-
-                                </tr>
-                            }
-                            
-                        </table>
-                    </div>
-                    <button type="submit" class="btn btn-primary pull-right">מחק כל האילוצים</button>
-                    <!-- /.table-responsive -->
+                    @Html.Partial("Partials/_GetScheduleConstrains", Model);
+                    
                     @*<button type="submit" class="btn btn-primary pull-right" id="scheduleConstrains">שלח אילוצים</button>
     if (TempData["Success"] != null && (bool)TempData["Success"])
     {

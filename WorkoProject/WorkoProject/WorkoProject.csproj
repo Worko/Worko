@@ -172,6 +172,7 @@
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\ScheduleConstrains.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\Shift.cs" />
     <Compile Include="Models\ShiftsConstrains.cs" />
     <Compile Include="Models\Station.cs" />
@@ -240,6 +241,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\ProfileImages\301210704.jpg" />
     <Content Include="Images\ProfileImages\301571121.jpg" />
+    <Content Include="Scripts\autoUpdate.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="font-awesome-4.1.0\fonts\fontawesome-webfont.eot" />
@@ -367,6 +369,7 @@
     <Content Include="Views\ShiftsManager\ScheduleConstrains.cshtml" />
     <Content Include="Views\Requests\SendRequest.cshtml" />
     <Content Include="Views\Stations\Partials\_RelatedWorkers.cshtml" />
+    <Content Include="Views\ShiftsManager\Partials\_GetScheduleConstrains.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

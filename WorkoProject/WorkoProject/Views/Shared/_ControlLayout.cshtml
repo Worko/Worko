@@ -27,6 +27,9 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link href="~/Content/Worko.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var _autoUpdateRun = true;
+    </script>
 </head>
 <body>
     <div class="se-pre-con"></div>
@@ -79,8 +82,10 @@
     <script src="~/Scripts/plugins/metisMenu/metisMenu.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="~/Scripts/sb-admin-2.js"></script>
+    
     <script src="~/Scripts/Worko.js"></script>
     <script src="~/Scripts/Cookies.js"></script>
+    <script src="~/Scripts/autoUpdate.js"></script>
 
     @if (TempData["stay_logged_in"] != null && (bool)TempData["stay_logged_in"])
     {

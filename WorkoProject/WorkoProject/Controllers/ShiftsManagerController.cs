@@ -56,6 +56,22 @@ namespace WorkoProject.Controllers
         }
 
 
+        [HttpPost]
+        public JsonResult GetScheduleConstrains(int wsid = -1)
+        {
+            List<StationDC> lsdc = clnt.GetStations(Entities.StationStatus.None);
+
+            ViewData["WSID"] = wsid;
+            ViewData["Stations"] = lsdc;
+
+            if (wsid == -1)
+            {
+                wsid = clnt.GetWSID();
+            }
+
+            return Json(new { html = this.RenderPartialToString("Partials/_GetScheduleConstrains", clnt.GetStationConstrains(wsid)) });
+        }
+
         public ActionResult ScheduleConstrains()
         {
             List<StationDC> lsdc = clnt.GetStations(Entities.StationStatus.None);

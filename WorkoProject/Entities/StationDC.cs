@@ -13,5 +13,6 @@ namespace Entities
         public string Description { get; set; }
         public StationStatus Status { get; set; }
         public bool[][] Constrains { get; set; }
+        public int Priority { get; set; }
     }
 }

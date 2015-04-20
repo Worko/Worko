@@ -71,6 +71,21 @@ namespace WorkoProject.Controllers
         }
 
         [HttpPost]
+        public ActionResult ScheduleConstrains(int wsid)
+        {
+            List<StationDC> lsdc = clnt.GetStations(Entities.StationStatus.None);
+            List<ScheduleConstrainsDC> model = new List<ScheduleConstrainsDC>();
+
+            clnt.RemoveAllStationConstrains(wsid);
+
+            ViewData["WSID"] = wsid;
+            ViewData["Stations"] = lsdc;
+
+            return View(model);
+        }
+
+
+        [HttpPost]
         public JsonResult AddSchduleConstrain(int wsid, int stationId, int day, int shiftTime)
         {
             int res = clnt.AddStationConstrains(stationId, wsid, day, shiftTime);

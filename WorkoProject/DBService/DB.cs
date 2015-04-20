@@ -99,6 +99,11 @@ namespace DBService
             return Invoker.RemoveStationConstrains(stationId, wsid, day, shiftTime);
         }
 
+        public int RemoveAllStationConstrains(int wsid)
+        {
+            return Invoker.RemoveAllStationConstrains(wsid);
+        }
+
         public int AddWorkerConstrains(ShiftsConstrainsDC shiftsConstrains)
         {
             return Invoker.AddWorkerConstrains(shiftsConstrains);
@@ -119,6 +124,7 @@ namespace DBService
             return Invoker.GetStationConstrains(wsid);
         }
         #endregion
+
 
         #region Requests
 

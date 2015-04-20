@@ -59,22 +59,32 @@ namespace DBServiceInterfaces
 
         #region WorkSchedule
 
+        [OperationContract]
         int AddStationConstrains(int stationId, int wsid, int day, int shiftTime);
 
+        [OperationContract]
         int RemoveStationConstrains(int stationId, int wsid, int day, int shiftTime);
 
+        [OperationContract]
+        int RemoveAllStationConstrains(int wsid);
+
+        [OperationContract]
         int AddWorkerConstrains(ShiftsConstrainsDC shiftsConstrains);
 
+        [OperationContract]
         int GetWSID(int backWeeks = 0);
 
+        [OperationContract]
         List<bool> GetWorkerConstrains(string workerId, int wsid);
 
+        [OperationContract]
         List<ScheduleConstrainsDC> GetStationConstrains(int wsid);
 
         #endregion
 
         #region Requests
 
+        [OperationContract]
         int AddWorkerRequest(RequestDC request);
 
         #endregion

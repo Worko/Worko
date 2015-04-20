@@ -26,7 +26,7 @@
             <div class="panel-body">
                 @using (Html.BeginForm("ScheduleConstrains", "ShiftsManager", FormMethod.Post))
                 {
-                   <input type="hidden" id="WSID" value="@wsid" />
+                   <input type="hidden" name="wsid" id="WSID" value="@wsid" />
                     
                     <div class="table-responsive">
                         <table class="table">
@@ -85,9 +85,10 @@
 
                                 </tr>
                             }
-
+                            
                         </table>
                     </div>
+                    <button type="submit" class="btn btn-primary pull-right">מחק כל האילוצים</button>
                     <!-- /.table-responsive -->
                     @*<button type="submit" class="btn btn-primary pull-right" id="scheduleConstrains">שלח אילוצים</button>
     if (TempData["Success"] != null && (bool)TempData["Success"])

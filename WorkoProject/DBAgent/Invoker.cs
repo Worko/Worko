@@ -556,6 +556,31 @@ namespace DBAgent
             return res;
         }
 
+
+
+        public static int RemoveAllStationConstrains(int wsid)
+        {
+            try
+            {
+                OpenConnection();
+                // create new StoredProcedure command
+                cmd = new SqlCommand("sp_RemoveAllStationConstrains", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // add the parameters
+                cmd.Parameters.AddWithValue("@WSID", wsid);
+
+                cmd.ExecuteNonQuery();
+                CloseConnection();
+                return 1;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+
         public static int RemoveStationConstrains(int stationId, int wsid, int day, int shiftTime)
         {
             try

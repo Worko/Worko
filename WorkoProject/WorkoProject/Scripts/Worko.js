@@ -2,6 +2,7 @@
 var _cuCookie = 'worko_stay_connected';
 var _sli = null;
 var _hasChanged = false;
+var randomAnimation = 1 + Math.floor(Math.random() * 7);
 
 /* Page loading */
 $(window).load(function () {

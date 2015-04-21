@@ -370,6 +370,7 @@
     <Content Include="Views\Requests\SendRequest.cshtml" />
     <Content Include="Views\Stations\Partials\_RelatedWorkers.cshtml" />
     <Content Include="Views\ShiftsManager\Partials\_GetScheduleConstrains.cshtml" />
+    <Content Include="Views\ShiftsManager\Oren_ScheduleConstrains.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

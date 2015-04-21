@@ -1,14 +1,23 @@
 ﻿
 /* Page loading animation */
-.no-js #loader { display: none;  }
-.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.no-js #loader {
+    display: none;
+}
+
+.js #loader {
+    display: block;
+    position: absolute;
+    left: 100px;
+    top: 0;
+}
+
 .se-pre-con {
-	position: fixed;
-	left: 0px;
-	top: 0px;
-	width: 100%;
-	height: 100%;
-	z-index: 9999;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
     background: url('img/Loading Animation/Preloader_3.gif') center no-repeat #fff;
 }
 
@@ -22,20 +31,22 @@
 }
 
 #myCarousel .myControl-right {
-  right: 0;
-  left: auto;
-  background-image: none;
-  color: #000;
+    right: 0;
+    left: auto;
+    background-image: none;
+    color: #000;
 }
+
 #myCarousel .myControl-left {
-  left: 0;
-  right: auto;
-  background-image: none;
-  color: #000;
+    left: 0;
+    right: auto;
+    background-image: none;
+    color: #000;
 }
+
 #myCarousel .carousel-indicators.custom li {
-   border-color: #292929;
-   background-color: rgba(41, 41, 41, 0.4);
+    border-color: #292929;
+    background-color: rgba(41, 41, 41, 0.4);
 }
 
 
@@ -134,6 +145,7 @@ a.disabled {
     margin-bottom: 15px;
     width: 25%;
 }
+
 .form-group.register-modal {
     margin-bottom: 15px;
 }
@@ -290,12 +302,7 @@ a.disabled {
 }
 
 #shifts-constrains table tr td:not(.clickable):not(.shift-name) {
-  background: repeating-linear-gradient( 
-      45deg, 
-      rgba(249, 249, 249, 1), 
-      rgba(255, 255, 255, 1) 8px, 
-      rgba(249, 249, 249, 1) 5px, 
-      rgba(0, 0, 0, 0.1) 12px );
+    background: repeating-linear-gradient( 45deg, rgba(249, 249, 249, 1), rgba(255, 255, 255, 1) 8px, rgba(249, 249, 249, 1) 5px, rgba(0, 0, 0, 0.1) 12px );
 }
 
 #shifts-constrains table tr td:not(.shift-name),
@@ -350,7 +357,7 @@ a.disabled {
 }
 
 .station-name {
-  color: rgba(60,60,60,0.9);
+    color: rgba(60,60,60,0.9);
 }
 
 .icon-td {
@@ -358,16 +365,19 @@ a.disabled {
     height: 20px;
     text-align: center;
 }
+
 .icon {
-      text-align: -webkit-center;
+    text-align: -webkit-center;
 }
+
 .morning-icon {
-      background-image: url('img/morning.png');
-      background-repeat: no-repeat;
-      background-size: 100%;
-      height: 16px;
-      width: 16px;
+    background-image: url('img/morning.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 16px;
+    width: 16px;
 }
+
 .noon-icon {
     background-image: url('img/noon.png');
     background-repeat: no-repeat;
@@ -385,21 +395,81 @@ a.disabled {
 }
 
 #schedule-constrains table td:nth-child(n) {
-  border-left: 1px solid rgba(221, 221, 221, 0.3);
+    border-left: 1px solid rgba(221, 221, 221, 0.3);
 }
+
 #schedule-constrains table td:nth-child(3n-2) {
-  border-left: 2px solid rgba(221, 221, 221, 0.5);
+    border-left: 2px solid rgba(221, 221, 221, 0.5);
 }
 
 #schedule-constrains table tr:nth-child(n+2) {
     border-bottom: 2px solid rgba(221, 221, 221, 1);
 }
+
 #schedule-constrains table tr:nth-last-child(1) {
     border-bottom: none;
 }
+
 #schedule-constrains table td:nth-last-child(1) {
     border-left: none;
 }
+
+
+
+/* Start: Schedule Constrains New !!!!!*/
+
+#schedule-constrains .station {
+    padding: 10px;
+}
+
+    #schedule-constrains .station.active,
+    #schedule-constrains .station.clickable:hover {
+        background-color: #F9F9F9;
+    }
+
+    
+    #schedule-constrains .station:not(:last-child) {
+        border-bottom: 1px solid #DDD;
+    }
+
+    #schedule-constrains .station .field {
+        font-size: 20px;
+    }
+
+    #schedule-constrains .station .pic {
+        text-align: center;
+    }
+
+#schedule-constrains .week-table {
+  background: rgb(249, 249, 249);
+  padding: 2%;
+}
+#schedule-constrains .week-table .table-responsive{
+    background-color: rgb(238, 238, 238);
+}
+#schedule-constrains .station.active{
+        border-bottom: 0;
+    }
+
+#schedule-constrains td.shift div {
+  display: block;
+  text-align: center;
+}
+#schedule-constrains th:not(.shift-name){
+    text-align: center;
+}
+
+#schedule-constrains .station.active .station-name {
+    font-weight: bold;
+}
+
+#schedule-constrains td.shift div input, 
+#schedule-constrains td.shift div select {
+  width: 114px;
+  margin-bottom: 6px;
+}
+
+/* End: Schedule Constrains New !!!!!*/
 
 
 

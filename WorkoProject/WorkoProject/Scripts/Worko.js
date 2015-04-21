@@ -145,6 +145,29 @@ $(function () {
 
 /* ScheduleConstrains */
 
+/* Start: Aviran Changes */
+
+$(document).on('click', '#schedule-constrains .station.clickable', function () {
+    $('.week-table').addClass('hide');
+    $('#schedule-constrains .station').addClass('clickable');
+    $('#schedule-constrains .station').removeClass('active');
+    $('#schedule-constrains .station .close').addClass('hide');
+    $(this).next('.week-table').removeClass('hide');
+    $(this).removeClass('clickable');
+    $(this).addClass('active');
+    $(this).find('.close').removeClass('hide');
+});
+
+$(document).on('click', '#schedule-constrains .station .close, #schedule-constrains .station:not(.clickable)', function () {
+    $('.week-table').addClass('hide');
+    $('#schedule-constrains .station').addClass('clickable');
+    $('#schedule-constrains .station').removeClass('active');
+    $('#schedule-constrains .station .close').addClass('hide');
+});
+
+/* End: Aviran Checnges*/
+
+
 $(document).on('click', '#schedule-constrains .shift.clickable', function () {
     _autoUpdateRun = false;
 

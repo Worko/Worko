@@ -1,0 +1,46 @@
+﻿@using Entities;
+@using WorkoProject.Models;
+
+@model List<ScheduleConstrainsDC>
+
+@{
+    ViewBag.Title = "הגשת אילוצי סידור עבודה";
+    Layout = "~/Views/Shared/_ControlLayout.cshtml";
+
+    int wsid = (int)ViewData["WSID"];
+    var stations = ViewData["Stations"] as List<StationDC>;
+    var shifts = new WorkScheduleTemplate().Shifts;
+}
+
+<h2>הגשת אילוצי סידור עבודה</h2>
+<div class="row" id="schedule-constrains">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                
+                <p><strong>משבצת מסומנת</strong> - עמדה לא פעילה באותו יום ובאותה משמרת</p>
+                <p><strong>משבצת לא מסומנת</strong> - עמדה פעילה באותו יום ובאותה משמרת</p>
+                <p>הדאטה בייס מתעדכן ברגע הלחיצה</p>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                @using (Html.BeginForm("ScheduleConstrains", "ShiftsManager", FormMethod.Post))
+                {
+                   <input type="hidden" name="wsid" id="WSID" value="@wsid" />
+                    
+                    @Html.Partial("Partials/_GetScheduleConstrains", Model);
+                    
+                    @*<button type="submit" class="btn btn-primary pull-right" id="scheduleConstrains">שלח אילוצים</button>
+    if (TempData["Success"] != null && (bool)TempData["Success"])
+    {
+        <label class="success pull-right">האילוצים עודכנו במערכת בהצלחה</label>
+    }*@
+
+                }
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-6 -->
+</div>

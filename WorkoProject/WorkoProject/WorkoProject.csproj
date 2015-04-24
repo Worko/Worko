@@ -217,6 +217,7 @@
     <Content Include="Content\img\Loading Animation\Preloader_5.gif" />
     <Content Include="Content\img\Loading Animation\Preloader_6.gif" />
     <Content Include="Content\img\Loading Animation\Preloader_7.gif" />
+    <Content Include="Content\img\Loading Animation\workoLogo.gif" />
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\img\mainDecoration.png" />
     <Content Include="Content\img\morning.png" />

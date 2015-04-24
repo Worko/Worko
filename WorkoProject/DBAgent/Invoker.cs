@@ -607,7 +607,7 @@ namespace DBAgent
         }
 
 
-        public static int AddStationConstrains(int stationId, int wsid, int day, int shiftTime)
+        public static int AddStationConstrains(int stationId, int wsid, int day, int shiftTime, int status, int numOfWorkers, int priority)
         {
 
             try
@@ -623,6 +623,9 @@ namespace DBAgent
                 cmd.Parameters.AddWithValue("@StationId", stationId);
                 cmd.Parameters.AddWithValue("@Day", day);
                 cmd.Parameters.AddWithValue("@ShiftTime", shiftTime);
+                cmd.Parameters.AddWithValue("@Status", status);
+                cmd.Parameters.AddWithValue("@NumberOfWorkers", numOfWorkers);
+                cmd.Parameters.AddWithValue("@Priority", priority);
 
                 cmd.ExecuteNonQuery();
 

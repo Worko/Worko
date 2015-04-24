@@ -102,9 +102,9 @@ namespace WorkoProject.Controllers
 
 
         [HttpPost]
-        public JsonResult AddSchduleConstrain(int wsid, int stationId, int day, int shiftTime)
+        public JsonResult SetShiftSchduleConstrain(int wsid, int stationId, int day, int shiftTime, int status, int numOfWorkers, int priority)
         {
-            int res = clnt.AddStationConstrains(stationId, wsid, day, shiftTime);
+            int res = clnt.AddStationConstrains(stationId, wsid, day, shiftTime, status, numOfWorkers, priority);
 
             if (res == 1)
             {
@@ -117,22 +117,30 @@ namespace WorkoProject.Controllers
 
             return Json(new { });
         }
+
+        //[HttpPost]
+        //public JsonResult RemoveSchduleConstrain(int wsid, int stationId, int day, int shiftTime)
+        //{
+        //    int res = clnt.RemoveStationConstrains(stationId, wsid, day, shiftTime);
+
+        //    if (res == 1)
+        //    {
+
+        //    }
+        //    else
+        //    {
+
+        //    }
+
+        //    return Json(new { });
+        //}
+
 
         [HttpPost]
-        public JsonResult RemoveSchduleConstrain(int wsid, int stationId, int day, int shiftTime)
+        public ActionResult WeeklyStationsConstrains(StationDC s)
         {
-            int res = clnt.RemoveStationConstrains(stationId, wsid, day, shiftTime);
-
-            if (res == 1)
-            {
-
-            }
-            else
-            {
-
-            }
-
-            return Json(new { });
+            return View();
         }
+
     }
 }

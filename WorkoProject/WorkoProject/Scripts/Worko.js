@@ -147,70 +147,94 @@ $(function () {
 
 /* Start: Aviran Changes */
 
-$(document).on('click', '#schedule-constrains .station.clickable', function () {
+$(document).on('click', '#schedule-constrains .station:not(.active)', function () {
     $('.week-table').addClass('hide');
-    $('#schedule-constrains .station').addClass('clickable');
     $('#schedule-constrains .station').removeClass('active');
     $('#schedule-constrains .station .close').addClass('hide');
     $(this).next('.week-table').removeClass('hide');
-    $(this).removeClass('clickable');
     $(this).addClass('active');
     $(this).find('.close').removeClass('hide');
 });
 
-$(document).on('click', '#schedule-constrains .station .close, #schedule-constrains .station:not(.clickable)', function () {
+$(document).on('click', '#schedule-constrains .station .close, #schedule-constrains .station.active', function () {
     $('.week-table').addClass('hide');
     $('#schedule-constrains .station').addClass('clickable');
     $('#schedule-constrains .station').removeClass('active');
     $('#schedule-constrains .station .close').addClass('hide');
 });
 
+$(document).on('click', '#schedule-constrains td.clickable', function () {
+    $(this).find('.settings').removeClass('hide');
+    $(this).find('.details').addClass('hide');
+});
 /* End: Aviran Checnges*/
 
 
-$(document).on('click', '#schedule-constrains .shift.clickable', function () {
+$(document).on('click', '#schedule-constrains .settings button', function () {
     _autoUpdateRun = false;
 
-    var v = $(this).find('i.fa');
-    var hidden = $(this).find('.ischecked');
-    var url;
-
-    if (v.hasClass('fa-times')) {
-        url = '/ShiftsManager/RemoveSchduleConstrain';
-    } else {
-        url = '/ShiftsManager/AddSchduleConstrain';
-    }
+    var url = '/ShiftsManager/SetShiftSchduleConstrain';
+  
+    var shift = $(this).parents('.shift');
 
     var wsid = $('#WSID').val();
-    var day = $(this).data('day');
-    var shiftTime = $(this).data('shift');
-    var stationId = $(this).parents('tr').data('stationid');
+    var day = shift.data('day');
+    var shiftTime = shift.parents('tr').data('shift');
+    var stationId = $('.station.active').data('stationid');
+    var status = shift.find('.settings .status').val();
+    var numOfWorkers = shift.find('.settings .now').val();
+    var priority = shift.find('.settings .priority').val();
 
-    $.ajax({
-        method: "POST",
-        url: url,
-        data: {
-            wsid: wsid,
-            day: day,
-            shiftTime: shiftTime,
-            stationId: stationId
-        },
-        dataType: "json",
-        success: function (data) {
-            if (v.hasClass('fa-times')) {
-                v.removeClass('fa-times');
-                hidden.val("False");
-            } else {
-                v.addClass('fa-times');
-                hidden.val("True");
+    if (status == "-1" || numOfWorkers == "0" || priority == "-1") {
+        // display error message
+        alert('no');
+    }
+    else {
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: {
+                wsid: wsid,
+                day: day,
+                shiftTime: shiftTime,
+                stationId: stationId,
+                status: status,
+                numOfWorkers: numOfWorkers,
+                priority: priority
+            },
+            dataType: "json",
+            success: function (data) {
+                var details = shift.find('.details');
+                details.removeClass('hide');
+                var statusStr;
+                switch (status) {
+                    case "1":
+                        statusStr = "פעיל";
+                        break;
+                    case "2":
+                        statusStr = "לא פעיל";
+                        break;
+                    case "3":
+                        statusStr = "בתיקון";
+                        break;
+                    case "-1":
+                    default:
+                        statusStr = "";
+                        break;
+                }
+
+                details.find('.status').html('סטטוס: ' + statusStr);
+                details.find('.now').html('מספר עובדים: ' + numOfWorkers);
+                details.find('.priority').html('עדיפות: ' + priority);
+
+                shift.find('.settings').addClass('hide');
+            },
+            complete: function () {
+                _autoUpdateRun = true;
             }
-        },
-        complete: function () {
-            _autoUpdateRun = true;
-        }
-        
-    });
 
+        });
+    }
 });
 
 

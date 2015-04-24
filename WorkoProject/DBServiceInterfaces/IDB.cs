@@ -60,7 +60,7 @@ namespace DBServiceInterfaces
         #region WorkSchedule
 
         [OperationContract]
-        int AddStationConstrains(int stationId, int wsid, int day, int shiftTime);
+        int AddStationConstrains(int stationId, int wsid, int day, int shiftTime, int status, int numOfWorkers, int priority);
 
         [OperationContract]
         int RemoveStationConstrains(int stationId, int wsid, int day, int shiftTime);

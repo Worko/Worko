@@ -1,0 +1,133 @@
+﻿@using Entities;
+@using WorkoProject.Models;
+
+@model StationDC
+
+@{
+    var shifts = new WorkScheduleTemplate().Shifts;
+}
+
+<div class="row clickable station" data-stationid="@Model.Id">
+    <div class="pic col-md-1"><img alt="@Model.Name" src="~/Content/img/default_user.png" height="50" width="50" /></div>
+    <div class="station-name field col-md-10">@Model.Name</div>
+    <div class="col-md-1"><i class="fa fa-times close pull-left hide"></i></div>
+</div>
+<div class="row week-table hide">
+    <div class="table-responsive">
+        @using (Html.BeginForm("WeeklyStationsConstrains", "ShiftsManager", FormMethod.Post))
+        {
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="shift-name">משמרת</th>
+                    <th>ראשון</th>
+                    <th>שני</th>
+                    <th>שלישי</th>
+                    <th>רביעי</th>
+                    <th>חמישי</th>
+                    <th>שישי</th>
+                    <th>שבת</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-shift="0">
+                    <td class="shift-name">בוקר</td>
+                    @for (int i = 0; i < 7; i++)
+                        {
+                        @SetShiftSettings(i, shifts)
+                        }
+                </tr>
+                <tr data-shift="1">
+                    <td class="shift-name">צהרים</td>
+                    @for (int i = 7; i < 14; i++)
+                        {
+                        @SetShiftSettings(i, shifts)
+                        }
+                </tr>
+                <tr data-shift="2">
+                    <td class="shift-name">לילה</td>
+                    @for (int i = 14; i < 21; i++)
+                        {
+                        @SetShiftSettings(i, shifts)
+                        }
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary pull-left">עדכן אילוצי משמרת</button>
+        }
+    </div>
+    <!-- /.table-responsive -->
+</div>
+
+@helper SetShiftSettings(int i, Shift[] shifts)
+{
+    Station station = null;
+
+    if (shifts[i].Stations != null && shifts[i].Stations.Count > 0)
+    { 
+        station = shifts[i].Stations.First(x => x.Id == Model.Id);
+    }
+
+    var status = station != null ? station.Status : StationStatus.None;
+    int now = station != null ? station.NumberOfWorkers : 0;
+    int priority = station != null ? station.Priority : 1;
+    string statusStr = string.Empty;
+        
+    switch (status)
+    {
+            
+        case StationStatus.Active:
+            statusStr = "פעיל";
+            break;
+        case StationStatus.Inactive:
+            statusStr = "לא פעיל";
+            break;
+        case StationStatus.Treatment:
+            statusStr = "בתיקון";
+            break;
+        case StationStatus.None:
+        default:
+            statusStr = string.Empty;
+            break;
+    }
+
+    <td class="shift @(shifts[i].IsActive ? "clickable" : string.Empty)" data-day="@i">
+        <div class="details @(station == null ? "hide" : string.Empty)">
+            <p class="status">
+                סטטוס: @statusStr
+            </p>
+            <p class="now">
+                כמות עובדים: @now
+            </p>
+            <p class="priority">
+                עדיפות: @priority
+            </p>
+        </div>
+        <div class="settings hide">
+            <div>
+                <select class="status">
+                    <option value="-1" @Html.Raw(status == StationStatus.None ? "selected" : string.Empty)>סטטוס</option>
+                    <option value="1" @Html.Raw(status == StationStatus.Active ? "selected" : string.Empty)>פעילה</option>
+                    <option value="2" @Html.Raw(status == StationStatus.Inactive ? "selected" : string.Empty)>לא פעילה</option>
+                    <option value="3" @Html.Raw(status == StationStatus.Treatment ? "selected" : string.Empty)>בתיקון</option>
+                </select>
+            </div>
+            <div>
+                <input class="now" type="number" placeholder="מספר עובדים" min="0" value="@now" />
+            </div>
+            <div>
+                <select class="priority">
+                    <option value="-1" @Html.Raw(priority <= 0 ? "selected" : string.Empty)>עדיפות</option>
+                    <option value="1" @Html.Raw(priority == 1 ? "selected" : string.Empty)>1</option>
+                    <option value="2" @Html.Raw(priority == 2 ? "selected" : string.Empty)>2</option>
+                    <option value="3" @Html.Raw(priority == 3 ? "selected" : string.Empty)>3</option>
+                    <option value="4" @Html.Raw(priority == 4 ? "selected" : string.Empty)>4</option>
+                    <option value="5" @Html.Raw(priority == 5 ? "selected" : string.Empty)>5</option>
+                </select>
+            </div>
+            <div>
+                <button type="button" class="btn btn-success">אישור</button>
+            </div>
+        </div>
+    </td>
+}

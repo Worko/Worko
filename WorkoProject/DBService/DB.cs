@@ -89,9 +89,9 @@ namespace DBService
 
         #region WorkSchedule
 
-        public int AddStationConstrains(int stationId, int wsid, int day, int shiftTime)
+        public int AddStationConstrains(int stationId, int wsid, int day, int shiftTime, int status, int numOfWorkers, int priority)
         {
-            return Invoker.AddStationConstrains(stationId, wsid, day, shiftTime);
+            return Invoker.AddStationConstrains(stationId, wsid, day, shiftTime, status, numOfWorkers, priority);
         }
 
         public int RemoveStationConstrains(int stationId, int wsid, int day, int shiftTime)

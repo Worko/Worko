@@ -17,6 +17,8 @@ namespace WorkoProject.Models
 
         public bool IsActive { get; set; }
 
+        public List<Station> Stations { get; set; }
+
         public static int GetShiftIndex(DayOfWeek day, PartOfDay part)
         {
             return ((int)part) * 7 + (int)day;

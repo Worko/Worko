@@ -469,6 +469,31 @@ a.disabled {
   margin-bottom: 6px;
 }
 
+#schedule-constrains td.shift {
+  width: 13.2%;
+  height: 93px;
+}
+
+#schedule-constrains td.shift-name {
+    width: 11%;
+}
+
+#schedule-constrains .settings button{
+    width:100%
+}
+
+#schedule-constrains .shift-name, 
+#schedule-constrains .table-striped>tbody>tr:nth-child(odd)>td.shift-name, 
+#schedule-constrains .table-striped>tbody>tr:nth-child(odd)>th.shift-name {
+  background-color: rgb(205, 205, 205);
+  color: #356639;
+}
+
+#schedule-constrains td.shift div.details p {
+  text-align: right;
+  opacity: 0.5;
+  margin: 0;
+}
 /* End: Schedule Constrains New !!!!!*/
 
 

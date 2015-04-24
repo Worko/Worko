@@ -28,7 +28,8 @@ namespace WorkoProject.Models
                 {
                     Day = (DayOfWeek)day,
                     Part = (PartOfDay)part,
-                    IsActive = true
+                    IsActive = true,
+                    Stations = new List<Station>()
                 };
             }
 

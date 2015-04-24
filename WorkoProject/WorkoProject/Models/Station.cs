@@ -24,5 +24,9 @@ namespace WorkoProject.Models
         public bool[][] Constrains { get; set; }
 
         public int Priority { get; set; }
+
+        public int NumberOfWorkers { get; set; }
+
+        public List<Worker> Workers { get; set; }
     }
 }

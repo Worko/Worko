@@ -190,6 +190,7 @@
     <Compile Include="Utils\IdNumberValidate.cs" />
     <Compile Include="Utils\RenderPartialToString.cs" />
     <Compile Include="Utils\SessionManager.cs" />
+    <Compile Include="Utils\Sorter.cs" />
     <Compile Include="Utils\Translator.cs" />
     <Compile Include="Utils\VerifyUserFilter.cs" />
   </ItemGroup>

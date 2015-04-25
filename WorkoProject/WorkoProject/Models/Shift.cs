@@ -23,5 +23,41 @@ namespace WorkoProject.Models
         {
             return ((int)part) * 7 + (int)day;
         }
+         
+        public static int GetNextShiftIndex(DayOfWeek day, PartOfDay part)
+        {
+            int p = (int)part;
+            int d = (int)day;
+
+            if (p == 2)
+            {
+                p = 0;
+                d++;
+            }
+            else
+            {
+                p++;
+            }
+
+            return p * 7 + d;
+        }
+
+        public static int GetPreviousShiftIndex(DayOfWeek day, PartOfDay part)
+        {
+            int p = (int)part;
+            int d = (int)day;
+
+            if (p == 0)
+            {
+                p = 2;
+                d--;
+            }
+            else
+            {
+                p--;
+            }
+
+            return p * 7 + d;
+        }
     }
 }

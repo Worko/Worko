@@ -14,5 +14,7 @@ namespace Entities
         public StationStatus Status { get; set; }
         public bool[][] Constrains { get; set; }
         public int Priority { get; set; }
+        public int NumberOfWorkers { get; set; }
+        public List<WorkerDC> Workers { get; set; }
     }
 }

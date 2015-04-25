@@ -1,14 +1,13 @@
 ﻿@using Entities;
 @using WorkoProject.Models;
 
-@model List<ScheduleConstrainsDC>
+@model List<StationDC>
 
 @{
     ViewBag.Title = "הגשת אילוצי סידור עבודה";
     Layout = "~/Views/Shared/_ControlLayout.cshtml";
 
     int wsid = (int)ViewData["WSID"];
-    var stations = ViewData["Stations"] as List<StationDC>;
     var shifts = new WorkScheduleTemplate().Shifts;
 }
 
@@ -23,7 +22,7 @@
             <div class="panel-body">
                 <input type="hidden" name="wsid" id="WSID" value="@wsid" />
 
-                @foreach (var s in stations)
+                @foreach (var s in Model)
                 {
                   @Html.Partial("Partials/_WeeklyStationsConstrains", s)
                 }

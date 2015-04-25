@@ -10,15 +10,21 @@ namespace Entities
     {
         public ScheduleConstrainsDC()
         {
-            Constrains = new bool[7][];
-            for (int i = 0; i < 7; i++)
-                Constrains[i] = new bool[3];
         }
 
-        public int PKID                 { get; set; }
-        public int WSID                 { get; set; }
-        public int StationId            { get; set; }
-        public StationStatus Status     { get; set; }
-        public bool[][] Constrains      { get; set; }
+        public int PKID                             { get; set; }
+        public int WSID                             { get; set; }
+        public int StationId                        { get; set; }
+        public StationStatus Status                 { get; set; }
+        public List<StationConstrains> Constrains   { get; set; }
+    }
+
+    public partial class StationConstrains
+    {
+        public int Priority         { get; set; }
+        public int NumberOfWorkers  { get; set; }
+        public StationStatus Status { get; set; }
+        public int Day        { get; set; }
+        public int ShiftTime  { get; set; }
     }
 }

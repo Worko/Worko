@@ -81,9 +81,9 @@ namespace WorkoProject.Controllers
             List<ScheduleConstrainsDC> model = clnt.GetStationConstrains(wsid);
 
             ViewData["WSID"] = wsid;
-            ViewData["Stations"] = lsdc;
+            ViewData["Constrains"] = model ;
 
-            return View(model);
+            return View(lsdc);
         }
 
         [HttpPost]

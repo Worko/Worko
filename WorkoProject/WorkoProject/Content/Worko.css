@@ -356,7 +356,9 @@ a.disabled {
     text-align: center;
 }
 
-.station-name {
+.station-name,
+.station-desc,
+.station-status {
     color: rgba(60,60,60,0.9);
 }
 
@@ -441,8 +443,9 @@ a.disabled {
     }
 
 #schedule-constrains .week-table {
-  background: rgb(249, 249, 249);
-  padding: 2%;
+    background: rgb(249, 249, 249);
+    padding: 2%;
+    border-bottom: 2px solid #DDD;
 }
 #schedule-constrains .week-table .table-responsive{
     background-color: rgb(238, 238, 238);

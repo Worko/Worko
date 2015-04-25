@@ -648,7 +648,7 @@ namespace DBAgent
                 List<Tuple<string, object>> args = new List<Tuple<string, object>>();
                 args.Add(new Tuple<string, object>("WSID", wsid));
                 var ds = GetDataSet("sp_GetStationConstrains", args);
-
+                
                 int curStation = -1;
                 int index = -1;
 
@@ -659,6 +659,9 @@ namespace DBAgent
                     int day = (int)row["Day"];
                     int shift = (int)row["ShiftTime"];
                     int id = (int)row["StationId"];
+                    int priority = (int)row["Priority"];
+                    int numberOfWorkers = (int)row["NumberOfWorkers"];
+                    StationStatus status = (StationStatus)row["Status"];
 
                     if (curStation != id)
                     {
@@ -667,12 +670,28 @@ namespace DBAgent
                         var sc = new ScheduleConstrainsDC();
                         sc.WSID = wsid;
                         sc.StationId = id;
-                        sc.Constrains[day][shift] = true;
+                        sc.Status = status;
+                        sc.Constrains = new List<StationConstrains>();
+                        sc.Constrains.Add(new StationConstrains()
+                        {
+                            Day = day,
+                            ShiftTime = shift,
+                            Priority = priority,
+                            NumberOfWorkers = numberOfWorkers,
+                            Status = status
+                        });
                         list.Add(sc);
                     }
                     else
                     {
-                        list[index].Constrains[day][shift] = true;
+                        list[index].Constrains.Add(new StationConstrains()
+                        {
+                            Day = day,
+                            ShiftTime = shift,
+                            Priority = priority,
+                            NumberOfWorkers = numberOfWorkers,
+                            Status = status
+                        });
                     }
                 }
 

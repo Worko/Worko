@@ -5,6 +5,17 @@
 
 @{
     var shifts = new WorkScheduleTemplate().Shifts;
+    var stationConstrains = ViewData["Constrains"] as List<ScheduleConstrainsDC>;
+    List<StationConstrains> constrains = null;
+    try
+    {     
+        constrains = stationConstrains.Find(x => x.StationId == Model.Id).Constrains;
+    }
+    catch
+    {
+        
+    }
+    
 }
 
 <div class="row clickable station" data-stationid="@Model.Id">
@@ -34,43 +45,44 @@
                     <td class="shift-name">בוקר</td>
                     @for (int i = 0; i < 7; i++)
                         {
-                        @SetShiftSettings(i, shifts)
+                        @SetShiftSettings(i, shifts, constrains)
                         }
                 </tr>
                 <tr data-shift="1">
                     <td class="shift-name">צהרים</td>
                     @for (int i = 7; i < 14; i++)
                         {
-                        @SetShiftSettings(i, shifts)
+                        @SetShiftSettings(i, shifts, constrains)
                         }
                 </tr>
                 <tr data-shift="2">
                     <td class="shift-name">לילה</td>
                     @for (int i = 14; i < 21; i++)
                         {
-                        @SetShiftSettings(i, shifts)
+                        @SetShiftSettings(i, shifts, constrains)
                         }
                 </tr>
             </tbody>
         </table>
-        <button type="submit" class="btn btn-primary pull-left">עדכן אילוצי משמרת</button>
         }
     </div>
     <!-- /.table-responsive -->
 </div>
 
-@helper SetShiftSettings(int i, Shift[] shifts)
+@helper SetShiftSettings(int i, Shift[] shifts, List<StationConstrains> constrains)
 {
-    Station station = null;
-
-    if (shifts[i].Stations != null && shifts[i].Stations.Count > 0)
+    int part = i / 7;
+    int day = i - 7 * part;
+    StationConstrains constrain = null;
+    if (constrains != null)
     { 
-        station = shifts[i].Stations.First(x => x.Id == Model.Id);
+        constrain = constrains.Find(x => x.Day == day && x.ShiftTime == part);
     }
 
-    var status = station != null ? station.Status : StationStatus.None;
-    int now = station != null ? station.NumberOfWorkers : 0;
-    int priority = station != null ? station.Priority : 1;
+
+    var status = constrain != null ? constrain.Status : StationStatus.None;
+    int now = constrain != null ? constrain.NumberOfWorkers : 0;
+    int priority = constrain != null ? constrain.Priority : 1;
     string statusStr = string.Empty;
         
     switch (status)
@@ -91,8 +103,8 @@
             break;
     }
 
-    <td class="shift @(shifts[i].IsActive ? "clickable" : string.Empty)" data-day="@i">
-        <div class="details @(station == null ? "hide" : string.Empty)">
+    <td class="shift @(shifts[i].IsActive ? "clickable" : string.Empty)" data-day="@day">
+        <div class="details @(constrain == null ? "hide" : string.Empty)">
             <p class="status">
                 סטטוס: @statusStr
             </p>

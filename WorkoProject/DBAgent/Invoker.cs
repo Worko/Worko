@@ -344,7 +344,9 @@ namespace DBAgent
                     Id = int.Parse(ds.Tables[0].Rows[i][0].ToString()),
                     Name = ds.Tables[0].Rows[i][1].ToString(),
                     Description = ds.Tables[0].Rows[i][2].ToString(),
-                    Status = (StationStatus)int.Parse(ds.Tables[0].Rows[i][3].ToString())
+                    Status = (StationStatus)int.Parse(ds.Tables[0].Rows[i][3].ToString()),
+                    Priority = int.Parse(ds.Tables[0].Rows[i][4].ToString()),
+                    NumberOfWorkers = int.Parse(ds.Tables[0].Rows[i][5].ToString())
                 });
             }
 
@@ -386,6 +388,8 @@ namespace DBAgent
             cmd.Parameters.AddWithValue("@StationName", station.Name);
             cmd.Parameters.AddWithValue("@Description", station.Description);
             cmd.Parameters.AddWithValue("@Status", (int)station.Status);
+            cmd.Parameters.AddWithValue("@NumberOfWorkers", station.NumberOfWorkers);
+            cmd.Parameters.AddWithValue("@Priority", station.Priority);
 
             sqlParm = new SqlParameter("@res", DbType.Int32);
             sqlParm.Direction = ParameterDirection.Output;
@@ -414,6 +418,49 @@ namespace DBAgent
         #endregion
 
         #region Constrains
+        public static List<WorkerConstrains> GetAllWorkersConstrains(int wsid)
+        {
+            List<WorkerConstrains> list = new List<WorkerConstrains>();
+            
+            try
+            {
+                List<Tuple<string, object>> args = new List<Tuple<string, object>>();
+                args.Add(new Tuple<string, object>("WSID", wsid));
+                var ds = GetDataSet("sp_GetAllWorkersConstrains", args);
+
+                string curWorker = "";
+                int index = -1;
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    var row = ds.Tables[0].Rows[i];
+
+                    int day = (int)row["Day"];
+                    int shift = (int)row["ShiftTime"];
+                    string id = (string)row["WorkerId"];
+
+                    if (curWorker != id)
+                    {
+                        index++;
+                        curWorker = id;
+                        var wc = new WorkerConstrains();
+                        wc.WorkerID = id;
+                        wc.Constrains[day][shift] = true;
+                        list.Add(wc);
+                    }
+                    else
+                    {
+                        list[index].Constrains[day][shift] = true;
+                    }
+                }
+
+            }
+            catch { }
+
+            return list;
+        }
+
+
         public static List<bool> GetWorkerConstrains(string workerId, int wsid)
         {
             List<Tuple<string, object>> args = new List<Tuple<string, object>>();
@@ -636,6 +683,44 @@ namespace DBAgent
             {
                 return 0;
             }
+        }
+
+
+        public static List<SortedScheduleConstrainsDC> GetSortedStationConstrains(int wsid)
+        {
+            List<SortedScheduleConstrainsDC> list = new List<SortedScheduleConstrainsDC>();
+
+            try
+            {
+                List<Tuple<string, object>> args = new List<Tuple<string, object>>();
+                args.Add(new Tuple<string, object>("WSID", wsid));
+                var ds = GetDataSet("sp_GetSortedStationConstrains", args);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    var row = ds.Tables[0].Rows[i];
+
+                    int day = (int)row["Day"];
+                    int shift = (int)row["ShiftTime"];
+                    int id = (int)row["StationId"];
+                    int priority = (int)row["Priority"];
+                    int numberOfWorkers = (int)row["NumberOfWorkers"];
+                    StationStatus status = (StationStatus)row["Status"];
+
+                    var ssc = new SortedScheduleConstrainsDC();
+                    ssc.StationId = id;
+                    ssc.Status = status;
+                    ssc.Day = day;
+                    ssc.NumberOfWorkers = numberOfWorkers;
+                    ssc.Priority = priority;
+                    ssc.ShiftTime = shift;
+
+                    list.Add(ssc);
+                }
+            }
+            catch { }
+
+            return list;
         }
 
 

@@ -80,9 +80,9 @@
     }
 
 
-    var status = constrain != null ? constrain.Status : StationStatus.None;
-    int now = constrain != null ? constrain.NumberOfWorkers : 0;
-    int priority = constrain != null ? constrain.Priority : 1;
+    var status = constrain != null ? constrain.Status : Model.Status;
+    int now = constrain != null ? constrain.NumberOfWorkers : Model.NumberOfWorkers;
+    int priority = constrain != null ? constrain.Priority : Model.Priority;
     string statusStr = string.Empty;
         
     switch (status)
@@ -104,7 +104,7 @@
     }
 
     <td class="shift @(shifts[i].IsActive ? "clickable" : string.Empty)" data-day="@day">
-        <div class="details @(constrain == null ? "hide" : string.Empty)">
+        <div class="details @(constrain == null ? "hide" : string.Empty)" data-status="@((int)status)" data-priority="@priority" data-now="@now">
             <p class="status">
                 סטטוס: @statusStr
             </p>
@@ -125,7 +125,7 @@
                 </select>
             </div>
             <div>
-                <input class="now" type="number" placeholder="מספר עובדים" min="0" value="@now" />
+                <input class="now" type="number" placeholder="מספר עובדים" min="1" value="@now" />
             </div>
             <div>
                 <select class="priority">

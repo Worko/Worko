@@ -80,6 +80,12 @@ namespace DBServiceInterfaces
         [OperationContract]
         List<ScheduleConstrainsDC> GetStationConstrains(int wsid);
 
+        [OperationContract]
+        List<SortedScheduleConstrainsDC> GetSortedStationConstrains(int wsid);
+
+        [OperationContract]
+        List<WorkerConstrains> GetAllWorkersConstrains(int wsid);
+
         #endregion
 
         #region Requests

@@ -23,10 +23,15 @@ namespace WorkoProject.Models
         {
             DBService.DB clnt = new DBService.DB();
 
+            var wsid = clnt.GetWSID();
+
             var workers = clnt.GetWorkers();
             var stations = clnt.GetStations(Entities.StationStatus.None);
-            //var workersConstrains = null;///TODO: get all workers constrains
-                                        
+            var workersConstrains = clnt.GetAllWorkersConstrains(wsid);
+            //var stationsConstrains = clnt.GetStationConstrains(wsid);
+            
+            // Sort stations by priority
+            var sortedStationsConstrains = clnt.GetSortedStationConstrains(wsid);
 
         }
 

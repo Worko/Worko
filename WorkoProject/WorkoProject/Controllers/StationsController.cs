@@ -138,7 +138,7 @@ namespace WorkoProject.Controllers
 
 
         [HttpPost]
-        public JsonResult UpdateStation(string name, string description, int status, int id)
+        public JsonResult UpdateStation(string name, string description, int status, int id, int now, int priority)
         {
             Message message = new Message()
             {
@@ -151,7 +151,9 @@ namespace WorkoProject.Controllers
                 Id = id,
                 Name = name, 
                 Description = description,
-                Status = (StationStatus)status
+                Status = (StationStatus)status,
+                NumberOfWorkers = now,
+                Priority = priority
             };
 
             try

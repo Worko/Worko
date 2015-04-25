@@ -123,6 +123,16 @@ namespace DBService
         {
             return Invoker.GetStationConstrains(wsid);
         }
+
+        public List<SortedScheduleConstrainsDC> GetSortedStationConstrains(int wsid)
+        {
+            return Invoker.GetSortedStationConstrains(wsid);
+        }
+
+        public List<WorkerConstrains> GetAllWorkersConstrains(int wsid)
+        {
+            return Invoker.GetAllWorkersConstrains(wsid);
+        }
         #endregion
 
 

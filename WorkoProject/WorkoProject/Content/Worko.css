@@ -204,6 +204,16 @@ a.disabled {
     }
 
 /* Stations list */
+#Stations-list #sNow,
+#Stations-list #sPriority {
+    width: 60px;
+}
+
+#Stations-list #sStatus {
+    width: 150px;
+}
+
+
 #Stations-list .related-workers {
     cursor: pointer;
 }
@@ -489,7 +499,7 @@ a.disabled {
 #schedule-constrains .table-striped>tbody>tr:nth-child(odd)>td.shift-name, 
 #schedule-constrains .table-striped>tbody>tr:nth-child(odd)>th.shift-name {
   background-color: rgb(205, 205, 205);
-  color: #356639;
+  color: #535353;
 }
 
 #schedule-constrains td.shift div.details p {

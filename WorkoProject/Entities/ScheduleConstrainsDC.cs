@@ -10,6 +10,7 @@ namespace Entities
     {
         public ScheduleConstrainsDC()
         {
+            Constrains = new List<StationConstrains>();
         }
 
         public int PKID                             { get; set; }

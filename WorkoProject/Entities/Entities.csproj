@@ -42,12 +42,14 @@
   <ItemGroup>
     <Compile Include="Enums.cs" />
     <Compile Include="RequestDC.cs" />
+    <Compile Include="SortedScheduleConstrainsDC.cs" />
     <Compile Include="ScheduleConstrainsDC.cs" />
     <Compile Include="ShiftDC.cs" />
     <Compile Include="ShiftsConstrainsDC.cs" />
     <Compile Include="StationDC.cs" />
     <Compile Include="WorkerDC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkerConstrains.cs" />
     <Compile Include="WorkSchedule.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

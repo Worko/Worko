@@ -10,6 +10,8 @@
                 <th class="filter">שם העמדה</th>
                 <th class="filter">תיאור</th>
                 <th class="filter">סטטוס</th>
+                <th>מס' עובדים</th>
+                <th>עדיפות</th>
                 <th>עובדים משוייכים</th>
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
@@ -22,6 +24,8 @@
                     <td class="station-name field">@station.Name</td>
                     <td class="station-desc field">@station.Description</td>
                     <td class="station-status field">@Helpers.GetStationStatus(Html, station.Status)</td>
+                    <td class="station-now field">@station.NumberOfWorkers</td>
+                    <td class="station-priority field">@station.Priority</td>
                     <td><a class="related-workers">הצג עובדים משוייכים</a></td>
                     <td>
                         <button type="button" class="btn btn-success link-worker" title="שייך עובד לעמדה @station.Name">

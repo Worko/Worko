@@ -66,7 +66,7 @@ $(function () {
         }
     }
     /* Login */
-    
+
     /* Error messages */
     var err = $('#error');
     if (err) {
@@ -138,7 +138,7 @@ $(function () {
             v.removeClass('fa-times');
             hidden.val("False");
         }
-        
+
     });
 });
 
@@ -166,6 +166,7 @@ $(document).on('click', '#schedule-constrains .station .close, #schedule-constra
 $(document).on('click', '#schedule-constrains td.clickable', function () {
     $(this).find('.settings').removeClass('hide');
     $(this).find('.details').addClass('hide');
+    $(this).removeClass('clickable');
 });
 /* End: Aviran Checnges*/
 
@@ -174,20 +175,26 @@ $(document).on('click', '#schedule-constrains .settings button', function () {
     _autoUpdateRun = false;
 
     var url = '/ShiftsManager/SetShiftSchduleConstrain';
-  
+
     var shift = $(this).parents('.shift');
 
     var wsid = $('#WSID').val();
     var day = shift.data('day');
     var shiftTime = shift.parents('tr').data('shift');
     var stationId = $('.station.active').data('stationid');
+
+    var oldDetails = shift.find('.details');
+    var oldStatus = oldDetails.data('status');
+    var oldNumOfWorkers = oldDetails.data('now');
+    var oldPriority = oldDetails.data('priority');
+
     var status = shift.find('.settings .status').val();
     var numOfWorkers = shift.find('.settings .now').val();
     var priority = shift.find('.settings .priority').val();
 
     if (status == "-1" || numOfWorkers == "0" || priority == "-1") {
-        // display error message
-        alert('no');
+
+
     }
     else {
         $.ajax({
@@ -228,6 +235,7 @@ $(document).on('click', '#schedule-constrains .settings button', function () {
                 details.find('.priority').html('עדיפות: ' + priority);
 
                 shift.find('.settings').addClass('hide');
+                shift.addClass('clickable');
             },
             complete: function () {
                 _autoUpdateRun = true;
@@ -235,6 +243,7 @@ $(document).on('click', '#schedule-constrains .settings button', function () {
 
         });
     }
+
 });
 
 
@@ -301,7 +310,7 @@ $(document).on('click', '#workers-list .edit', function () {
     if (editingRow.length > 0 && editingRow[0] != parent[0]) {
         msg = updateWorker(editingRow);
     }
-    
+
 
     if (parent.hasClass('editing')) {
         msg = updateWorker(parent);
@@ -349,7 +358,7 @@ function updateWorker(worker) {
         }
     }
     catch (e) { }
-    
+
     wId = worker.data('id');
     wFname = worker.find('#wFname').val();
     wLname = worker.find('#wLname').val();
@@ -412,7 +421,7 @@ $(document).on('click', '#workers-list .delete', function () {
             workerToRemove.remove();
             $('body').append(data.html);
             $('#delete-worker-modal').modal('show');
-            
+
         }
     });
 });
@@ -424,7 +433,7 @@ $(document).on('click', '#workers-list .delete', function () {
 
 
 /* stations */
-var _stationDetails = { };
+var _stationDetails = {};
 
 
 function addStationSuccess(data) {
@@ -463,9 +472,11 @@ $(document).on('hidden.bs.modal', '#update-station-modal', function () {
     $('#update-station-modal').remove();
 });
 
+
+
 $(document).on('click', '#Stations-list .edit', function () {
-    var sName, sDesc, sStatus, sStatusVal, msg = null;
-    
+    var sName, sDesc, sStatus, sStatusVal, sNow, sPriority, msg = null;
+
     // if clicking on other 'edit' button, close the open editing row and update the station.
     // open the clicked row to edit
     var editingRow = $('.editing');
@@ -474,7 +485,7 @@ $(document).on('click', '#Stations-list .edit', function () {
     if (editingRow.length > 0 && editingRow[0] != parent[0]) {
         msg = updateStation(editingRow);
     }
-    
+
     if (parent.hasClass('editing')) {
         msg = updateStation(parent);
     } else {
@@ -483,21 +494,28 @@ $(document).on('click', '#Stations-list .edit', function () {
         sName = parent.find('.station-name').text();
         sDesc = parent.find('.station-desc').text();
         sStatus = parent.find('.station-status').text();
+        sNow = parent.find('.station-now').text();
+        sPriority = parent.find('.station-priority').text();
 
         parent.find('.station-name').html('<input id="sName" type="text" class="form-control" placeholder="הזן שם עמדה" value="' + sName + '" />');
         parent.find('.station-desc').html('<textarea  id="sDesc" class="form-control" placeholder="הזן תיאור עמדה" rows="2">' + sDesc + '</textarea>');
-        
-        options = [ { text: 'עמדה פעילה', value: "1" },
+
+        options = [{ text: 'עמדה פעילה', value: "1" },
                     { text: 'עמדה לא פעילה', value: "2" },
                     { text: 'בטיפול', value: "3" }];
-        
-        parent.find('.station-status').html(getDropDown(options, 'sStatus', 'form-control', sStatus));
-        parent.find('.edit').html('אישור');
-        $('.link-worker, .related-workers').addClass('disabled');
 
+        parent.find('.station-status').html(getDropDown(options, 'sStatus', 'form-control', sStatus));
+        parent.find('.station-now').html('<input id="sNow" type="number" min="1" class="form-control" placeholder="הזן מספר עובדים" value="' + sNow + '" />');
+
+        parent.find('.station-priority').html('<input id="sPriority" type="number" min="1" max="5" class="form-control" placeholder="הזן עדיפות" value="' + sPriority + '" />');
+
+        parent.find('.edit').html('אישור');
+        $('.link-worker, .related-workers, .delete').addClass('disabled');
         _stationDetails.name = sName;
         _stationDetails.desc = sDesc;
         _stationDetails.status = sStatus;
+        _stationDetails.now = sNow;
+        _stationDetails.priority = sPriority;
     }
 
     if (msg != null) {
@@ -506,6 +524,70 @@ $(document).on('click', '#Stations-list .edit', function () {
     }
 });
 
+
+function updateStation(station) {
+    var sName, sDesc, sStatus, sStatusVal, sNow, sPriority, msg = null, sId;
+
+    sId = station.data('id');
+    sName = station.find('#sName').val();
+    sDesc = station.find('#sDesc').val();
+    sStatus = station.find('#sStatus').find('option:selected').text();
+    sStatusVal = station.find('#sStatus').val();
+    sNow = station.find('#sNow').val();
+    sPriority = station.find('#sPriority').val();
+
+    if (_stationDetails.name != sName || _stationDetails.desc != sDesc ||
+        _stationDetails.status != sStatus || _stationDetails.now != sNow || _stationDetails.priority != sPriority) {
+        $.ajax({
+            method: "POST",
+            url: 'Stations/UpdateStation',
+            dataType: "json",
+            data: {
+                id: parseInt(sId),
+                name: sName,
+                description: sDesc,
+                status: parseInt(sStatusVal),
+                now: parseInt(sNow),
+                priority: parseInt(sPriority)
+
+            },
+            success: function (data) {
+                $('body').append(data.html);
+                $('#update-station-modal').modal('show');
+            }
+        });
+    }
+
+    station.find('.station-name').html(sName);
+    station.find('.station-desc').html(sDesc);
+    station.find('.station-status').html(sStatus);
+    station.find('.station-now').html(sNow);
+    station.find('.station-priority').html(sPriority);
+    station.find('.edit').html('ערוך');
+    station.removeClass('editing');
+    $('.link-worker, .related-workers, .delete').removeClass('disabled');
+
+    return msg;
+}
+
+$(document).on('click', '#Stations-list .delete', function () {
+    var stationToRemove = $(this).parents('tr');
+    var stationId = stationToRemove.data('id');
+
+    $.ajax({
+        method: "POST",
+        url: 'Stations/DeleteStation',
+        data: {
+            stationId: stationId.toString()
+        },
+        success: function (data) {
+            stationToRemove.remove();
+            $('body').append(data.html);
+            $('#delete-station-modal').modal('show');
+
+        }
+    });
+});
 
 $(document).on('click', '#Stations-list .related-workers', function () {
     var stationID = $(this).parents('tr').data('id');
@@ -593,13 +675,11 @@ $(document).on('click', '.linkWorker', function () {
             stationID: stationID
         },
         success: function (data) {
-            if (data.msg == 'success')
-            {
+            if (data.msg == 'success') {
                 btn.parents('tr').find('.unlinkWorker').removeClass('disabled');
                 btn.addClass('disabled');
             }
-            else
-            {
+            else {
                 $('#worker-station-modal .error-message').html('אירעה שגיאה');
             }
         }
@@ -634,62 +714,7 @@ $(document).on('click', '.unlinkWorker', function () {
 
 
 
-function updateStation(station) {
-    var sName, sDesc, sStatus, sStatusVal, msg = null, sId;
 
-    sId = station.data('id');
-    sName = station.find('#sName').val();
-    sDesc = station.find('#sDesc').val();
-    sStatus = station.find('#sStatus').find('option:selected').text();
-    sStatusVal = station.find('#sStatus').val();
-
-    if (_stationDetails.name != sName || _stationDetails.desc != sDesc || _stationDetails.status != sStatus) {
-        $.ajax({
-            method: "POST",
-            url: 'Stations/UpdateStation',
-            dataType: "json",
-            data: {
-                id: parseInt(sId),
-                name: sName,
-                description: sDesc,
-                status: parseInt(sStatusVal)
-            },
-            success: function (data) {
-                $('body').append(data.html);
-                $('#update-station-modal').modal('show');
-            }
-        });
-    }
-
-    station.find('.station-name').html(sName);
-    station.find('.station-desc').html(sDesc);
-    station.find('.station-status').html(sStatus);
-    station.find('.edit').html('ערוך');
-    station.removeClass('editing');
-    $('.link-worker, .related-workers').removeClass('disabled');
-
-    return msg;
-}
-
-
-$(document).on('click', '#Stations-list .delete', function () {
-    var stationToRemove = $(this).parents('tr');
-    var stationId = stationToRemove.data('id');
-
-    $.ajax({
-        method: "POST",
-        url: 'Stations/DeleteStation',
-        data: {
-            stationId: stationId.toString()
-        },
-        success: function (data) {
-            stationToRemove.remove();
-            $('body').append(data.html);
-            $('#delete-station-modal').modal('show');
-
-        }
-    });
-});
 /* stations */
 
 
@@ -699,8 +724,8 @@ $(document).on('click', '#Stations-list .delete', function () {
 // create drop down list dynamicly
 // options example: [{value:= "1", text: "option1"}, ...]
 function getDropDown(options, id, css, selected) {
-    var html = '<select id="' + id + '" class="'+ css + '">';
-    
+    var html = '<select id="' + id + '" class="' + css + '">';
+
     for (var i = 0; i < options.length; i++) {
         html += '<option value="' + options[i].value + '"';
         if (options[i].text == selected) {

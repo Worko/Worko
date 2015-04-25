@@ -19,6 +19,9 @@ namespace WorkoProject.Models
 
         public WorkScheduleTemplate Template { get; set; }
 
+
+
+
         #region Algorithm
 
         private void GenerateWorkSchedule()

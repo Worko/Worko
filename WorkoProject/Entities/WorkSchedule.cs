@@ -8,9 +8,15 @@ namespace Entities
 {
     public class WorkSchedule
     {
+        public WorkSchedule(int wsid)
+        {
+            WSID = wsid;
+        }
+
         public int WSID { get; set; }
 
-        
+        public WorkScheduleTemplate Template { get; set; }
+
     }
 
 }

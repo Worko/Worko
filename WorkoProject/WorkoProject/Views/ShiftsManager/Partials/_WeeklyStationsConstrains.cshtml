@@ -1,11 +1,11 @@
 ﻿@using Entities;
 @using WorkoProject.Models;
 
-@model StationDC
+@model Station
 
 @{
     var shifts = new WorkScheduleTemplate().Shifts;
-    var stationConstrains = ViewData["Constrains"] as List<ScheduleConstrainsDC>;
+    var stationConstrains = ViewData["Constrains"] as List<ScheduleConstrains>;
     List<StationConstrains> constrains = null;
     try
     {     

@@ -18,13 +18,13 @@ namespace WorkoProject.Controllers
         
         public ActionResult Index()
         {
-            List<WorkerDC> workersDc = clnt.GetWorkers();
+            List<Worker> workersDb = clnt.GetWorkers();
 
             List<Worker> workers = new List<Worker>();
 
-            foreach (var w in workersDc)
+            foreach (var w in workersDb)
             {
-                workers.Add(w.TryCast<Worker>());
+                workers.Add(w);
             }
 
             ViewData["Workers"] = workers;
@@ -42,8 +42,7 @@ namespace WorkoProject.Controllers
 
             try
             {
-                StationDC sdc = station.TryCast<StationDC>();
-                int res = clnt.AddStation(sdc);
+                int res = clnt.AddStation(station);
 
                 if (res == 0)
                 {
@@ -120,8 +119,8 @@ namespace WorkoProject.Controllers
         [HttpPost]
         public JsonResult GetRelatedWorkers(int stationID)
         {
-            List<WorkerDC> workers = new List<WorkerDC>();
-            List<WorkerDC> tempWorkers = clnt.GetWorkers();
+            List<Worker> workers = new List<Worker>();
+            List<Worker> tempWorkers = clnt.GetWorkers();
             List<string> relatedWorkers = clnt.GetWorkersByStationID(stationID);
 
             foreach (var rw in relatedWorkers)
@@ -146,7 +145,7 @@ namespace WorkoProject.Controllers
                 Title = "עדכון פרטי עמדה"
             };
 
-            StationDC station = new StationDC()
+            Station station = new Station()
             {
                 Id = id,
                 Name = name, 
@@ -212,12 +211,12 @@ namespace WorkoProject.Controllers
 
         private List<Station> GetStationByStatus(StationStatus status)
         {
-            List<StationDC> sdc = clnt.GetStations(status);
+            List<Station> sdc = clnt.GetStations(status);
             List<Station> stations = new List<Station>();
 
-            foreach (StationDC s in sdc)
+            foreach (Station s in sdc)
             {
-                stations.Add(s.TryCast<Station>());
+                stations.Add(s);
             }
 
             return stations;

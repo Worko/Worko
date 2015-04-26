@@ -1,59 +1,48 @@
-﻿using System;
+﻿using Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkoProject.Models
+namespace WorkoProject.Utils
 {
-    public class WorkSchedule
+    public class WorkoAlgorithm
     {
-        private DBService.DB clnt = new DBService.DB();
-
-        public WorkSchedule(int wsid)
-        {
-            WSID = wsid;
-        }
-
-        public int WSID { get; set; }
-
-        public WorkScheduleTemplate Template { get; set; }
-
-
-
+        private static DBService.DB clnt = new DBService.DB();
+        private static WorkSchedule workSchedulel;
 
         #region Algorithm
 
-        private void GenerateWorkSchedule()
+        public static void GenerateWorkSchedule()
         {
-            
-
-            WSID = clnt.GetWSID();
+            int wsid = clnt.GetWSID();
+            workSchedulel = new WorkSchedule(wsid);
 
             var workers = clnt.GetWorkers();
             var stations = clnt.GetStations(Entities.StationStatus.None);
-            var workersConstrains = clnt.GetAllWorkersConstrains(WSID);
-            
+            var workersConstrains = clnt.GetAllWorkersConstrains(workSchedulel.WSID);
+
             //var stationsConstrains = clnt.GetStationConstrains(wsid);
-            
+
             // Sort stations by shift then priority 
-            var sortedStationsConstrains = clnt.GetSortedStationConstrains(WSID);
+            var sortedStationsConstrains = clnt.GetSortedStationConstrains(workSchedulel.WSID);
 
             for (int i = 0; i < sortedStationsConstrains.Count; i++)
             {
                 for (int j = 0; j < sortedStationsConstrains[i].NumberOfWorkers; j++)
                 {
-                    
+
                 }
             }
 
         }
 
-        private List<Tuple<string, double>> CalculateWorkersGrade(int stationId, int day, int shift)
+        private static List<Tuple<string, double>> CalculateWorkersGrade(int stationId, int day, int shift)
         {
             var workersByStation = clnt.GetWorkersByStationID(stationId);
-            List<Tuple<string, double>> grades = new List<Tuple<string,double>>();
-            
+            List<Tuple<string, double>> grades = new List<Tuple<string, double>>();
+
 
             foreach (var w in workersByStation)
             {
@@ -64,7 +53,7 @@ namespace WorkoProject.Models
                 grade += 1;
                 ///
 
-                var workerConstrains = clnt.GetWorkerConstrains(w, WSID);
+                var workerConstrains = clnt.GetWorkerConstrains(w, workSchedulel.WSID);
                 if (workerConstrains[shiftIndex])
                 {
                     continue;
@@ -72,27 +61,27 @@ namespace WorkoProject.Models
 
                 grade += 1;
 
-                
+
 
 
             }
             return grades;
         }
 
-        private bool IsWorkerWorkBeforeOrAfter(int day, int shift, int stationId, string workerID)
+        private static bool IsWorkerWorkBeforeOrAfter(int day, int shift, int stationId, string workerID)
         {
             DayOfWeek d = (DayOfWeek)day;
             Entities.PartOfDay s = (Entities.PartOfDay)shift;
 
             int currentShiftIndex = Shift.GetShiftIndex(d, s);
-            int prevShiftIndex = Shift.GetPreviousShiftIndex(d, s) ;
+            int prevShiftIndex = Shift.GetPreviousShiftIndex(d, s);
             int nextShiftIndex = Shift.GetNextShiftIndex(d, s);
 
             Worker worker = null;
             try
             {
                 // check if worker already work in current shift
-                worker = this.Template.Shifts[currentShiftIndex].Stations.Find(x => x.Id == stationId).Workers.Find(x => x.IdNumber == workerID);
+                worker = workSchedulel.Template.Shifts[currentShiftIndex].Stations.Find(x => x.Id == stationId).Workers.Find(x => x.IdNumber == workerID);
             }
             catch { }
 
@@ -100,7 +89,5 @@ namespace WorkoProject.Models
         }
 
         #endregion Algorithm
-
     }
-
 }

@@ -46,11 +46,7 @@ namespace WorkoProject.Controllers
 
                 }
 
-
-
-                WorkerDC worker = model.TryCast<WorkerDC>();
-
-                var res = clnt.AddWorker(worker);
+                var res = clnt.AddWorker(model);
 
                 if (res == 0)
                 {
@@ -79,8 +75,7 @@ namespace WorkoProject.Controllers
 
             try
             {
-                WorkerDC wdc = worker.TryCast<WorkerDC>();
-                int res = clnt.AddWorker(wdc);
+                int res = clnt.AddWorker(worker);
 
                 if (res == 0)
                 {
@@ -132,7 +127,7 @@ namespace WorkoProject.Controllers
                 return View();
             }
 
-            SessionManager.CurrentWorker = w.TryCast<Worker>();
+            SessionManager.CurrentWorker = w;
             SessionManager.HasConnectedUser = true;
             SessionManager.HasAdminConnected = w.IsAdmin;
             if (worker.RememberME)
@@ -148,7 +143,7 @@ namespace WorkoProject.Controllers
         public JsonResult AutoLogin(string workerId)
         {
 
-            WorkerDC w = null;
+            Worker w = null;
             string message = string.Empty;
             string url = string.Empty;
 
@@ -159,7 +154,7 @@ namespace WorkoProject.Controllers
 
             if (w != null)
             {
-                SessionManager.CurrentWorker = w.TryCast<Worker>();
+                SessionManager.CurrentWorker = w;
                 SessionManager.HasConnectedUser = true;
                 SessionManager.HasAdminConnected = w.IsAdmin;
 
@@ -181,12 +176,12 @@ namespace WorkoProject.Controllers
         [AdminOnlyFilter]
         public ActionResult WorkersList()
         {
-            List<WorkerDC> workersDc = clnt.GetWorkers();
+            List<Worker> workersDb = clnt.GetWorkers();
             List<Worker> workers = new List<Worker>();
 
-            foreach (var w in workersDc)
+            foreach (var w in workersDb)
             {
-                workers.Add(w.TryCast<Worker>());
+                workers.Add(w);
             }
 
             return View(workers);
@@ -211,7 +206,7 @@ namespace WorkoProject.Controllers
                 userPic.SaveAs(mapPath);
             }
 
-            WorkerDC worker = new WorkerDC()
+            Worker worker = new Worker()
             {
                 IdNumber = id,
                 FirstName = fname,

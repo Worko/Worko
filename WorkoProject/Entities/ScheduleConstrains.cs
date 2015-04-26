@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class ScheduleConstrainsDC
+    public class ScheduleConstrains
     {
-        public ScheduleConstrainsDC()
+        public ScheduleConstrains()
         {
             Constrains = new List<StationConstrains>();
         }

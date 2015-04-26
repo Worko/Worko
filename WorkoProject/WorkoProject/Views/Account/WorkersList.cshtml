@@ -1,4 +1,6 @@
-﻿@model List<WorkoProject.Models.Worker>
+﻿@using Entities;
+
+@model List<Worker>
 
 @{
     ViewBag.Title = "רשימת עובדים";
@@ -62,5 +64,5 @@
 
 @section Modals
 {
-    @Html.Partial("Partials/_AddWorker", new WorkoProject.Models.Worker())
+    @Html.Partial("Partials/_AddWorker", new Worker())
 }

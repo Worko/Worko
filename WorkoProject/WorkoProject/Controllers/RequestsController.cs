@@ -16,7 +16,7 @@ namespace WorkoProject.Controllers
         
         public ActionResult SendRequest()
         {
-            return View(new Request());
+            return View(new Request() { WorkerId = SessionManager.CurrentWorker.IdNumber });
         }
 
         [HttpPost]
@@ -24,9 +24,7 @@ namespace WorkoProject.Controllers
         {
             request.Date = DateTime.Now;
 
-            var req = request.TryCast<RequestDC>();
-
-            if(clnt.AddWorkerRequest(req) == 1)
+            if (clnt.AddWorkerRequest(request) == 1)
             {
                 TempData["Success"] = true;
             }
@@ -39,7 +37,7 @@ namespace WorkoProject.Controllers
                 };
             }
 
-            return View(new Request());
+            return View(new Request() { WorkerId = SessionManager.CurrentWorker.IdNumber });
         }
     }
 }

@@ -4,16 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WorkoProject.Utils;
 
-namespace WorkoProject.Models
+namespace Entities
 {
     public class Request
     {
         public Request()
         {
             IsNewRequest = true;
-            WorkerId = SessionManager.CurrentWorker.IdNumber;
         }
 
         [Required]
@@ -27,6 +25,5 @@ namespace WorkoProject.Models
         public bool IsNewRequest { get; set; }
 
         public string WorkerId { get; set; }
-
     }
 }

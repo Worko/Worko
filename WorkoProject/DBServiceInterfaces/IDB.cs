@@ -15,19 +15,19 @@ namespace DBServiceInterfaces
         #region Workers
         
         [OperationContract]
-        int AddWorker(WorkerDC worker);
+        int AddWorker(Worker worker);
 
         [OperationContract]
-        WorkerDC Login(string id, string pass);
+        Worker Login(string id, string pass);
 
         [OperationContract]
-        WorkerDC AutoLogin(string id);
+        Worker AutoLogin(string id);
 
         [OperationContract]
-        List<WorkerDC> GetWorkers();
+        List<Worker> GetWorkers();
 
         [OperationContract]
-        int UpdateWorker(WorkerDC worker);
+        int UpdateWorker(Worker worker);
 
         [OperationContract]
         void DeleteWorker(string worker);
@@ -36,13 +36,13 @@ namespace DBServiceInterfaces
         #region Stations
 
         [OperationContract]
-        List<StationDC> GetStations(StationStatus status);
+        List<Station> GetStations(StationStatus status);
 
         [OperationContract]
-        int AddStation(StationDC station);
+        int AddStation(Station station);
 
         [OperationContract]
-        int UpdateStation(StationDC station);
+        int UpdateStation(Station station);
 
         [OperationContract]
         void LinkWorkerToStation(int workerID, int stationID);
@@ -69,7 +69,7 @@ namespace DBServiceInterfaces
         int RemoveAllStationConstrains(int wsid);
 
         [OperationContract]
-        int AddWorkerConstrains(ShiftsConstrainsDC shiftsConstrains);
+        int AddWorkerConstrains(ShiftsConstrains shiftsConstrains);
 
         [OperationContract]
         int GetWSID(int backWeeks = 0);
@@ -78,10 +78,10 @@ namespace DBServiceInterfaces
         List<bool> GetWorkerConstrains(string workerId, int wsid);
 
         [OperationContract]
-        List<ScheduleConstrainsDC> GetStationConstrains(int wsid);
+        List<ScheduleConstrains> GetStationConstrains(int wsid);
 
         [OperationContract]
-        List<SortedScheduleConstrainsDC> GetSortedStationConstrains(int wsid);
+        List<SortedScheduleConstrains> GetSortedStationConstrains(int wsid);
 
         [OperationContract]
         List<WorkerConstrains> GetAllWorkersConstrains(int wsid);
@@ -91,7 +91,7 @@ namespace DBServiceInterfaces
         #region Requests
 
         [OperationContract]
-        int AddWorkerRequest(RequestDC request);
+        int AddWorkerRequest(Request request);
 
         #endregion
     }

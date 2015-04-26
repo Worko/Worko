@@ -1,15 +1,13 @@
-﻿using Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkoProject.Models
+namespace Entities
 {
     public class ShiftsConstrains
     {
-                
         public ShiftsConstrains()
         {
             Constrains = new List<bool>();

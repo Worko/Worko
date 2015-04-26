@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkoProject.Utils
+namespace Entities.Utils
 {
     public static class Translator
     {

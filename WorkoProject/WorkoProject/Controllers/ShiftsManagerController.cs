@@ -32,7 +32,7 @@ namespace WorkoProject.Controllers
         [HttpPost]
         public ActionResult ConstrainsSubmission(ShiftsConstrains model)
         {
-            ShiftsConstrainsDC sc = new ShiftsConstrainsDC()
+            ShiftsConstrains sc = new ShiftsConstrains()
             {
                 Constrains = model.Constrains,
                 WorkerId = model.WorkerId,
@@ -56,29 +56,13 @@ namespace WorkoProject.Controllers
         }
 
 
-        [HttpPost]
-        public JsonResult GetScheduleConstrains(int wsid = -1)
-        {
-            List<StationDC> lsdc = clnt.GetStations(Entities.StationStatus.None);
-
-            ViewData["WSID"] = wsid;
-            ViewData["Stations"] = lsdc;
-
-            if (wsid == -1)
-            {
-                wsid = clnt.GetWSID();
-            }
-
-            return Json(new { html = this.RenderPartialToString("Partials/_GetScheduleConstrains", clnt.GetStationConstrains(wsid)) });
-        }
-
         public ActionResult ScheduleConstrains()
         {
-            List<StationDC> lsdc = clnt.GetStations(Entities.StationStatus.None);
+            List<Station> lsdc = clnt.GetStations(Entities.StationStatus.None);
 
             int wsid = clnt.GetWSID();
 
-            List<ScheduleConstrainsDC> model = clnt.GetStationConstrains(wsid);
+            List<ScheduleConstrains> model = clnt.GetStationConstrains(wsid);
 
             ViewData["WSID"] = wsid;
             ViewData["Constrains"] = model ;
@@ -89,8 +73,8 @@ namespace WorkoProject.Controllers
         [HttpPost]
         public ActionResult ScheduleConstrains(int wsid)
         {
-            List<StationDC> lsdc = clnt.GetStations(Entities.StationStatus.None);
-            List<ScheduleConstrainsDC> model = new List<ScheduleConstrainsDC>();
+            List<Station> lsdc = clnt.GetStations(Entities.StationStatus.None);
+            List<ScheduleConstrains> model = new List<ScheduleConstrains>();
 
             clnt.RemoveAllStationConstrains(wsid);
 
@@ -137,7 +121,7 @@ namespace WorkoProject.Controllers
 
 
         [HttpPost]
-        public ActionResult WeeklyStationsConstrains(StationDC s)
+        public ActionResult WeeklyStationsConstrains(Station s)
         {
             return View();
         }

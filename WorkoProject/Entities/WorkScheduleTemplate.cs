@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkoProject.Models
+namespace Entities
 {
     public class WorkScheduleTemplate
     {

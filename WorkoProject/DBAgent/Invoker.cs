@@ -112,7 +112,7 @@ namespace DBAgent
         /// <param name="id">User ID Number</param>
         /// <param name="pass">User Password</param>
         /// <returns>SqlDataReader - Result from sp</returns>
-        public static WorkerDC Login(string id, string pass)
+        public static Worker Login(string id, string pass)
         {
             OpenConnection();
             EncryptPassword encryptPass = new EncryptPassword();
@@ -129,10 +129,10 @@ namespace DBAgent
             // return the reader
             reader = cmd.ExecuteReader();
 
-            WorkerDC w = null;
+            Worker w = null;
             if (reader.Read())
             {
-                w = new WorkerDC()
+                w = new Worker()
                 {
                     IdNumber = reader.GetString(1),
                     FirstName = reader.GetString(2),
@@ -147,7 +147,7 @@ namespace DBAgent
             return w;
         }
 
-        public static WorkerDC AutoLogin(string id)
+        public static Worker AutoLogin(string id)
         {
             OpenConnection();
 
@@ -161,10 +161,10 @@ namespace DBAgent
             // return the reader
             reader = cmd.ExecuteReader();
 
-            WorkerDC w = null;
+            Worker w = null;
             if (reader.Read())
             {
-                w = new WorkerDC()
+                w = new Worker()
                 {
                     IdNumber = reader.GetString(1),
                     FirstName = reader.GetString(2),
@@ -183,7 +183,7 @@ namespace DBAgent
 
         #region Workers
 
-        public static int AddWorker(WorkerDC worker)
+        public static int AddWorker(Worker worker)
         {
             OpenConnection();
             // create new StoredProcedure command
@@ -214,14 +214,14 @@ namespace DBAgent
         }
 
 
-        public static List<WorkerDC> GetWorkers()
+        public static List<Worker> GetWorkers()
         {
             var ds = GetDataSet("sp_GetWorkers");
-            List<WorkerDC> workers = new List<WorkerDC>();
+            List<Worker> workers = new List<Worker>();
 
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                workers.Add(new WorkerDC()
+                workers.Add(new Worker()
                 {
                     IdNumber = ds.Tables[0].Rows[i][0].ToString(),
                     FirstName = ds.Tables[0].Rows[i][1].ToString(),
@@ -237,7 +237,7 @@ namespace DBAgent
         }
 
 
-        public static int UpdateWorker(WorkerDC worker)
+        public static int UpdateWorker(Worker worker)
         {
             OpenConnection();
             // create new StoredProcedure command
@@ -329,17 +329,17 @@ namespace DBAgent
         #endregion
 
         #region Stations
-        public static List<StationDC> GetStations(StationStatus status = StationStatus.None)
+        public static List<Station> GetStations(StationStatus status = StationStatus.None)
         {
             List<Tuple<string, object>> args = new List<Tuple<string, object>>();
             args.Add(new Tuple<string, object>("Status", (int)status));
             var ds = GetDataSet("sp_GetStations", args);
 
-            List<StationDC> stations = new List<StationDC>();
+            List<Station> stations = new List<Station>();
 
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                stations.Add(new StationDC()
+                stations.Add(new Station()
                 {
                     Id = int.Parse(ds.Tables[0].Rows[i][0].ToString()),
                     Name = ds.Tables[0].Rows[i][1].ToString(),
@@ -353,7 +353,7 @@ namespace DBAgent
             return stations;
         }
 
-        public static int AddStation(StationDC station)
+        public static int AddStation(Station station)
         {
             OpenConnection();
             // create new StoredProcedure command
@@ -376,7 +376,7 @@ namespace DBAgent
             return res;
         }
 
-        public static int UpdateStation(StationDC station)
+        public static int UpdateStation(Station station)
         {
             OpenConnection();
             // create new StoredProcedure command
@@ -478,7 +478,7 @@ namespace DBAgent
             {
                 int day = int.Parse(ds.Tables[0].Rows[i][3].ToString());
                 int part = int.Parse(ds.Tables[0].Rows[i][4].ToString());
-                wc[ShiftDC.GetShiftIndex((DayOfWeek)day, (PartOfDay)part)] = true;
+                wc[Shift.GetShiftIndex((DayOfWeek)day, (PartOfDay)part)] = true;
             }
 
             return wc;
@@ -543,7 +543,7 @@ namespace DBAgent
             }
         }
 
-        public static int AddWorkerConstrains(ShiftsConstrainsDC shiftsConstrains)
+        public static int AddWorkerConstrains(ShiftsConstrains shiftsConstrains)
         {
             if (RemoveWorkerConstrains(shiftsConstrains.WorkerId, shiftsConstrains.WSID) == 1)
             {
@@ -579,7 +579,7 @@ namespace DBAgent
             }
         }
 
-        public static int AddWorkerRequest(RequestDC request)
+        public static int AddWorkerRequest(Request request)
         {
             OpenConnection();
             // create new StoredProcedure command
@@ -686,9 +686,9 @@ namespace DBAgent
         }
 
 
-        public static List<SortedScheduleConstrainsDC> GetSortedStationConstrains(int wsid)
+        public static List<SortedScheduleConstrains> GetSortedStationConstrains(int wsid)
         {
-            List<SortedScheduleConstrainsDC> list = new List<SortedScheduleConstrainsDC>();
+            List<SortedScheduleConstrains> list = new List<SortedScheduleConstrains>();
 
             try
             {
@@ -707,7 +707,7 @@ namespace DBAgent
                     int numberOfWorkers = (int)row["NumberOfWorkers"];
                     StationStatus status = (StationStatus)row["Status"];
 
-                    var ssc = new SortedScheduleConstrainsDC();
+                    var ssc = new SortedScheduleConstrains();
                     ssc.StationId = id;
                     ssc.Status = status;
                     ssc.Day = day;
@@ -724,9 +724,9 @@ namespace DBAgent
         }
 
 
-        public static List<ScheduleConstrainsDC> GetStationConstrains(int wsid)
+        public static List<ScheduleConstrains> GetStationConstrains(int wsid)
         {
-            List<ScheduleConstrainsDC> list = new List<ScheduleConstrainsDC>();
+            List<ScheduleConstrains> list = new List<ScheduleConstrains>();
 
             try
             {
@@ -752,7 +752,7 @@ namespace DBAgent
                     {
                         index++;
                         curStation = (int)row["StationId"];
-                        var sc = new ScheduleConstrainsDC();
+                        var sc = new ScheduleConstrains();
                         sc.WSID = wsid;
                         sc.StationId = id;
                         sc.Status = status;

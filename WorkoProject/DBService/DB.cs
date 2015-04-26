@@ -16,27 +16,27 @@ namespace DBService
     {
         #region Workers
 
-        public int AddWorker(WorkerDC worker)
+        public int AddWorker(Worker worker)
         {
             return Invoker.AddWorker(worker);
         }
 
-        public WorkerDC Login(string id, string pass)
+        public Worker Login(string id, string pass)
         {
             return Invoker.Login(id, pass);
         }
 
-        public WorkerDC AutoLogin(string id)
+        public Worker AutoLogin(string id)
         {
             return Invoker.AutoLogin(id);
         }
 
-        public List<WorkerDC> GetWorkers()
+        public List<Worker> GetWorkers()
         {
             return Invoker.GetWorkers();
         }
 
-        public int UpdateWorker(WorkerDC worker)
+        public int UpdateWorker(Worker worker)
         {
             return Invoker.UpdateWorker(worker);
         }
@@ -50,17 +50,17 @@ namespace DBService
 
         #region Stations
 
-        public List<StationDC> GetStations(StationStatus status)
+        public List<Station> GetStations(StationStatus status)
         {
             return Invoker.GetStations(status);
         }
 
-        public int AddStation(StationDC station)
+        public int AddStation(Station station)
         {
             return Invoker.AddStation(station);
         }
         
-        public int UpdateStation(StationDC station)
+        public int UpdateStation(Station station)
         {
             return Invoker.UpdateStation(station);
         }
@@ -104,7 +104,7 @@ namespace DBService
             return Invoker.RemoveAllStationConstrains(wsid);
         }
 
-        public int AddWorkerConstrains(ShiftsConstrainsDC shiftsConstrains)
+        public int AddWorkerConstrains(ShiftsConstrains shiftsConstrains)
         {
             return Invoker.AddWorkerConstrains(shiftsConstrains);
         }
@@ -119,12 +119,12 @@ namespace DBService
             return Invoker.GetWorkerConstrains(workerId, wsid);
         }
 
-        public List<ScheduleConstrainsDC> GetStationConstrains(int wsid)
+        public List<ScheduleConstrains> GetStationConstrains(int wsid)
         {
             return Invoker.GetStationConstrains(wsid);
         }
 
-        public List<SortedScheduleConstrainsDC> GetSortedStationConstrains(int wsid)
+        public List<SortedScheduleConstrains> GetSortedStationConstrains(int wsid)
         {
             return Invoker.GetSortedStationConstrains(wsid);
         }
@@ -138,7 +138,7 @@ namespace DBService
 
         #region Requests
 
-        public int AddWorkerRequest(RequestDC request)
+        public int AddWorkerRequest(Request request)
         {
             return Invoker.AddWorkerRequest(request);
         }

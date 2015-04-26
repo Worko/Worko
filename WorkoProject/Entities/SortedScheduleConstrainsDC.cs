@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class SortedScheduleConstrainsDC
+    public class SortedScheduleConstrains
     {
         public int StationId        { get; set; }
         public StationStatus Status { get; set; }

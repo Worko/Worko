@@ -101,25 +101,7 @@ namespace WorkoProject.Controllers
 
             return Json(new { });
         }
-
-        //[HttpPost]
-        //public JsonResult RemoveSchduleConstrain(int wsid, int stationId, int day, int shiftTime)
-        //{
-        //    int res = clnt.RemoveStationConstrains(stationId, wsid, day, shiftTime);
-
-        //    if (res == 1)
-        //    {
-
-        //    }
-        //    else
-        //    {
-
-        //    }
-
-        //    return Json(new { });
-        //}
-
-
+        
         [HttpPost]
         public ActionResult WeeklyStationsConstrains(Station s)
         {

@@ -4,7 +4,7 @@
   <xs:element name="AddWorker">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Entities" minOccurs="0" name="worker" nillable="true" type="q1:WorkerDC" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Entities" minOccurs="0" name="worker" nillable="true" type="q1:Worker" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

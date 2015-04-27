@@ -54,7 +54,7 @@ namespace WorkoProject.Utils
                 ///
 
                 var workerConstrains = clnt.GetWorkerConstrains(w, workSchedulel.WSID);
-                if (workerConstrains[shiftIndex])
+                if (workerConstrains[shiftIndex] && !IsWorkerWorkBeforeOrAfter(day, shift, stationId, w))
                 {
                     continue;
                 }
@@ -71,21 +71,38 @@ namespace WorkoProject.Utils
         private static bool IsWorkerWorkBeforeOrAfter(int day, int shift, int stationId, string workerID)
         {
             DayOfWeek d = (DayOfWeek)day;
-            Entities.PartOfDay s = (Entities.PartOfDay)shift;
+            PartOfDay s = (PartOfDay)shift;
 
             int currentShiftIndex = Shift.GetShiftIndex(d, s);
             int prevShiftIndex = Shift.GetPreviousShiftIndex(d, s);
             int nextShiftIndex = Shift.GetNextShiftIndex(d, s);
 
-            Worker worker = null;
-            try
+            foreach (var station in workSchedulel.Template.Shifts[currentShiftIndex].Stations)
             {
-                // check if worker already work in current shift
-                worker = workSchedulel.Template.Shifts[currentShiftIndex].Stations.Find(x => x.Id == stationId).Workers.Find(x => x.IdNumber == workerID);
+                if (station.Workers.Find(x => x.IdNumber == workerID) != null)
+                {
+                    return true;
+                }
             }
-            catch { }
 
-            return worker != null;
+            ///TODO: if sunday check saturday of prev week
+            foreach (var station in workSchedulel.Template.Shifts[prevShiftIndex].Stations)
+            {
+                if (station.Workers.Find(x => x.IdNumber == workerID) != null)
+                {
+                    return true;
+                }
+            }
+
+            foreach (var station in workSchedulel.Template.Shifts[nextShiftIndex].Stations)
+            {
+                if (station.Workers.Find(x => x.IdNumber == workerID) != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion Algorithm

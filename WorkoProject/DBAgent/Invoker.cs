@@ -787,5 +787,43 @@ namespace DBAgent
         }
 
         #endregion
+
+        #region Requests
+        public static List<Request> GetUnreadWorkersRequests()
+        {
+            var ds = GetDataSet("sp_GetUnreadWorkersRequests");
+            List<Request> unreadRequests = new List<Request>();
+
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                var row = ds.Tables[0].Rows[i];
+
+                unreadRequests.Add(new Request()
+                {
+                    Pkid     = (int)row["pkid"],
+                    WorkerId = (string)row["WorkerId"],
+                    Date     = (DateTime)row["Date"],
+                    Title    = (string)row["Title"],
+                    Content  = (string)row["Content"]
+                });
+            }
+
+            return unreadRequests;
+        }
+
+        public static void UpdateWorkerRequest(string requestId)
+        {
+            OpenConnection();
+            // create new StoredProcedure command
+            cmd = new SqlCommand("sp_UpdateWorkerRequest", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // add the parameters
+            cmd.Parameters.AddWithValue("@pkid", int.Parse(requestId));
+
+            cmd.ExecuteNonQuery();
+            CloseConnection();
+        }
+        #endregion
     }
 }

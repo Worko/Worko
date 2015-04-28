@@ -25,5 +25,7 @@ namespace Entities
         public bool IsNewRequest { get; set; }
 
         public string WorkerId { get; set; }
+
+        public int Pkid { get; set; }
     }
 }

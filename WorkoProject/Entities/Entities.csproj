@@ -44,7 +44,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="SortedScheduleConstrainsDC.cs" />
+    <Compile Include="SortedScheduleConstrains.cs" />
     <Compile Include="ScheduleConstrains.cs" />
     <Compile Include="Shift.cs" />
     <Compile Include="ShiftsConstrains.cs" />

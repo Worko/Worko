@@ -126,7 +126,39 @@ namespace DBService
 
         public List<SortedScheduleConstrains> GetSortedStationConstrains(int wsid)
         {
-            return Invoker.GetSortedStationConstrains(wsid);
+            List<SortedScheduleConstrains> list = new List<SortedScheduleConstrains>();
+            var stations = GetStations(StationStatus.None);
+            var res =  Invoker.GetSortedStationConstrains(wsid);
+
+            foreach (var s in stations)
+            {
+                for (int i = 0; i < 7; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        var constrain = res.Find(x => x.StationId == s.Id && x.Day == i && x.ShiftTime == j);
+                        if (constrain == null)
+                        {
+                            constrain = new SortedScheduleConstrains()
+                            {
+                                Day = i,
+                                ShiftTime = j,
+                                Priority = s.Priority,
+                                StationId = s.Id,
+                                Status = s.Status,
+                                NumberOfWorkers = s.NumberOfWorkers
+                            };
+                        }
+                        list.Add(constrain);
+                    }
+                }
+            }
+
+            list = list.OrderByDescending(x => x.ShiftTime)
+                        .ThenByDescending(x => x.Priority).ToList()
+                        .FindAll(x => x.Status == StationStatus.Active);
+
+            return list;
         }
 
         public List<WorkerConstrains> GetAllWorkersConstrains(int wsid)
@@ -143,6 +175,15 @@ namespace DBService
             return Invoker.AddWorkerRequest(request);
         }
 
+        public List<Request> GetUnreadWorkersRequests()
+        {
+            return Invoker.GetUnreadWorkersRequests();
+        }
+
+        public void UpdateWorkerRequest(string requestId)
+        {
+            Invoker.UpdateWorkerRequest(requestId);
+        }
         #endregion
     }
 }

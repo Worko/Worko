@@ -1,0 +1,47 @@
+﻿@using Entities;
+
+@model List<Request>
+
+@{
+    List<Worker> workers = ViewData["workers"] as List<Worker>;
+}
+
+<div class="table-responsive">
+    @if (Model.Count == 0)
+    {
+        <div class="no-requests">
+            אין בקשות חדשות.
+        </div>
+    }
+    else
+    {
+        foreach (Request r in Model)
+        {
+            Worker w = workers.Find(x => x.IdNumber == r.WorkerId);
+            <div class="request" data-pkid="@r.Pkid">
+                <div class="request-title">
+                    <img class="pull-right" src="/@(string.IsNullOrEmpty(w.Picture) ? "Content/img/default_user.png" : w.Picture)" alt="" width="50" height="50" />
+                    <span class="title pull-right">@r.Title</span>
+                    <div class="worker-name pull-right text-muted">
+                        <strong><span>מאת: </span></strong>
+                        <span>@w.FirstName @w.LastName</span>
+                    </div>
+                    <div class="request-date pull-left text-muted small">
+                        <strong><span>נשלח ב:</span></strong>
+                        <span>@r.Date</span>
+                    </div>
+                </div>
+                <div class="request-content">
+                    <p>
+                        <span class="pull-right">@r.Content</span>
+                    </p>
+                </div>
+                <div class="request-footer">
+                    <button type="button" class="btn btn-success approve">אשר</button>
+                    <button type="button" class="btn btn-danger reject">דחה</button>
+                </div>
+            </div>
+        }
+    }
+
+</div>

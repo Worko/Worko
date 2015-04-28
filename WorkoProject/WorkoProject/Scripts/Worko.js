@@ -712,11 +712,24 @@ $(document).on('click', '.unlinkWorker', function () {
     });
 });
 
+/* End of stations */
 
 
+/* Workers Requests */
 
-/* stations */
+$(document).on('click', '#workers-requests-list button', function () {
+    var requestDiv = $(this).closest('.request');
+    var requestId = requestDiv.data('pkid');
 
+    $.ajax({
+        method: "POST",
+        url: '/Requests/UpdateWorkerRequest',
+        data: { requestId: requestId },
+        success: function (data) {
+            requestDiv.fadeOut(500);
+        }
+    })
+});
 
 
 /* General */

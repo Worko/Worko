@@ -65,14 +65,14 @@
             <li class="@(controller == "requests" ? "active" : string.Empty)">
                 <a href="#"><i class="fa fa-files-o fa-fw"></i> בקשות<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    @if(isAdmin)
-                    { 
+                    @if (isAdmin)
+                    {
                         <li>
-                            <a href="blank.html">בקשות עובדים</a>
+                            <a class="@(action == "workersrequestslist" ? "active" : string.Empty)" href="@Url.Action("WorkersRequestsList", "Requests")">בקשות עובדים</a>
                         </li>
                     }
                     else
-                    { 
+                    {
                         <li>
                             <a class="@(action == "sendrequest" ? "active" : string.Empty)" href="@Url.Action("SendRequest", "Requests")">שלח בקשת עובד</a>
                         </li>

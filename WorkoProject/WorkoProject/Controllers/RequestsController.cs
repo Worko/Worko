@@ -39,5 +39,34 @@ namespace WorkoProject.Controllers
 
             return View(new Request() { WorkerId = SessionManager.CurrentWorker.IdNumber });
         }
+
+        [AdminOnlyFilter]
+        public ActionResult GetUnreadWorkersRequests()
+        {
+            return Json(new { requests = clnt.GetUnreadWorkersRequests().ToList(), workers = clnt.GetWorkers().ToList() });
+        }
+
+        public ActionResult WorkersRequestsList()
+        {
+            List<Request> requests = clnt.GetUnreadWorkersRequests();
+            List<Worker> workers = clnt.GetWorkers();
+            ViewData["workers"] = workers;
+
+            return View(requests);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateWorkerRequest(string requestId)
+        {
+            try
+            {
+                clnt.UpdateWorkerRequest(requestId);
+            }
+            catch
+            {
+
+            }
+            return Json(new { });
+        }
     }
 }

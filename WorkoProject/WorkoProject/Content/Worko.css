@@ -647,7 +647,7 @@ fieldset.regPersonalDetails {
 }
 
 
-.updateDot {
+.updateDot-alerts {
     display: none;
     border-radius: 50%;
     border: 1px solid #FFF;
@@ -658,4 +658,94 @@ fieldset.regPersonalDetails {
     top: 53%;
     right: 22%;
     z-index: 1;
+}
+
+.request-from {
+    margin-right: 22px;
+}
+
+.dropdown-alerts li a {
+    height: 45px;
+    padding-top: 0px;
+}
+
+.dropdown-alerts li .all-requests {
+    height: 30px;
+    padding-top: 0px;
+    margin-bottom: 0px;
+}
+
+.dropdown-alerts li .all-requests strong,
+.dropdown-alerts li .all-requests i {
+    vertical-align: -webkit-baseline-middle;
+}
+
+.dropdown-alerts .no-alerts {
+    text-align: center;
+    font-weight: bold;
+    height: 50px;
+    padding-top: 15px;
+}
+
+
+#workers-requests-list .request {
+    border-bottom: 5px solid #ddd;
+    padding-top: 5px;
+}
+
+#workers-requests-list .request p {
+      padding: 15px;
+}
+
+#workers-requests-list .request-title {
+    display: block;
+    border-bottom: 1px solid #ddd;
+    height: 60px;
+}
+
+#workers-requests-list .request-title .title {
+    font-size: x-large;
+    font-weight: bold;
+    padding-right: 20px;
+}
+
+#workers-requests-list .request-title .worker-name {
+    padding-top: 35px;
+    padding-right: 65px;
+    position: absolute;
+}
+
+#workers-requests-list .request-title .request-date {
+    padding-top: 35px;
+}
+
+
+#workers-requests-list .request-content {
+    height: 100px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: medium;
+}
+
+#workers-requests-list .request-footer {
+      margin-bottom: 5px;
+}
+
+#workers-requests-list .panel-heading span {
+    display: block;
+    padding-right: 25px;
+    margin-top: -29px;
+    font-size: large;
+    font-weight: 500;
+}
+
+#workers-requests-list .panel-heading input {
+    width: 20px;
+    height: 20px;
+}
+
+#workers-requests-list .no-requests {
+    text-align: -webkit-center;
+    font-size: -webkit-xxx-large;
 }

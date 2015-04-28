@@ -93,6 +93,12 @@ namespace DBServiceInterfaces
         [OperationContract]
         int AddWorkerRequest(Request request);
 
+        [OperationContract]
+        List<Request> GetUnreadWorkersRequests();
+
+        [OperationContract]
+        void UpdateWorkerRequest(string requestId);
+
         #endregion
     }
 }

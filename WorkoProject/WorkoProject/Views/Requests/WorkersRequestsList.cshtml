@@ -1,0 +1,24 @@
+﻿@using Entities;
+
+@model List<Request>
+
+@{
+    ViewBag.Title = "בקשות עובדים";
+    Layout = "~/Views/Shared/_ControlLayout.cshtml";
+    var workers = ViewData["workers"] as List<Worker>;
+}
+
+<h2>בקשות עובדים</h2>
+
+<div id="workers-requests-list" class="panel panel-default">
+    <div class="panel-heading">
+        <input type="checkbox" name="cbShowAll" value="show-all" />
+        <span>הצג את כל הבקשות</span>
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        @Html.Partial("Partials/_RequestsList", Model, ViewData)
+    </div>
+    <!-- /.panel-body -->
+</div>
+

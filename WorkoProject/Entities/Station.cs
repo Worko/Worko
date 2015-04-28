@@ -9,6 +9,11 @@ namespace Entities
 {
     public class Station
     {
+        public Station()
+        {
+            Workers = new List<Worker>();
+        }
+
         public int Id { get; set; }
 
         [Display(Name = "שם העמדה")]

@@ -11,6 +11,7 @@ namespace Entities
         public WorkSchedule(int wsid)
         {
             WSID = wsid;
+            Template = new WorkScheduleTemplate();
         }
 
         public int WSID { get; set; }

@@ -48,5 +48,12 @@ namespace Entities
         [Display(Name = "תמונת פרופיל:")]
         [DataMember]
         public string Picture { get; set; }
+
+        [Display(Name = "סוג עובד:")]
+        [Required]
+        [Range(1, 3, ErrorMessage = "אנא בחר סוג מהרשימה.")]
+        public WorkerType Type { get; set; }
+
+        
     }
 }

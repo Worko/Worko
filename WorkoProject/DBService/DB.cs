@@ -50,6 +50,11 @@ namespace DBService
 
         #region Stations
 
+        public List<Tuple<int, string>> GetWorkersStations()
+        {
+            return Invoker.GetWorkersStations();
+        }
+
         public List<Station> GetStations(StationStatus status)
         {
             return Invoker.GetStations(status);
@@ -167,7 +172,6 @@ namespace DBService
         }
         #endregion
 
-
         #region Requests
 
         public int AddWorkerRequest(Request request)
@@ -184,6 +188,15 @@ namespace DBService
         {
             Invoker.UpdateWorkerRequest(requestId);
         }
+        #endregion
+
+        #region Shifts
+
+        public List<string> GetLastSaturdayNightWorkers(int wsid)
+        {
+            return Invoker.GetLastSaturdayNightWorkers(wsid);
+        }
+
         #endregion
     }
 }

@@ -1,5 +1,32 @@
 ﻿@model Entities.Worker
 
+@{
+    List<SelectListItem> typeItems = new List<SelectListItem>();
+    typeItems.Add(new SelectListItem()
+    {
+        Selected = true,
+        Value = "-1",
+        Text = "סוג עובד"
+    });
+    typeItems.Add(new SelectListItem()
+    {
+        Selected = false,
+        Value = "1",
+        Text = "שכיר"
+    });
+    typeItems.Add(new SelectListItem()
+    {
+        Selected = false,
+        Value = "2",
+        Text = "בני גרעין"
+    });
+    typeItems.Add(new SelectListItem()
+    {
+        Selected = false,
+        Value = "3",
+        Text = "חברי משק"
+    });
+}
 <div id="add-worker-modal" class="modal fade">
     <div class="modal-dialog">
         <div>
@@ -47,6 +74,11 @@
                             <div class="form-group register-modal">
                                 @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "טלפון" })
                                 @Html.ValidationMessageFor(x => x.Phone)
+                            </div>
+
+                            <div class="form-group register-modal">
+                                @Html.DropDownListFor(m => m.Type, typeItems, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Type)
                             </div>
 
                             <input type="submit" class="submit action-button" value="שלח" />

@@ -34,6 +34,8 @@ namespace DBServiceInterfaces
         #endregion
 
         #region Stations
+        [OperationContract]
+        List<Tuple<int, string>> GetWorkersStations();
 
         [OperationContract]
         List<Station> GetStations(StationStatus status);
@@ -98,6 +100,13 @@ namespace DBServiceInterfaces
 
         [OperationContract]
         void UpdateWorkerRequest(string requestId);
+
+        #endregion
+
+        #region Shifts
+
+        [OperationContract]
+        List<string> GetLastSaturdayNightWorkers(int wsid);
 
         #endregion
     }

@@ -3,6 +3,26 @@
 @{
     Layout = "~/Views/Shared/_ControlLayout.cshtml";
     ViewBag.Title = "הרשמה";
+
+    List<SelectListItem> typeItems = new List<SelectListItem>();
+    typeItems.Add(new SelectListItem()
+    {
+        Selected = true,
+        Value = "1",
+        Text = "שכיר"
+    });
+    typeItems.Add(new SelectListItem()
+    {
+        Selected = false,
+        Value = "2",
+        Text = "בני גרעין"
+    });
+    typeItems.Add(new SelectListItem()
+    {
+        Selected = false,
+        Value = "3",
+        Text = "חברי משק"
+    });
 }
 
 <div class="bs-callout">
@@ -49,6 +69,12 @@
             @Html.LabelFor(m => m.Password)
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
             @Html.ValidationMessageFor(x => x.Password)
+        </div>
+
+        <div class="form-group register">
+            @Html.LabelFor(m => m.Type)
+            @Html.DropDownListFor(m => m.Type, typeItems, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Type)
         </div>
 
         <div class="form-group">

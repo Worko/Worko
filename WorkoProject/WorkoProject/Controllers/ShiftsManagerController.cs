@@ -16,6 +16,7 @@ namespace WorkoProject.Controllers
 
         public ActionResult Index()
         {
+            WorkoAlgorithm.GenerateWorkSchedule();
             return View();
         }
 

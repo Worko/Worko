@@ -201,6 +201,7 @@ namespace DBAgent
             cmd.Parameters.AddWithValue("@Phone", worker.Phone != null ? worker.Phone : "");
             cmd.Parameters.AddWithValue("@Email", worker.Email != null ? worker.Email : "");
             cmd.Parameters.AddWithValue("@Picture", worker.Picture != null ? worker.Picture : "");
+            cmd.Parameters.AddWithValue("@Type", worker.Type);
 
             sqlParm = new SqlParameter("@res", DbType.Int32);
             sqlParm.Direction = ParameterDirection.Output;
@@ -221,15 +222,18 @@ namespace DBAgent
 
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
+                var row = ds.Tables[0].Rows[i];
                 workers.Add(new Worker()
                 {
-                    IdNumber = ds.Tables[0].Rows[i][0].ToString(),
-                    FirstName = ds.Tables[0].Rows[i][1].ToString(),
-                    LastName = ds.Tables[0].Rows[i][2].ToString(),
-                    Email = ds.Tables[0].Rows[i][3].ToString(),
-                    Phone = ds.Tables[0].Rows[i][4].ToString(),
-                    IsAdmin = ds.Tables[0].Rows[i][5].ToString() == "true",
-                    Picture = ds.Tables[0].Rows[i][6].ToString()
+                    
+                    IdNumber = (string)row["IdNumber"],
+                    FirstName = (string)row["FirstName"],
+                    LastName = (string)row["LastName"],
+                    Email = (string)row["Email"],
+                    Phone = (string)row["Phone"],
+                    IsAdmin = (bool)row["IsAdmin"],
+                    Picture = (string)row["Picture"],
+                    Type = (WorkerType)row["Type"]
                 });
             }
 
@@ -251,6 +255,7 @@ namespace DBAgent
             cmd.Parameters.AddWithValue("@Phone", worker.Phone);
             cmd.Parameters.AddWithValue("@Email", worker.Email);
             cmd.Parameters.AddWithValue("@Picture", string.IsNullOrEmpty(worker.Picture) ? string.Empty : worker.Picture);
+            cmd.Parameters.AddWithValue("@Type", worker.Type);
 
             // need to add this sometime...
             //cmd.Parameters.AddWithValue("@Password", worker.Password);
@@ -329,6 +334,22 @@ namespace DBAgent
         #endregion
 
         #region Stations
+
+        public static List<Tuple<int, string>> GetWorkersStations()
+        {
+            var ds = GetDataSet("sp_GetWorkersStations");
+
+            List<Tuple<int, string>> ws = new List<Tuple<int, string>>();
+
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                var row = ds.Tables[0].Rows[i];
+                ws.Add(new Tuple<int, string>((int)row["StationId"], row["WorkerId"].ToString()));
+            }
+
+            return ws;
+        }
+
         public static List<Station> GetStations(StationStatus status = StationStatus.None)
         {
             List<Tuple<string, object>> args = new List<Tuple<string, object>>();
@@ -480,7 +501,7 @@ namespace DBAgent
                 int part = int.Parse(ds.Tables[0].Rows[i][4].ToString());
                 wc[Shift.GetShiftIndex((DayOfWeek)day, (PartOfDay)part)] = true;
             }
-
+            
             return wc;
         }
 
@@ -824,6 +845,26 @@ namespace DBAgent
             cmd.ExecuteNonQuery();
             CloseConnection();
         }
+        #endregion
+
+        #region Shifts
+
+        public static List<string> GetLastSaturdayNightWorkers(int wsid)
+        {
+            List<Tuple<string, object>> args = new List<Tuple<string, object>>();
+            args.Add(new Tuple<string, object>("WSID", wsid - 1));
+            var ds = GetDataSet("sp_GetSaturdayNightWorkers", args);
+
+            List<string> workers = new List<string>();
+
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                workers.Add(ds.Tables[0].Rows[0].ToString());
+            }
+
+            return workers;
+        }
+
         #endregion
     }
 }

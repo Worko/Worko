@@ -21,4 +21,12 @@ namespace Entities
         Evening = 1,
         Night = 2
     };
+
+    public enum WorkerType : int
+    {
+        Regular = 1,
+        Garin = 2,
+        Meshek = 3
+        
+    };
 }

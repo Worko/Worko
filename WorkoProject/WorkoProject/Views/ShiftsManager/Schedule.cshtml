@@ -1,0 +1,35 @@
+﻿@using Entities
+
+@model Entities.WorkSchedule
+
+@{
+    ViewBag.Title = "סידור עבודה לשבוע הקרוב";
+    Layout = "~/Views/Shared/_ControlLayout.cshtml";
+    
+    var shifts = Model.Template.Shifts; 
+}
+
+<h2>סידור עבודה</h2>
+
+<div class="row schedule-table">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="shift-name">משמרת</th>
+                    <th>עמדה</th>
+                    <th>ראשון</th>
+                    <th>שני</th>
+                    <th>שלישי</th>
+                    <th>רביעי</th>
+                    <th>חמישי</th>
+                    <th>שישי</th>
+                    <th>שבת</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+</div>

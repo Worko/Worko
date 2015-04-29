@@ -16,7 +16,6 @@ namespace WorkoProject.Controllers
 
         public ActionResult Index()
         {
-            WorkoAlgorithm.GenerateWorkSchedule();
             return View();
         }
 
@@ -108,6 +107,16 @@ namespace WorkoProject.Controllers
         {
             return View();
         }
+
+        [AdminOnlyFilter]
+        public ActionResult Schedule()
+        {
+            WorkoAlgorithm.GenerateWorkSchedule();
+            return View(WorkoAlgorithm.workSchedule);
+        }
+
+
+
 
     }
 }

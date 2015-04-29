@@ -14,6 +14,18 @@ namespace Entities
             Workers = new List<Worker>();
         }
 
+        public Station(Station station)
+        {
+            this.Id = station.Id;
+            this.Name = station.Name;
+            this.Status = station.Status;
+            this.Description = station.Description;
+            this.Constrains = station.Constrains;
+            this.NumberOfWorkers = station.NumberOfWorkers;
+            this.Priority = station.Priority;
+            this.Workers = new List<Worker>();
+        }
+
         public int Id { get; set; }
 
         [Display(Name = "שם העמדה")]

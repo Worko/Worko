@@ -16,7 +16,16 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <p>כאן יופיע הסבר...</p>
+                <p>
+                    בעת לחיצה על עמדה, יופיע האילוצים של העמדה לשבוע הקרוב. <br />
+                    קבע אילוצים עבור כל עמדה בכל משמרת. <br />
+                    משמרות בהן לא נקבעו אילוצים, האילוצים שיקבעו הם אילוצי ברירת המחדש שנקבעו עבור כל עמדה.<br />
+                    בסיום קביעת האילוצים לחץ על הכפתור מצד שמאל על מנת לאפשר לעובדים להגיש אילוצים לשבוע הבא.
+                </p>
+                @using (Html.BeginForm())
+                {
+                    <button type="submit" data-tooltip="tooltip" data-placement="top" title="קבע אילוצים"><i class="fa fa-download"></i></button>
+                }
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">

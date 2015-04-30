@@ -406,6 +406,19 @@ a.disabled {
     width: 16px;
 }
 
+#schedule-constrains form {
+  display: block;
+  width: 100%;
+  text-align: left;
+  position: absolute;
+  top: 70px;
+  left: 24px;
+}
+#schedule-constrains form button{
+      width: 50px;
+  font-size: 20px;
+  line-height: 29px;
+}
 #schedule-constrains table td:nth-child(n) {
     border-left: 1px solid rgba(221, 221, 221, 0.3);
 }
@@ -749,3 +762,47 @@ fieldset.regPersonalDetails {
     text-align: -webkit-center;
     font-size: -webkit-xxx-large;
 }
+
+/* Work Schedule */
+
+#work-schedule ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#work-schedule .no-workers {
+    background: repeating-linear-gradient( 45deg, rgba(249, 249, 249, 1), rgba(255, 255, 255, 1) 8px, rgba(249, 249, 249, 1) 5px, rgba(0, 0, 0, 0.1) 12px );
+}
+
+#work-schedule .not-active {
+    background: repeating-linear-gradient( 45deg, rgba(249, 249, 249, 1), rgba(255, 255, 255, 1) 8px, rgba(0, 0, 0, 0.51) 5px, rgba(0, 0, 0, 0.1) 12px );
+}
+
+#work-schedule thead tr th {
+   text-align: center;
+}
+
+#work-schedule thead tr th span {
+   display: block;
+}
+
+#work-schedule .day td {
+    padding: 0;
+}
+
+#work-schedule tr:not(.day) td:first-child,
+#work-schedule tr:not(.day) th:first-child {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: #1E3F5C;
+    font-size: 20px;
+}
+
+#work-schedule .day td div {
+    text-align: center;
+    font-size: x-large;
+    font-weight: 500;
+    background: rgb(66, 139, 202);
+    color: #fff;
+    border-radius: 0 0 50px 50px;
+}
+

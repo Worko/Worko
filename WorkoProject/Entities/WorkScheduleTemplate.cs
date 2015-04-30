@@ -9,15 +9,12 @@ namespace Entities
 {
     public class WorkScheduleTemplate
     {
-        public DateTime StartDate { get; set; }
+        
 
         public Shift[] Shifts { get; set; }
 
         public WorkScheduleTemplate()
         {
-            ///This is a temp!!!!
-            ///TODO: Get From DB
-
             Shifts = new Shift[21];
 
             for (int i = 0; i < 21; i++)

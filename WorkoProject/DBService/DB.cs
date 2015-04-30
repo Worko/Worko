@@ -119,6 +119,11 @@ namespace DBService
             return Invoker.GetWSID(backWeeks);
         }
 
+        public DateTime GetWeekStartDate(int backWeeks = 0)
+        {
+            return Invoker.GetWeekStartDate(backWeeks);
+        }
+
         public List<bool> GetWorkerConstrains(string workerId, int wsid)
         {
             return Invoker.GetWorkerConstrains(workerId, wsid);

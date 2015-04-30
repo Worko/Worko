@@ -112,6 +112,7 @@ namespace WorkoProject.Controllers
         public ActionResult Schedule()
         {
             WorkoAlgorithm.GenerateWorkSchedule();
+            ViewData["Stations"] = clnt.GetStations(StationStatus.None);
             return View(WorkoAlgorithm.workSchedule);
         }
 

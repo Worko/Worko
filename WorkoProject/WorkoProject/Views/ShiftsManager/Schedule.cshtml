@@ -5,31 +5,102 @@
 @{
     ViewBag.Title = "סידור עבודה לשבוע הקרוב";
     Layout = "~/Views/Shared/_ControlLayout.cshtml";
-    
+    var stations = ViewData["Stations"] as List<Station>;
     var shifts = Model.Template.Shifts; 
 }
 
 <h2>סידור עבודה</h2>
 
-<div class="row schedule-table">
+<div id="work-schedule" class="row schedule-table">
     <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover">
+        <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th class="shift-name">משמרת</th>
                     <th>עמדה</th>
-                    <th>ראשון</th>
-                    <th>שני</th>
-                    <th>שלישי</th>
-                    <th>רביעי</th>
-                    <th>חמישי</th>
-                    <th>שישי</th>
-                    <th>שבת</th>
+                    <th>
+                    <div>
+                        <span>ראשון</span>
+                        <span>@Model.StartDate.ToString("dd/MM/yyyy")</span>
+                    </div>
+                    </th>
+                    <th>
+                        <div>
+                            <span>שני</span>
+                            <span>@Model.StartDate.AddDays(1).ToString("dd/MM/yyyy")</span>
+                        </div>
+                    </th>
+                    <th>
+                        <div>
+                            <span>שלישי</span>
+                            <span>@Model.StartDate.AddDays(2).ToString("dd/MM/yyyy")</span>
+                        </div>
+                    </th>
+                    <th>
+                        <div>
+                            <span>רביעי</span>
+                            <span>@Model.StartDate.AddDays(3).ToString("dd/MM/yyyy")</span>
+                        </div>
+                    </th>
+                    <th>
+                        <div>
+                            <span>חמישי</span>
+                            <span>@Model.StartDate.AddDays(4).ToString("dd/MM/yyyy")</span>
+                        </div>
+                    </th>
+                    <th>
+                        <div>
+                            <span>שישי</span>
+                            <span>@Model.StartDate.AddDays(5).ToString("dd/MM/yyyy")</span>
+                        </div>
+                    </th>
+                    <th>
+                        <div>
+                            <span>שבת</span>
+                            <span>@Model.StartDate.AddDays(6).ToString("dd/MM/yyyy")</span>
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                
+                <tr class="day"><td colspan="8"><div>בוקר</div></td></tr>
+                @PlaceWorkers(stations, shifts, 0)
+                <tr class="day"><td colspan="8"><div>צהריים</div></td></tr>
+                @PlaceWorkers(stations, shifts, 7)
+                <tr class="day"><td colspan="8"><div>לילה</div></td></tr>
+                @PlaceWorkers(stations, shifts, 14)
             </tbody>
         </table>
     </div>
 </div>
+
+@helper PlaceWorkers(List<Station> stations, Shift[] shifts, int shiftTime)
+{
+    foreach (var station in stations)
+    {
+        <tr>
+            <td>@station.Name</td>
+            @for (int i = shiftTime; i < 7 + shiftTime; i++)
+            {
+                List<Worker> workers = null;
+                try
+                {
+                    workers = shifts[i].Stations.Find(x => x.Id == station.Id).Workers;
+                }
+                catch { }
+                bool hasWorkers = workers != null && workers.Count > 0;
+                bool isActive = shifts[i].IsActive;
+                <td class="@(!isActive ? "not-active" : string.Empty) @(hasWorkers ? string.Empty : "no-workers")">
+                    @if (hasWorkers)
+                    {
+                        <ul>
+                            @foreach (var w in workers)
+                            {
+                                <li>@w.FirstName @w.LastName</li>
+                            }
+                        </ul>
+                    }
+                </td>
+            }
+        </tr>
+    }
+}

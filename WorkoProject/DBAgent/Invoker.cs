@@ -564,6 +564,23 @@ namespace DBAgent
             }
         }
 
+        public static DateTime GetWeekStartDate(int backWeeks = 0)
+        {
+            List<Tuple<string, object>> args = new List<Tuple<string, object>>();
+            args.Add(new Tuple<string, object>("Week", backWeeks));
+            var ds = GetDataSet("sp_GetNextWeekSchedule", args);
+
+            try
+            {
+                return (DateTime)ds.Tables[0].Rows[0][1];
+            }
+            catch (Exception)
+            {
+                SetNextWeek();
+                return GetWeekStartDate();
+            }
+        }
+
         public static int AddWorkerConstrains(ShiftsConstrains shiftsConstrains)
         {
             if (RemoveWorkerConstrains(shiftsConstrains.WorkerId, shiftsConstrains.WSID) == 1)

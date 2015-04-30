@@ -24,7 +24,7 @@ namespace WorkoProject.Utils
         private static void Init()
         {
             WSID = clnt.GetWSID();
-            workSchedule = new WorkSchedule(WSID);
+            workSchedule = new WorkSchedule(WSID, clnt.GetWeekStartDate());
             workers = clnt.GetWorkers();
             stations = clnt.GetStations(Entities.StationStatus.None);
             workersConstrains = clnt.GetAllWorkersConstrains(workSchedule.WSID);
@@ -40,12 +40,16 @@ namespace WorkoProject.Utils
 
             for (int i = 0; i < sortedStationsConstrains.Count; i++)
             {
+
                 int sid = sortedStationsConstrains[i].StationId;
                 int day = sortedStationsConstrains[i].Day;
                 int shift = sortedStationsConstrains[i].ShiftTime;
-                int maxWorkers = sortedStationsConstrains[i].NumberOfWorkers;
-                var fitsWorkers = CalculateWorkersGrade(sid, day, shift, maxWorkers);
-                AddWorkersToSchedule(sid, day, shift, fitsWorkers);
+                if (workSchedule.Template.Shifts[Shift.GetShiftIndex((DayOfWeek)day, (PartOfDay)shift)].IsActive)
+                {
+                    int maxWorkers = sortedStationsConstrains[i].NumberOfWorkers;
+                    var fitsWorkers = CalculateWorkersGrade(sid, day, shift, maxWorkers);
+                    AddWorkersToSchedule(sid, day, shift, fitsWorkers);
+                }
             }
 
         }

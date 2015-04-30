@@ -77,6 +77,9 @@ namespace DBServiceInterfaces
         int GetWSID(int backWeeks = 0);
 
         [OperationContract]
+        DateTime GetWeekStartDate(int backWeeks = 0);
+
+        [OperationContract]
         List<bool> GetWorkerConstrains(string workerId, int wsid);
 
         [OperationContract]

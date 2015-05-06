@@ -178,6 +178,7 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\AdminOnlyFilter.cs" />
+    <Compile Include="Utils\HebCalendar.cs" />
     <Compile Include="Utils\RenderPartialToString.cs" />
     <Compile Include="Utils\SessionManager.cs" />
     <Compile Include="Utils\VerifyUserFilter.cs" />

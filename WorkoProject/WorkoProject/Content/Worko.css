@@ -768,6 +768,20 @@ fieldset.regPersonalDetails {
 #work-schedule ul {
   list-style-type: none;
   padding: 0;
+  text-align: center;
+}
+
+#work-schedule button {
+    margin-bottom: 10px;
+    border: 2px solid #295229;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: -15px;
+}
+
+#work-schedule .holiday-name {
+    font-size: 18px;
+    font-weight: 500;
 }
 
 #work-schedule .no-workers {
@@ -776,6 +790,7 @@ fieldset.regPersonalDetails {
 
 #work-schedule .not-active {
     background: repeating-linear-gradient( 45deg, rgba(249, 249, 249, 1), rgba(255, 255, 255, 1) 8px, rgba(0, 0, 0, 0.51) 5px, rgba(0, 0, 0, 0.1) 12px );
+    opacity: 0.3;
 }
 
 #work-schedule thead tr th {
@@ -784,6 +799,10 @@ fieldset.regPersonalDetails {
 
 #work-schedule thead tr th span {
    display: block;
+   font-size: 20px;
+   line-height: 25px;
+   vertical-align: top;
+   height: 25px;
 }
 
 #work-schedule .day td {

@@ -133,7 +133,7 @@ namespace WorkoProject.Controllers
 
             clnt.CreateWorkSchedule(ws);
 
-            return View();
+            return RedirectToAction("Index");
         }
 
     }

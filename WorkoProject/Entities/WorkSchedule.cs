@@ -18,6 +18,7 @@ namespace Entities
         public int WSID { get; set; }
         public DateTime StartDate { get; set; }
         public WorkScheduleTemplate Template { get; set; }
+        public double Capacity { get; set; }
 
     }
 

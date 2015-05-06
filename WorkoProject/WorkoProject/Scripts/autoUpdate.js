@@ -1,7 +1,7 @@
 ﻿
 
 $(document).ready(function () {
-    autoUpdate(updateRequestsAlert);
+   // autoUpdate(updateRequestsAlert);
 });
 
 

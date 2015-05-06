@@ -17,6 +17,7 @@ namespace WorkoProject.Utils
         private const string HAS_CONNECTED_USER = "HasConnectedUser";
         private const string HAS_ADMIN_CONNECTED = "HasAdminConnected";
         private const string CONNECTED_USER = "ConnectedUser";
+        private const string WORK_SCHEDULE = "WorkSchedule";
 
         #endregion
 
@@ -61,5 +62,16 @@ namespace WorkoProject.Utils
             }
         }
 
+        public static WorkSchedule CurrentWorkSchedule
+        {
+            get
+            {
+                return (WorkSchedule)Session[WORK_SCHEDULE];
+            }
+            set
+            {
+                Session[WORK_SCHEDULE] = value;
+            }
+        }
     }
 }

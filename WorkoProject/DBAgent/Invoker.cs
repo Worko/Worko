@@ -220,6 +220,8 @@ namespace DBAgent
             var ds = GetDataSet("sp_GetWorkers");
             List<Worker> workers = new List<Worker>();
 
+            int wsid = GetWSID();
+
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
                 var row = ds.Tables[0].Rows[i];
@@ -233,11 +235,36 @@ namespace DBAgent
                     Phone = (string)row["Phone"],
                     IsAdmin = (bool)row["IsAdmin"],
                     Picture = (string)row["Picture"],
-                    Type = (WorkerType)row["Type"]
+                    Type = (WorkerType)row["Type"],
+                    ShiftCounter = 0,
+                   NightsCounter = GetWorkerNightShiftCount(wsid, int.Parse((string)row["IdNumber"]))
                 });
             }
 
             return workers;
+        }
+
+        private static int GetWorkerNightShiftCount(int wsid, int workerId)
+        {
+            OpenConnection();
+            // create new StoredProcedure command
+            cmd = new SqlCommand("sp_GetWorkerNightShiftCount", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // add the parameters
+            cmd.Parameters.AddWithValue("@WSID", wsid);
+            cmd.Parameters.AddWithValue("@workerId", workerId);
+
+            // return the reader
+            reader = cmd.ExecuteReader();
+            int count = 0;
+            if (reader.Read())
+            {
+                count = reader.GetInt32(0);
+            }
+
+            CloseConnection();
+            return count;
         }
 
 
@@ -530,17 +557,17 @@ namespace DBAgent
             return res;
         }
 
-        private static void SetNextWeek()
+        public static void SetNextWeek()
         {
             OpenConnection();
             // create new StoredProcedure command
             cmd = new SqlCommand("sp_SetNextWeekSchedule", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            DateTime date = DateTime.Now.AddDays(8 - (int)DateTime.Now.DayOfWeek);
+            DateTime date = DateTime.Now.AddDays(7 - (int)DateTime.Now.DayOfWeek);
 
             // add the parameters
-            cmd.Parameters.AddWithValue("@Date", date);
+            cmd.Parameters.AddWithValue("@Date", date.Date);
 
             cmd.ExecuteNonQuery();
             CloseConnection();
@@ -822,6 +849,48 @@ namespace DBAgent
             catch { }
 
             return list;
+        }
+
+        public static void CreateWorkSchedule(WorkSchedule ws)
+        {
+            string template = "INSERT INTO WeeklyWorkers (WSID, WorkerId, StationId, Day, ShiftTime)"
+                                + "VALUES({0}, {1}, {2}, {3}, {4})";
+
+            string script = string.Empty;
+
+            foreach (var shift in ws.Template.Shifts)
+            {
+                int day = (int)shift.Day;
+                int shiftTime = (int)shift.Part;
+
+                foreach (var station in shift.Stations)
+                {
+                    int stationId = station.Id;
+
+                    foreach (var worker in station.Workers)
+                    {
+                        string workerId = worker.IdNumber;
+                        script += string.Format(template, ws.WSID, workerId, stationId, day, shiftTime);
+                        script += "\n";
+                    }
+                }
+            }
+
+            try
+            {
+                OpenConnection();
+                cmd = new SqlCommand(script, con);
+                cmd.ExecuteNonQuery();
+            }
+            catch
+            {
+           
+            }
+            finally
+            {
+                CloseConnection();
+            }
+
         }
 
         #endregion

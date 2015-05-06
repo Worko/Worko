@@ -12,6 +12,13 @@
 <h2>סידור עבודה</h2>
 
 <div id="work-schedule" class="row schedule-table">
+    <div class="panel-heading">
+        @using (Html.BeginForm("CreateWeeklySchedule", "ShiftsManager", FormMethod.Post))
+        {
+            <button type="submit" data-tooltip="tooltip" data-placement="top" title="שמור סידור עבודה">שמור סידור עבודה</button>
+        }
+    </div>
+
     <div class="table-responsive">
         <table class="table table-bordered">
             <thead>
@@ -82,13 +89,14 @@
             @for (int i = shiftTime; i < 7 + shiftTime; i++)
             {
                 List<Worker> workers = null;
+                var s = shifts[i].Stations.Find(x => x.Id == station.Id);
                 try
                 {
-                    workers = shifts[i].Stations.Find(x => x.Id == station.Id).Workers;
+                    workers = s.Workers;
                 }
                 catch { }
                 bool hasWorkers = workers != null && workers.Count > 0;
-                bool isActive = shifts[i].IsActive;
+                bool isActive = shifts[i].IsActive && (s != null && s.Status == StationStatus.Active);
                 <td class="@(!isActive ? "not-active" : string.Empty) @(hasWorkers ? string.Empty : "no-workers")">
                     @if (hasWorkers)
                     {

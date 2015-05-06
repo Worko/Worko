@@ -91,6 +91,11 @@ namespace DBServiceInterfaces
         [OperationContract]
         List<WorkerConstrains> GetAllWorkersConstrains(int wsid);
 
+        [OperationContract]
+        void SetNextWeek();
+
+        [OperationContract]
+        void CreateWorkSchedule(WorkSchedule ws);
         #endregion
 
         #region Requests

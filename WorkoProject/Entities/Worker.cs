@@ -54,6 +54,10 @@ namespace Entities
         [Range(1, 3, ErrorMessage = "אנא בחר סוג מהרשימה.")]
         public WorkerType Type { get; set; }
 
+        public int ShiftCounter { get; set; }
+
+        public int NightsCounter { get; set; }
+
         
     }
 }

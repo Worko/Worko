@@ -137,7 +137,7 @@ namespace DBService
         public List<SortedScheduleConstrains> GetSortedStationConstrains(int wsid)
         {
             List<SortedScheduleConstrains> list = new List<SortedScheduleConstrains>();
-            var stations = GetStations(StationStatus.None);
+            var stations = GetStations(StationStatus.Active);
             var res =  Invoker.GetSortedStationConstrains(wsid);
 
             foreach (var s in stations)
@@ -174,6 +174,16 @@ namespace DBService
         public List<WorkerConstrains> GetAllWorkersConstrains(int wsid)
         {
             return Invoker.GetAllWorkersConstrains(wsid);
+        }
+
+        public void SetNextWeek()
+        {
+            Invoker.SetNextWeek();
+        }
+
+        public void CreateWorkSchedule(WorkSchedule ws)
+        {
+            Invoker.CreateWorkSchedule(ws);
         }
         #endregion
 

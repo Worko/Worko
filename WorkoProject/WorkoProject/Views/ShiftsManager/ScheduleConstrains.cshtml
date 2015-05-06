@@ -22,7 +22,7 @@
                     משמרות בהן לא נקבעו אילוצים, האילוצים שיקבעו הם אילוצי ברירת המחדש שנקבעו עבור כל עמדה.<br />
                     בסיום קביעת האילוצים לחץ על הכפתור מצד שמאל על מנת לאפשר לעובדים להגיש אילוצים לשבוע הבא.
                 </p>
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("SubmitScheduleConstrains", "ShiftsManager", FormMethod.Post))
                 {
                     <button type="submit" data-tooltip="tooltip" data-placement="top" title="קבע אילוצים"><i class="fa fa-download"></i></button>
                 }

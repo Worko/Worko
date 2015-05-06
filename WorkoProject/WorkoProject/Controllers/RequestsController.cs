@@ -43,7 +43,7 @@ namespace WorkoProject.Controllers
         [AdminOnlyFilter]
         public ActionResult GetUnreadWorkersRequests()
         {
-            return Json(new { requests = clnt.GetUnreadWorkersRequests().ToList(), workers = clnt.GetWorkers().ToList() });
+            return Json(new { requests = clnt.GetUnreadWorkersRequests().ToList()});
         }
 
         public ActionResult WorkersRequestsList()

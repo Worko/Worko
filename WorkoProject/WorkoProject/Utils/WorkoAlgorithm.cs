@@ -19,6 +19,9 @@ namespace WorkoProject.Utils
         private static List<Tuple<int, string>> WorkersStations;
         private static List<SortedScheduleConstrains> sortedStationsConstrains;
 
+        private static int SubmittedWorkers;
+        private static int MaxSubmittedWorkers;
+
         #region Algorithm
 
         private static void Init()
@@ -31,7 +34,9 @@ namespace WorkoProject.Utils
             lastSaturdayNightWorkers = clnt.GetLastSaturdayNightWorkers(WSID);
             WorkersStations = clnt.GetWorkersStations();
             sortedStationsConstrains = clnt.GetSortedStationConstrains(workSchedule.WSID);
-
+            SubmittedWorkers = 0;
+            MaxSubmittedWorkers = 0;
+            workSchedule.Capacity = 0;
         }
 
         public static void GenerateWorkSchedule()
@@ -44,13 +49,15 @@ namespace WorkoProject.Utils
                 int sid = sortedStationsConstrains[i].StationId;
                 int day = sortedStationsConstrains[i].Day;
                 int shift = sortedStationsConstrains[i].ShiftTime;
-                if (workSchedule.Template.Shifts[Shift.GetShiftIndex((DayOfWeek)day, (PartOfDay)shift)].IsActive)
+                if (sortedStationsConstrains[i].Status == StationStatus.Active && workSchedule.Template.Shifts[Shift.GetShiftIndex((DayOfWeek)day, (PartOfDay)shift)].IsActive)
                 {
                     int maxWorkers = sortedStationsConstrains[i].NumberOfWorkers;
                     var fitsWorkers = CalculateWorkersGrade(sid, day, shift, maxWorkers);
                     AddWorkersToSchedule(sid, day, shift, fitsWorkers);
                 }
             }
+
+            workSchedule.Capacity = (double)SubmittedWorkers / MaxSubmittedWorkers;
 
         }
 
@@ -59,10 +66,17 @@ namespace WorkoProject.Utils
             List<Worker> fitWorkersList = new List<Worker>();
             foreach (string w in fitsWorkers)
             {
-                fitWorkersList.Add(workers.Find(x => x.IdNumber.TrimStart('0') == w));
+                Worker worker = workers.Find(x => x.IdNumber.TrimStart('0') == w);
+                worker.ShiftCounter++;
+                fitWorkersList.Add(worker);
             }
 
+            SubmittedWorkers += fitWorkersList.Count;
+            
+
             var station = stations.Find(x => x.Id == stationId);
+            MaxSubmittedWorkers += station.NumberOfWorkers;
+
             Station s = new Station(station);
 
             s.Workers.AddRange(fitWorkersList);
@@ -86,21 +100,63 @@ namespace WorkoProject.Utils
 
             foreach (var w in workersByStation)
             {
-
                 double grade = 0;
                 int shiftIndex = Shift.GetShiftIndex((DayOfWeek)day, (Entities.PartOfDay)shift);
 
-                ///TODO: check type
-                grade += 1;
-                ///
-                WorkerConstrains workerConstrains = workersConstrains.Find(x => x.WorkerID.TrimStart('0') == w);
-                if (workerConstrains.Constrains[day][shift] == true || IsWorkerWorkBeforeOrAfter(day, shift, stationId, w))
+                // check type
+                Worker worker = workers.Find(x => x.IdNumber.TrimStart('0') == w);
+
+                // check for meshek - work only in the morning
+                if (worker.Type == WorkerType.Meshek && shift > 0)
                 {
                     continue;
                 }
+                else if (worker.Type == WorkerType.Meshek)
+                {
+                    grade += 5;
+                }
+                // check for garin - not working on wednesday at noon
+                if (worker.Type == WorkerType.Garin && shift == 1 && day == 3)
+                {
+                    continue;
+                }
+                else if (worker.Type == WorkerType.Garin)
+                {
+                    grade += 5;
+                }
 
-                grade += 1;
 
+                if (worker.ShiftCounter >= 5)
+                {
+                    continue;
+                }
+                else
+                {
+                    grade += 1 - worker.ShiftCounter / 5f; 
+                }
+
+                if (shift == 2 && worker.NightsCounter >= 7)
+                {
+                    continue;
+                }
+                else
+                {
+                    grade += 1 - worker.NightsCounter / 7f;
+                }
+
+                WorkerConstrains workerConstrains = workersConstrains.Find(x => x.WorkerID.TrimStart('0') == w);
+                try
+                {
+                    if (workerConstrains.Constrains[day][shift] == true || IsWorkerWorkBeforeOrAfter(day, shift, stationId, w))
+                    {
+                        continue;
+                    }
+
+                }
+                catch
+                {
+
+                }
 
 
                 grades.Add(new Tuple<string, double>(w, grade));

@@ -113,11 +113,28 @@ namespace WorkoProject.Controllers
         {
             WorkoAlgorithm.GenerateWorkSchedule();
             ViewData["Stations"] = clnt.GetStations(StationStatus.None);
+            SessionManager.CurrentWorkSchedule = WorkoAlgorithm.workSchedule;
             return View(WorkoAlgorithm.workSchedule);
         }
 
+        [AdminOnlyFilter]
+        [HttpPost]
+        public ActionResult SubmitScheduleConstrains()
+        {
+            clnt.SetNextWeek();
+            return RedirectToAction("ScheduleConstrains");
+        }
 
+        [AdminOnlyFilter]
+        [HttpPost]
+        public ActionResult CreateWeeklySchedule()
+        {
+            var ws = SessionManager.CurrentWorkSchedule;
 
+            clnt.CreateWorkSchedule(ws);
+
+            return View();
+        }
 
     }
 }

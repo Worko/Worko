@@ -1,5 +1,6 @@
 ﻿@using Entities;
 @using WorkoProject.Models;
+@using WorkoProject.Utils;
 
 @model ShiftsConstrains
 
@@ -8,6 +9,10 @@
     Layout = "~/Views/Shared/_ControlLayout.cshtml";
     
     var shifts = new WorkScheduleTemplate().Shifts;
+    var startDate = (DateTime)ViewData["NextWeekStartDate"];
+
+    string calPath = Server.MapPath(Url.Content("~/Content/jewish-holidays-all.csv"));
+    HebCalendar.SetCalendar(calPath);
 }
 
 <h2>הגשת אילוצי משמרות</h2>
@@ -34,13 +39,7 @@
                             <thead>
                                 <tr>
                                     <th class="shift-name">משמרת</th>
-                                    <th>ראשון</th>
-                                    <th>שני</th>
-                                    <th>שלישי</th>
-                                    <th>רביעי</th>
-                                    <th>חמישי</th>
-                                    <th>שישי</th>
-                                    <th>שבת</th>
+                                    @DayOfWeek(startDate)
                                 </tr>
                             </thead>
                             <tbody>
@@ -92,3 +91,31 @@
     </div>
     <!-- /.col-lg-6 -->
 </div>
+
+@helper DayOfWeek(DateTime startDate)
+{
+    for (int i = 0; i < 7; i++)
+    {
+        string day = HebCalendar.days[Enum.GetName(typeof(DayOfWeek), Convert.ToInt32(i))];
+
+        <th>
+            <div>
+                <span>@day</span>
+                <span>@startDate.AddDays(i).ToString("dd/MM/yyyy")</span>
+                <span class="holiday-name text-muted">
+                    @{
+                        var date = startDate.AddDays(i).ToString("M/d/yyyy");
+                        foreach (var row in HebCalendar.csvArray)
+                        {
+                            if (row[1].Split('\"')[1].Equals(date))
+                            {
+                                @HebCalendar.holidays[row[0].Split('\"')[1]];
+                                break;
+                            }
+                        }
+                    }
+                </span>
+            </div>
+        </th>
+    }
+}

@@ -26,6 +26,8 @@ namespace WorkoProject.Controllers
             model.WorkerId = SessionManager.CurrentWorker.IdNumber;
             model.Constrains = clnt.GetWorkerConstrains(model.WorkerId, model.WSID);
 
+            ViewData["NextWeekStartDate"] = clnt.GetWeekStartDate();
+
             return View(model);
         }
 
@@ -65,7 +67,8 @@ namespace WorkoProject.Controllers
             List<ScheduleConstrains> model = clnt.GetStationConstrains(wsid);
 
             ViewData["WSID"] = wsid;
-            ViewData["Constrains"] = model ;
+            ViewData["Constrains"] = model;
+            ViewData["NextWeekStartDate"] = clnt.GetWeekStartDate();
 
             return View(lsdc);
         }

@@ -608,6 +608,43 @@ namespace DBAgent
             }
         }
 
+        public static WorkSchedule GetWeeklySchedule(int wsid)
+        {
+            List<Tuple<string, object>> args = new List<Tuple<string, object>>();
+            args.Add(new Tuple<string, object>("WSID", wsid));
+            var ds = GetDataSet("sp_GetWeeklySchedule", args);
+
+            WorkSchedule ws = new WorkSchedule(wsid, GetWeekStartDate());
+            var workers = GetWorkers();
+            var stations = GetStations();
+
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                var row = ds.Tables[0].Rows[i];
+                int shift = (int)row["ShiftTime"];
+                int day = (int)row["Day"];
+                int stationId = (int)row["StationId"];
+                string workerId = row["WorkerId"].ToString();
+                var worker = workers.Find(x => x.IdNumber.TrimStart('0') == workerId);
+                var station = stations.Find(x => x.Id == stationId);
+
+                int shiftIndex = Shift.GetShiftIndex((DayOfWeek)day, (PartOfDay)shift);
+
+                var currentStation = ws.Template.Shifts[shiftIndex].Stations.Find(x => x.Id == station.Id);
+                if (currentStation == null)
+                {
+                    currentStation = new Station(station);
+                    ws.Template.Shifts[shiftIndex].Stations.Add(currentStation);
+                }
+
+                currentStation.Workers.Add(worker);
+                
+                
+            }
+
+            return ws;
+        }
+
         public static int AddWorkerConstrains(ShiftsConstrains shiftsConstrains)
         {
             if (RemoveWorkerConstrains(shiftsConstrains.WorkerId, shiftsConstrains.WSID) == 1)

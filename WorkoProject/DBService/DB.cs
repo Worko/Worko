@@ -185,6 +185,12 @@ namespace DBService
         {
             Invoker.CreateWorkSchedule(ws);
         }
+
+        public WorkSchedule GetWeeklySchedule(int wsid)
+        {
+            return Invoker.GetWeeklySchedule(wsid);
+        }
+
         #endregion
 
         #region Requests

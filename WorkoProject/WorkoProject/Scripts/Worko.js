@@ -10,6 +10,10 @@ $(window).load(function () {
     $(".se-pre-con").fadeOut("slow");
 });
 
+$(document).on('click', '.produce-schedule', function () {
+    $(".se-pre-con").show();
+});
+
 $(function () {
     /* Initialization */
     $('[data-tooltip="tooltip"]').tooltip()

@@ -95,6 +95,9 @@ namespace DBServiceInterfaces
         void SetNextWeek();
 
         [OperationContract]
+        WorkSchedule GetWeeklySchedule(int wsid);
+
+        [OperationContract]
         void CreateWorkSchedule(WorkSchedule ws);
         #endregion
 

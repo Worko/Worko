@@ -98,7 +98,7 @@
                         <ul>
                             @foreach (var w in workers)
                             {
-                                <li>@w.FirstName @w.LastName</li>
+                                <li class="@(w.IdNumber == SessionManager.CurrentWorker.IdNumber ? "current-worker" : string.Empty)"><span>@w.FirstName @w.LastName</span></li>
                             }
                         </ul>
                     }

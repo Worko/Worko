@@ -120,6 +120,17 @@ namespace WorkoProject.Controllers
             return View(WorkoAlgorithm.workSchedule);
         }
 
+        public ActionResult WeeklySchedule()
+        {
+            if (SessionManager.CurrentWorkSchedule == null)
+            {
+                var ws = clnt.GetWeeklySchedule(clnt.GetWSID());
+                SessionManager.CurrentWorkSchedule = ws;
+            }
+            ViewData["Stations"] = clnt.GetStations(StationStatus.None);
+            return View("Schedule", SessionManager.CurrentWorkSchedule);
+        }
+
         [AdminOnlyFilter]
         [HttpPost]
         public ActionResult SubmitScheduleConstrains()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -14,7 +15,6 @@ namespace WorkoProject.Utils
 
         public static void SetCalendar(string calendarPath)
         {
-
             days = new Dictionary<string, string>();
             holidays = new Dictionary<string, string>();
 

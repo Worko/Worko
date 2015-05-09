@@ -148,9 +148,9 @@ namespace WorkoProject.Utils
                 try
                 {
                     if (workerConstrains.Constrains[day][shift] == true || IsWorkerWorkBeforeOrAfter(day, shift, stationId, w))
-                    {
-                        continue;
-                    }
+                {
+                    continue;
+                }
 
                 }
                 catch

@@ -49,11 +49,13 @@
     <Compile Include="Shift.cs" />
     <Compile Include="ShiftsConstrains.cs" />
     <Compile Include="Station.cs" />
+    <Compile Include="TypeConstrains.cs" />
     <Compile Include="Utils\IdNumberValidate.cs" />
     <Compile Include="Utils\Translator.cs" />
     <Compile Include="Worker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerConstrains.cs" />
+    <Compile Include="WorkerType.cs" />
     <Compile Include="WorkSchedule.cs" />
     <Compile Include="WorkScheduleTemplate.cs" />
   </ItemGroup>

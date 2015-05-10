@@ -144,6 +144,30 @@ $(function () {
         }
 
     });
+
+    /* Worker Types */
+
+    $('#type-constrains #add-type button').click(function () {
+        var type = $('#add-type #type-name').val();
+        if (type.length > 0) {
+            $.ajax({
+                method: "POST",
+                url: '/Account/AddWorkerType',
+                data: {
+                    typeName: type
+                },
+                success: function (data) {
+                    $('#types').append($('<option>', {
+                        value: data.id,
+                        text: type
+                    }));
+                }
+            });
+        }
+    });
+
+
+    /* Worker Types */
 });
 
 
@@ -301,6 +325,12 @@ var _workerDetails = {};
 $(document).on('click', '.changePic', function () {
     $('#userFilePic').click();
 });
+
+$(document).on('change', '#type-constrains #types', function () {
+    $('#TypeId').val($(this).val());
+    ///TODO: get constrains
+});
+
 
 
 $(document).on('click', '#workers-list .edit', function () {

@@ -364,6 +364,7 @@
     <Content Include="Views\Requests\WorkersRequestsList.cshtml" />
     <Content Include="Views\Requests\Partials\_RequestsList.cshtml" />
     <Content Include="Views\ShiftsManager\Schedule.cshtml" />
+    <Content Include="Views\Account\Types.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

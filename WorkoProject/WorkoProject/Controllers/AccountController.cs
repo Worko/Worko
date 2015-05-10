@@ -265,5 +265,65 @@ namespace WorkoProject.Controllers
 
             return Json(new { html = html });
         }
+
+        [AdminOnlyFilter]
+        public ActionResult Types(int type = -1)
+        {
+            var types = clnt.GetWorkerTypes();
+            TypeConstrains typeConstrains;
+
+            List<SelectListItem> items = new List<SelectListItem>();
+            if (types != null && types.Count > 0)
+            {
+                foreach (var t in types)
+                {
+                    items.Add(new SelectListItem()
+                    {
+                        Text = t.TypeName,
+                        Value = string.Format("{0}", t.TypeID),
+                        Selected = false
+                    });
+                }
+
+                var selected = items.Find(x => int.Parse(x.Value) == type);
+                if (selected != null)
+                {
+                    selected.Selected = true;
+                }
+                else if (items.Count > 0)
+                {
+                    items[0].Selected = true;
+                }
+
+                //TODO: get type constrains
+                typeConstrains = new TypeConstrains();
+            }
+            else
+            {
+                typeConstrains = new TypeConstrains();
+            }
+
+            ViewData["Types"] = items;
+            ViewData["NextWeekStartDate"] = clnt.GetWeekStartDate();
+
+            return View(typeConstrains);
+        }
+
+        [AdminOnlyFilter]
+        [HttpPost]
+        public ActionResult SetTypeConstrains(TypeConstrains type)
+        {
+            return RedirectToAction("Types", "Account", new { type = type.TypeId});
+        }
+
+        
+        [AdminOnlyFilter]
+        [HttpPost]
+        public JsonResult AddWorkerType(string typeName)
+        {
+            int id = clnt.AddWorkerType(typeName);
+
+            return Json(new { id = id });
+        }
     }
 }

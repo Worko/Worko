@@ -107,20 +107,20 @@ namespace WorkoProject.Utils
                 Worker worker = workers.Find(x => x.IdNumber.TrimStart('0') == w);
 
                 // check for meshek - work only in the morning
-                if (worker.Type == WorkerType.Meshek && shift > 0)
+                if (worker.Type == WorkerTypes.Meshek && shift > 0)
                 {
                     continue;
                 }
-                else if (worker.Type == WorkerType.Meshek)
+                else if (worker.Type == WorkerTypes.Meshek)
                 {
                     grade += 5;
                 }
                 // check for garin - not working on wednesday at noon
-                if (worker.Type == WorkerType.Garin && shift == 1 && day == 3)
+                if (worker.Type == WorkerTypes.Garin && shift == 1 && day == 3)
                 {
                     continue;
                 }
-                else if (worker.Type == WorkerType.Garin)
+                else if (worker.Type == WorkerTypes.Garin)
                 {
                     grade += 5;
                 }

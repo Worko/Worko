@@ -46,6 +46,16 @@ namespace DBService
            Invoker.DeleteWorker(workerId);
         }
 
+        public int AddWorkerType(string TypeName)
+        {
+            return Invoker.AddWorkerType(TypeName);
+        }
+
+        public List<WorkerType> GetWorkerTypes()
+        {
+            return Invoker.GetWorkerTypes();
+        }
+
         #endregion
 
         #region Stations

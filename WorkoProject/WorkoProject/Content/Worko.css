@@ -845,3 +845,19 @@ fieldset.regPersonalDetails {
 #work-schedule .current-worker:hover {
     font-weight: bold;
 }
+
+/* Workers Types */
+#type-constrains .panel-heading {
+  font-size: 17px;
+}
+#type-constrains .panel-heading label {
+  margin-left: 12px;
+}
+#type-constrains .form-control {
+  width: 170px;
+  display: inline-block;
+}
+
+#type-constrains #add-type {
+    text-align: left;
+}

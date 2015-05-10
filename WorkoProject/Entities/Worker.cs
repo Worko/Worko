@@ -52,7 +52,7 @@ namespace Entities
         [Display(Name = "סוג עובד:")]
         [Required]
         [Range(1, 3, ErrorMessage = "אנא בחר סוג מהרשימה.")]
-        public WorkerType Type { get; set; }
+        public WorkerTypes Type { get; set; }
 
         public int ShiftCounter { get; set; }
 

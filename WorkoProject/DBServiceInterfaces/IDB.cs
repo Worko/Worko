@@ -31,6 +31,13 @@ namespace DBServiceInterfaces
 
         [OperationContract]
         void DeleteWorker(string worker);
+
+        [OperationContract]
+        int AddWorkerType(string TypeName);
+
+        [OperationContract]
+        List<WorkerType> GetWorkerTypes();
+
         #endregion
 
         #region Stations

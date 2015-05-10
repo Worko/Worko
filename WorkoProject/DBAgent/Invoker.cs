@@ -214,7 +214,6 @@ namespace DBAgent
             return res;
         }
 
-
         public static List<Worker> GetWorkers()
         {
             var ds = GetDataSet("sp_GetWorkers");
@@ -235,7 +234,7 @@ namespace DBAgent
                     Phone = (string)row["Phone"],
                     IsAdmin = (bool)row["IsAdmin"],
                     Picture = (string)row["Picture"],
-                    Type = (WorkerType)row["Type"],
+                    Type = (WorkerTypes)row["Type"],
                     ShiftCounter = 0,
                    NightsCounter = GetWorkerNightShiftCount(wsid, int.Parse((string)row["IdNumber"]))
                 });
@@ -267,7 +266,6 @@ namespace DBAgent
             return count;
         }
 
-
         public static int UpdateWorker(Worker worker)
         {
             OpenConnection();
@@ -298,7 +296,6 @@ namespace DBAgent
             return res;
         }
 
-
         public static void DeleteWorker(string workerId)
         {
             OpenConnection();
@@ -311,8 +308,6 @@ namespace DBAgent
 
             cmd.ExecuteNonQuery();
         }
-
-
 
         public static void LinkWorkerToStation(int workerID, int stationID)
         {
@@ -358,6 +353,46 @@ namespace DBAgent
 
             return workers;
         }
+
+        public static int AddWorkerType(string TypeName)
+        {
+            OpenConnection();
+            // create new StoredProcedure command
+            cmd = new SqlCommand("sp_AddType", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // add the parameters
+            cmd.Parameters.AddWithValue("@Name", TypeName); ;
+
+            sqlParm = new SqlParameter("@res", DbType.Int32);
+            sqlParm.Direction = ParameterDirection.Output;
+            // add the result parameter
+            cmd.Parameters.Add(sqlParm);
+
+            cmd.ExecuteNonQuery();
+            int res = (int)cmd.Parameters["@res"].Value;
+            CloseConnection();
+            return res;
+        }
+
+        public static List<WorkerType> GetWorkerTypes()
+        {
+            var ds = GetDataSet("sp_GetTypes");
+            List<WorkerType> types = new List<WorkerType>();
+            
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                var row = ds.Tables[0].Rows[i];
+                types.Add(new WorkerType()
+                {
+                    TypeID = (int)row["TypeID"],
+                    TypeName = row["TypeName"].ToString()
+                });
+            }
+
+            return types;
+        }
+        
         #endregion
 
         #region Stations

@@ -128,6 +128,7 @@ namespace WorkoProject.Controllers
                 SessionManager.CurrentWorkSchedule = ws;
             }
             ViewData["Stations"] = clnt.GetStations(StationStatus.None);
+            TempData["Watch"] = true;
             return View("Schedule", SessionManager.CurrentWorkSchedule);
         }
 

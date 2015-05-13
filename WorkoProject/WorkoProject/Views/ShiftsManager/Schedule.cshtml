@@ -19,10 +19,13 @@
 <div class="se-pre-con"></div>
 <div id="work-schedule" class="row schedule-table">
     <div class="panel-heading">
-        @using (Html.BeginForm("CreateWeeklySchedule", "ShiftsManager", FormMethod.Post))
-        {
-            <button type="submit" class="btn btn-success pull-left" data-tooltip="tooltip" data-placement="top" title="שמור סידור עבודה">שמור סידור עבודה</button>
+        @if (TempData["Watch"] != null && (bool)TempData["Watch"])
+        { 
+            using (Html.BeginForm("CreateWeeklySchedule", "ShiftsManager", FormMethod.Post))
+            {
+                <button type="submit" class="btn btn-success pull-left" data-tooltip="tooltip" data-placement="top" title="שמור סידור עבודה">שמור סידור עבודה</button>
 
+            }
         }
     </div>
 

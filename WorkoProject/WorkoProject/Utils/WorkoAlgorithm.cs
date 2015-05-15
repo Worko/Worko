@@ -12,12 +12,12 @@ namespace WorkoProject.Utils
         private static DBService.DB clnt = new DBService.DB();
         private static int WSID;
         public static WorkSchedule workSchedule;
-        private static List<Worker> workers;
-        private static List<Station> stations;
-        private static List<WorkerConstrains> workersConstrains;
+        public static List<Worker> workers;
+        public static List<Station> stations;
+        public static List<WorkerConstrains> workersConstrains;
         private static List<string> lastSaturdayNightWorkers;
-        private static List<Tuple<int, string>> WorkersStations;
-        private static List<SortedScheduleConstrains> sortedStationsConstrains;
+        public static List<Tuple<int, string>> WorkersStations;
+        public static List<SortedScheduleConstrains> sortedStationsConstrains;
 
         private static int SubmittedWorkers;
         private static int MaxSubmittedWorkers;

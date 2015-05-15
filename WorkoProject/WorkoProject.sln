@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entiti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBAgent", "DBAgent\DBAgent.csproj", "{15C1A9A9-EA53-4E41-A0F3-7F49B7635962}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoTesting", "WorkoTesting\WorkoTesting.csproj", "{A5FE5054-E351-4579-94E0-B81AA743499C}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -43,6 +45,10 @@ Global
 		{15C1A9A9-EA53-4E41-A0F3-7F49B7635962}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15C1A9A9-EA53-4E41-A0F3-7F49B7635962}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15C1A9A9-EA53-4E41-A0F3-7F49B7635962}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5FE5054-E351-4579-94E0-B81AA743499C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5FE5054-E351-4579-94E0-B81AA743499C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5FE5054-E351-4579-94E0-B81AA743499C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5FE5054-E351-4579-94E0-B81AA743499C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

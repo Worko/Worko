@@ -614,12 +614,11 @@ namespace DBAgent
             args.Add(new Tuple<string, object>("Week", backWeeks));
             var ds = GetDataSet("sp_GetNextWeekSchedule", args);
 
-            try
+            if(ds.Tables[0].Rows.Count > 0)
             {
-                int res = int.Parse(ds.Tables[0].Rows[0][0].ToString());
-                return res;
+                return int.Parse(ds.Tables[0].Rows[0][0].ToString());
             }
-            catch (Exception)
+            else
             {
                 SetNextWeek();
                 return GetWSID();

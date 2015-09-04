@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -273,7 +274,7 @@
     <Content Include="Content\img\workoLogo.psd" />
     <Content Include="App_Code\Helpers.cshtml" />
     <Content Include="Content\jewish-holidays-all.csv" />
-    <None Include="Properties\PublishProfiles\SmarterASP.NET.pubxml" />
+    <None Include="Properties\PublishProfiles\Davik Shifts.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Cookies.js" />
     <Content Include="Scripts\docs.min.js" />

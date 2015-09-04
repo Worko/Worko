@@ -11,13 +11,13 @@ namespace Entities
         public WorkSchedule(int wsid, DateTime startDate)
         {
             WSID = wsid;
-            Template = new WorkScheduleTemplate();
+            Schedule = new WorkScheduleTemplate();
             StartDate = startDate;
         }
 
         public int WSID { get; set; }
         public DateTime StartDate { get; set; }
-        public WorkScheduleTemplate Template { get; set; }
+        public WorkScheduleTemplate Schedule { get; set; }
         public double Capacity { get; set; }
 
     }

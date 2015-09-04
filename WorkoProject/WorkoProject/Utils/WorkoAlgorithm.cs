@@ -22,6 +22,8 @@ namespace WorkoProject.Utils
         private static int SubmittedWorkers;
         private static int MaxSubmittedWorkers;
 
+        private static Settings algorithmSettings;
+
         #region Algorithm
 
         private static void Init()
@@ -43,15 +45,20 @@ namespace WorkoProject.Utils
         {
             Init();
 
-            for (int i = 0; i < sortedStationsConstrains.Count; i++)
-            {
+            int scCount = sortedStationsConstrains.Count;
 
-                int sid = sortedStationsConstrains[i].StationId;
-                int day = sortedStationsConstrains[i].Day;
-                int shift = sortedStationsConstrains[i].ShiftTime;
-                if (sortedStationsConstrains[i].Status == StationStatus.Active && workSchedule.Template.Shifts[Shift.GetShiftIndex((DayOfWeek)day, (PartOfDay)shift)].IsActive)
+            for (int i = 0; i < scCount; i++)
+            {
+                int nextSc = GetNextStationsConstrainsIndex();
+                SortedScheduleConstrains currentSc = sortedStationsConstrains[nextSc];
+                sortedStationsConstrains.RemoveAt(nextSc);
+
+                int sid = currentSc.StationId;
+                int day = currentSc.Day;
+                int shift = currentSc.ShiftTime;
+                if (currentSc.Status == StationStatus.Active && workSchedule.Schedule.Shifts[Shift.GetShiftIndex((DayOfWeek)day, (PartOfDay)shift)].IsActive)
                 {
-                    int maxWorkers = sortedStationsConstrains[i].NumberOfWorkers;
+                    int maxWorkers = currentSc.NumberOfWorkers;
                     var fitsWorkers = CalculateWorkersGrade(sid, day, shift, maxWorkers);
                     AddWorkersToSchedule(sid, day, shift, fitsWorkers);
                 }
@@ -59,6 +66,88 @@ namespace WorkoProject.Utils
 
             workSchedule.Capacity = (double)SubmittedWorkers / MaxSubmittedWorkers;
 
+        }
+
+        private static int GetNextStationsConstrainsIndex()
+        {
+            List<Tuple<int, double>> grades = new List<Tuple<int, double>>(); ;
+
+            for (int i = 0; i < sortedStationsConstrains.Count; i++)
+            {
+                grades.Add(new Tuple<int, double>(i, CalculateStationsConstrainsGrade(i)));
+            }
+
+            // filter all station constrains having max grade
+            grades = grades.OrderByDescending(x => x.Item2).ToList()
+                           .FindAll(x => x.Item2 == grades[0].Item2);
+
+            // choose randomally station constrain with max grade
+            int rndIndex = new Random().Next(0, grades.Count);
+
+            return grades[rndIndex].Item1;
+        }
+
+        private static double CalculateStationsConstrainsGrade(int index)
+        {
+            var currentSc = sortedStationsConstrains[index];
+            double grade = 0;
+
+            if (currentSc.ShiftTime == 2)
+            {
+                grade += 2;
+            }
+
+            grade += currentSc.Priority / 5f;
+
+            grade += CalculateProbabilityOfShiftToBeSet(currentSc);
+
+
+            return grade;
+        }
+
+        private static double CalculateProbabilityOfShiftToBeSet(SortedScheduleConstrains current)
+        {
+            var stationConstrains = sortedStationsConstrains.FindAll(x => x.StationId == current.StationId);
+            int needeWorkers = stationConstrains.Sum(x => x.NumberOfWorkers);
+            int possibleOptions = 0;
+
+            foreach (var w in workers)
+            {
+                if (WorkersStations.Any(x => x.Item1 == current.StationId && x.Item2.TrimStart('0') == w.IdNumber.TrimStart('0')))
+                {
+                    var wcs = workersConstrains.Find(x => x.WorkerID == w.IdNumber);
+
+                    if (wcs != null)
+                    {
+                        foreach (var sc in stationConstrains)
+                        {
+                            if (!wcs.Constrains[sc.Day][sc.ShiftTime])
+                            {
+                                bool workerAlreadyAssigned = false;
+                                var assignedShift = workSchedule.Schedule.Shifts[Shift.GetShiftIndex((DayOfWeek)sc.Day, (PartOfDay)sc.ShiftTime)];
+                                
+                                if (assignedShift != null && assignedShift.Stations != null)
+                                {
+                                    foreach (var st in assignedShift.Stations)
+                                    {
+                                        if (st.Workers.Find(x => x.IdNumber == w.IdNumber) != null)
+                                        {
+                                            workerAlreadyAssigned = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (!workerAlreadyAssigned)
+                                {
+                                    possibleOptions += sc.NumberOfWorkers;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return (double)possibleOptions / needeWorkers;
         }
 
         private static void AddWorkersToSchedule(int stationId, int day, int shift, List<string> fitsWorkers)
@@ -81,7 +170,7 @@ namespace WorkoProject.Utils
 
             s.Workers.AddRange(fitWorkersList);
 
-            workSchedule.Template
+            workSchedule.Schedule
                         .Shifts[Shift.GetShiftIndex((DayOfWeek)day, (PartOfDay)shift)]
                         .Stations.Add(s);
 
@@ -186,7 +275,7 @@ namespace WorkoProject.Utils
             int prevShiftIndex = Shift.GetPreviousShiftIndex(d, s);
             int nextShiftIndex = Shift.GetNextShiftIndex(d, s);
 
-            foreach (var station in workSchedule.Template.Shifts[currentShiftIndex].Stations)
+            foreach (var station in workSchedule.Schedule.Shifts[currentShiftIndex].Stations)
             {
                 if (station.Workers != null && station.Workers.Find(x => x.IdNumber.TrimStart('0') == workerID) != null)
                 {
@@ -203,7 +292,7 @@ namespace WorkoProject.Utils
             }
             else
             {
-                foreach (var station in workSchedule.Template.Shifts[prevShiftIndex].Stations)
+                foreach (var station in workSchedule.Schedule.Shifts[prevShiftIndex].Stations)
                 {
                     if (station.Workers != null && station.Workers.Find(x => x.IdNumber.TrimStart('0') == workerID) != null)
                     {
@@ -212,7 +301,7 @@ namespace WorkoProject.Utils
                 }
             }
 
-            foreach (var station in workSchedule.Template.Shifts[nextShiftIndex].Stations)
+            foreach (var station in workSchedule.Schedule.Shifts[nextShiftIndex].Stations)
             {
                 if (station.Workers != null && station.Workers.Find(x => x.IdNumber.TrimStart('0') == workerID) != null)
                 {

@@ -665,11 +665,11 @@ namespace DBAgent
 
                 int shiftIndex = Shift.GetShiftIndex((DayOfWeek)day, (PartOfDay)shift);
 
-                var currentStation = ws.Template.Shifts[shiftIndex].Stations.Find(x => x.Id == station.Id);
+                var currentStation = ws.Schedule.Shifts[shiftIndex].Stations.Find(x => x.Id == station.Id);
                 if (currentStation == null)
                 {
                     currentStation = new Station(station);
-                    ws.Template.Shifts[shiftIndex].Stations.Add(currentStation);
+                    ws.Schedule.Shifts[shiftIndex].Stations.Add(currentStation);
                 }
 
                 currentStation.Workers.Add(worker);
@@ -930,7 +930,7 @@ namespace DBAgent
 
             string script = string.Empty;
 
-            foreach (var shift in ws.Template.Shifts)
+            foreach (var shift in ws.Schedule.Shifts)
             {
                 int day = (int)shift.Day;
                 int shiftTime = (int)shift.Part;

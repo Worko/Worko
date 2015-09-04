@@ -8,7 +8,7 @@
     ViewBag.Title = "סידור עבודה לשבוע הקרוב";
     Layout = "~/Views/Shared/_ControlLayout.cshtml";
     var stations = ViewData["Stations"] as List<Station>;
-    var shifts = Model.Template.Shifts;
+    var shifts = Model.Schedule.Shifts;
 
     string calPath = Server.MapPath(Url.Content("~/Content/jewish-holidays-all.csv"));
     HebCalendar.SetCalendar(calPath);

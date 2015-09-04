@@ -174,10 +174,12 @@ namespace DBService
                 }
             }
 
-            list = list.OrderByDescending(x => x.ShiftTime)
-                        .ThenByDescending(x => x.Priority).ToList()
-                        .FindAll(x => x.Status == StationStatus.Active);
+            // night shifts first, than sort by priority
+            //list = list.OrderByDescending(x => x.ShiftTime)
+            //            .ThenByDescending(x => x.Priority).ToList()
+            //            .FindAll(x => x.Status == StationStatus.Active);
 
+            list = list.FindAll(x => x.Status == StationStatus.Active);
             return list;
         }
 

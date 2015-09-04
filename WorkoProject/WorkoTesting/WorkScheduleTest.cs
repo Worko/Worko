@@ -34,7 +34,7 @@ namespace WorkoTesting
         public void WorkerAssignedInLinkedStationOnly()
         {
             var workers = WorkoAlgorithm.workers;
-            var shifts = ws.Template.Shifts;
+            var shifts = ws.Schedule.Shifts;
 
             int numOfWorkersToCheck = workers.Count;
             int numOfSuccess = 0;
@@ -82,7 +82,7 @@ namespace WorkoTesting
         public void MaxFiveShifts()
         {
             var workers = WorkoAlgorithm.workers;
-            var shifts = ws.Template.Shifts;
+            var shifts = ws.Schedule.Shifts;
 
             int numOfWorkersToCheck = workers.Count;
             int numOfSuccess = 0;
@@ -122,7 +122,7 @@ namespace WorkoTesting
         public void WorkerConstrains()
         {
             var workers = WorkoAlgorithm.workers;
-            var shifts = ws.Template.Shifts;
+            var shifts = ws.Schedule.Shifts;
             var workerConstrains = WorkoAlgorithm.workersConstrains;
 
             int numOfWorkersToCheck = workers.Count;
@@ -168,7 +168,7 @@ namespace WorkoTesting
         [TestMethod]
         public void ActiveShifts()
         {
-            var shifts = ws.Template.Shifts;
+            var shifts = ws.Schedule.Shifts;
             bool success = true;
 
             foreach (var shift in shifts)
@@ -199,7 +199,7 @@ namespace WorkoTesting
         [TestMethod]
         public void ActiveStations()
         {
-            var shifts = ws.Template.Shifts;
+            var shifts = ws.Schedule.Shifts;
             bool success = true;
 
             foreach (var shift in shifts)

@@ -22,7 +22,7 @@ namespace Entities
         Night = 2
     };
 
-    public enum WorkerTypes : int
+    public enum WorkerTypes : byte
     {
         Regular = 1,
         Garin = 2,

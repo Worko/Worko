@@ -653,10 +653,10 @@ $(document).on('click', '#Stations-list .related-workers', function () {
                 var txt = t1 + t2 + t3 + t4 + t5 + t6;
                 rows.append(txt);
             }
+
+            $('#related-worker-station-modal').modal('show');
         }
     });
-
-    $('#related-worker-station-modal').modal('show');
 });
 
 $(document).on('click', '#Stations-list .link-worker', function () {

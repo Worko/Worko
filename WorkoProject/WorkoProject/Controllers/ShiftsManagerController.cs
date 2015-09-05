@@ -54,6 +54,8 @@ namespace WorkoProject.Controllers
                 };
             }
 
+            ViewData["NextWeekStartDate"] = clnt.GetWeekStartDate();
+
             return View(model);
         }
 

@@ -233,7 +233,7 @@ namespace DBAgent
                     Email = (string)row["Email"],
                     Phone = (string)row["Phone"],
                     IsAdmin = (bool)row["IsAdmin"],
-                    Picture = (string)row["Picture"],
+                    Picture = row["Picture"] != DBNull.Value ? (string)row["Picture"] : string.Empty,
                     Type = (WorkerTypes)row["Type"],
                     ShiftCounter = 0,
                    NightsCounter = GetWorkerNightShiftCount(wsid, int.Parse((string)row["IdNumber"]))
@@ -245,6 +245,8 @@ namespace DBAgent
 
         private static int GetWorkerNightShiftCount(int wsid, int workerId)
         {
+            ///TODO: create stored procedure
+            return 0;
             OpenConnection();
             // create new StoredProcedure command
             cmd = new SqlCommand("sp_GetWorkerNightShiftCount", con);

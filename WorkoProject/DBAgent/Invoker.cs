@@ -150,7 +150,8 @@ namespace DBAgent
         public static Worker AutoLogin(string id)
         {
             OpenConnection();
-
+            /// TODO: Save password to cookie
+            /// 
             // create new StoredProcedure command
             cmd = new SqlCommand("sp_AutoLogin", con);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -282,7 +283,7 @@ namespace DBAgent
             cmd.Parameters.AddWithValue("@Phone", worker.Phone);
             cmd.Parameters.AddWithValue("@Email", worker.Email);
             cmd.Parameters.AddWithValue("@Picture", string.IsNullOrEmpty(worker.Picture) ? string.Empty : worker.Picture);
-            cmd.Parameters.AddWithValue("@Type", worker.Type);
+            //cmd.Parameters.AddWithValue("@Type", worker.Type);
 
             // need to add this sometime...
             //cmd.Parameters.AddWithValue("@Password", worker.Password);
@@ -356,6 +357,7 @@ namespace DBAgent
             return workers;
         }
 
+        /// NOTE: Not in use
         public static int AddWorkerType(string TypeName)
         {
             OpenConnection();
@@ -376,7 +378,7 @@ namespace DBAgent
             CloseConnection();
             return res;
         }
-
+        /// NOTE: Not in use
         public static List<WorkerType> GetWorkerTypes()
         {
             var ds = GetDataSet("sp_GetTypes");
@@ -981,7 +983,7 @@ namespace DBAgent
                 unreadRequests.Add(new Request()
                 {
                     Pkid     = (int)row["pkid"],
-                    WorkerId = (string)row["WorkerId"],
+                    WorkerId = ((int)row["WorkerId"]).ToString(),
                     Date     = (DateTime)row["Date"],
                     Title    = (string)row["Title"],
                     Content  = (string)row["Content"]

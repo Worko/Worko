@@ -43,8 +43,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a id="companyLogo" href="http://www.davik.co.il" target="_blank"><img src="~/Content/img/DavikLogo.png" height="40" class="logo"></a>
-                <a class="navbar-brand" href="/ShiftsManager"><img src="~/Content/img/workoLogo.png" height="60" class="logo"></a>
+                <a class="navbar-brand" href="/ShiftsManager"><img src="~/Content/img/DavikLogo.png" height="60" class="logo"></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -53,20 +52,20 @@
                 @Html.Partial("Partials/_SideMenuBar")
             </div>
         </nav>
-        
+
         <!-- Page Content -->
         <div id="page-wrapper">
-           @RenderBody()
+            @RenderBody()
         </div>
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
-        
+
     @if (TempData["ErrorMessgae"] != null)
-    {        
-        @Html.Partial("Partials/_ModalMessage", (Message)TempData["ErrorMessgae"]) 
+    {
+        @Html.Partial("Partials/_ModalMessage", (Message)TempData["ErrorMessgae"])
     }
-    
+
     @RenderSection("Modals", false)
 
     <!-- jQuery Version 1.11.0 -->
@@ -82,7 +81,7 @@
     <script src="~/Scripts/plugins/metisMenu/metisMenu.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="~/Scripts/sb-admin-2.js"></script>
-    
+
     <script src="~/Scripts/Worko.js"></script>
     <script src="~/Scripts/Cookies.js"></script>
     <script src="~/Scripts/autoUpdate.js"></script>

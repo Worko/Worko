@@ -44,7 +44,7 @@ namespace WorkoProject.Utils
         public static void GenerateWorkSchedule()
         {
             Init();
-
+            ///TODO: take holidays in consideration
             int scCount = sortedStationsConstrains.Count;
 
             for (int i = 0; i < scCount; i++)

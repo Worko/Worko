@@ -195,10 +195,12 @@ header {
 
 /* Footer */
 footer {
-	height: 100px;
-  	background-color: #2e2e2e;
-  	margin-top: 600px;
-  	text-align: center;
+    height: 100px;
+    background-color: #2e2e2e;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }
 
 
